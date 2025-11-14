@@ -1,0 +1,39 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: biopro-manufacturing-service
+  kafka:
+    bootstrap-servers: kafka:9092
+    schema-registry:
+      url: http://schema-registry:8081
+
+biopro:
+  dlq:
+    enabled: true
+    module-name: manufacturing
+  monitoring:
+    type: prometheus  # Switch to 'dynatrace' for production
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+      dynatrace:
+        enabled: false
+        # Uncomment below for Dynatrace (and set enabled: true above)
+        # uri: http://localhost:14499/metrics/ingest
+        # api-token: ${DYNATRACE_API_TOKEN}
+        # v2:
+        #   metric-key-prefix: biopro
+        #   enrich-with-dynatrace-metadata: true
+    tags:
+      application: ${spring.application.name}
+      environment: dev
+      module: manufacturing

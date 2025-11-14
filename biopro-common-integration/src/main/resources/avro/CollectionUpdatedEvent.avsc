@@ -1,0 +1,151 @@
+{
+  "type": "record",
+  "name": "CollectionUpdatedEvent",
+  "namespace": "com.biopro.events.collections",
+  "doc": "Event published when a blood collection is updated",
+  "fields": [
+    {
+      "name": "unitNumber",
+      "type": "string",
+      "doc": "Unique identifier for the collection unit (e.g., W036202412345)"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "doc": "Current status of the collection"
+    },
+    {
+      "name": "bagType",
+      "type": "string",
+      "doc": "Type of collection bag used"
+    },
+    {
+      "name": "drawTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Time when blood was drawn"
+    },
+    {
+      "name": "drawTimeZone",
+      "type": "string",
+      "default": "UTC",
+      "doc": "Timezone for drawTime (e.g., America/New_York)"
+    },
+    {
+      "name": "withdrawalTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Time when collection was withdrawn/completed"
+    },
+    {
+      "name": "withdrawalTimeZone",
+      "type": "string",
+      "default": "UTC",
+      "doc": "Timezone for withdrawalTime"
+    },
+    {
+      "name": "donationType",
+      "type": {
+        "type": "enum",
+        "name": "DonationType",
+        "symbols": ["ALLOGENEIC", "AUTOLOGOUS"]
+      },
+      "doc": "Type of donation"
+    },
+    {
+      "name": "procedureType",
+      "type": "string",
+      "doc": "Procedure type used for collection"
+    },
+    {
+      "name": "collectionLocation",
+      "type": "string",
+      "doc": "Location where collection occurred"
+    },
+    {
+      "name": "aboRh",
+      "type": "string",
+      "doc": "ABO/Rh blood type (e.g., AP, AN, BP, BN, OP, ON, ABP, ABN)"
+    },
+    {
+      "name": "machineSerialNumber",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Serial number of collection machine (if apheresis)"
+    },
+    {
+      "name": "machineType",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Type of collection machine used"
+    },
+    {
+      "name": "donationProperties",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null,
+      "doc": "Additional donation-specific properties"
+    },
+    {
+      "name": "drawProperties",
+      "type": ["null", {
+        "type": "map",
+        "values": "string"
+      }],
+      "default": null,
+      "doc": "Additional draw-specific properties"
+    },
+    {
+      "name": "volumes",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "Volume",
+          "fields": [
+            {
+              "name": "type",
+              "type": {
+                "type": "enum",
+                "name": "VolumeType",
+                "symbols": [
+                  "PLASMA",
+                  "RBC",
+                  "PLASMA_ANTICOAGULANT",
+                  "PLATELET",
+                  "PAS",
+                  "ANTICOAGULANT",
+                  "RBC_ANTICOAGULANT",
+                  "PLATELET_ANTICOAGULANT",
+                  "WHOLE_BLOOD",
+                  "GRANULOCYTE",
+                  "PLASMA_VOLUME_LOSS",
+                  "RBC_VOLUME_LOSS"
+                ]
+              },
+              "doc": "Type of volume measurement"
+            },
+            {
+              "name": "amount",
+              "type": "int",
+              "doc": "Volume amount in milliliters"
+            },
+            {
+              "name": "excludeInCalculation",
+              "type": "boolean",
+              "default": false,
+              "doc": "Whether to exclude this volume in calculations"
+            }
+          ]
+        }
+      },
+      "doc": "List of volumes associated with the collection"
+    }
+  ]
+}

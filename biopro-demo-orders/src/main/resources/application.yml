@@ -1,0 +1,73 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: biopro-orders-service
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    schema-registry:
+      url: http://schema-registry:8081
+    consumer:
+      group-id: biopro-orders-group
+      auto-offset-reset: earliest
+    producer:
+      acks: all
+      retries: 3
+
+# BioPro DLQ Configuration
+biopro:
+  dlq:
+    enabled: true
+    module-name: orders
+    retry:
+      max-attempts: 3
+      initial-delay: 1s
+      multiplier: 2.0
+      max-delay: 5m
+    circuit-breaker:
+      enabled: true
+      failure-threshold: 50
+      minimum-number-of-calls: 10
+      wait-duration-in-open-state: 1m
+    monitoring:
+      enabled: true
+      dynatrace-business-events-enabled: true
+  # Monitoring Type: prometheus (local dev) or dynatrace (production)
+  monitoring:
+    type: prometheus  # Switch to 'dynatrace' for production
+
+# Actuator endpoints for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus  # Add prometheus endpoint
+  metrics:
+    export:
+      # Prometheus (enabled by default for local dev)
+      prometheus:
+        enabled: true
+      # Dynatrace (disabled by default, enable in production)
+      dynatrace:
+        enabled: false
+        # In production, enable and configure via environment variables:
+        # uri: ${DYNATRACE_URI}
+        # api-token: ${DYNATRACE_API_TOKEN}
+        uri: http://localhost:14499/metrics/ingest  # Local OneAgent endpoint
+        api-token: placeholder
+        v2:
+          metric-key-prefix: biopro
+    tags:
+      application: ${spring.application.name}
+      environment: dev
+      module: orders
+
+# Logging
+logging:
+  level:
+    com.biopro: DEBUG
+    org.springframework.kafka: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

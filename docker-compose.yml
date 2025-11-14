@@ -1,0 +1,217 @@
+services:
+  # Redpanda - Kafka-compatible streaming platform (no Zookeeper needed!)
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.4
+    hostname: redpanda
+    container_name: biopro-redpanda
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://redpanda:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://redpanda:8082,external://localhost:18082
+      - --rpc-addr redpanda:33145
+      - --advertise-rpc-addr redpanda:33145
+      - --mode dev-container
+      - --smp 1
+      - --default-log-level=info
+    ports:
+      - "18082:18082"  # Pandaproxy (external)
+      - "19092:19092"  # Kafka API (external)
+      - "19644:9644"   # Admin API
+    volumes:
+      - redpanda-data:/var/lib/redpanda/data
+    networks:
+      - biopro-network
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -E 'Healthy:.+true' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 45s
+
+  # Redpanda Console - Web UI for Redpanda/Kafka
+  redpanda-console:
+    image: docker.redpanda.com/redpandadata/console:v2.7.0
+    container_name: biopro-redpanda-console
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    ports:
+      - "8090:8080"
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      KAFKA_BROKERS: redpanda:9092
+      KAFKA_SCHEMAREGISTRY_ENABLED: "true"
+      KAFKA_SCHEMAREGISTRY_URLS: http://schema-registry:8081
+    volumes:
+      - ./redpanda-console-config.yml:/tmp/config.yml
+    networks:
+      - biopro-network
+    restart: unless-stopped
+
+  # Schema Registry - Confluent Schema Registry for Avro schemas
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.5.3
+    container_name: biopro-schema-registry
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: redpanda:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_SCHEMA_REGISTRY_GROUP_ID: schema-registry
+    networks:
+      - biopro-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/subjects"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # kcat - Kafka CLI tool for monitoring and testing
+  kcat:
+    image: edenhill/kcat:1.7.1
+    container_name: biopro-kcat
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["tail -f /dev/null"]
+    networks:
+      - biopro-network
+    environment:
+      KAFKA_BROKER: redpanda:9092
+
+  # Prometheus - Metrics collection and storage
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: biopro-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - biopro-network
+
+  # Grafana - Metrics visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: biopro-grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: 'Admin'
+      GF_AUTH_DISABLE_LOGIN_FORM: 'true'
+      GF_SECURITY_ADMIN_PASSWORD: 'admin'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - biopro-network
+
+  # ===== BioPro Services =====
+
+  # Orders Service
+  orders-service:
+    build:
+      context: .
+      dockerfile: biopro-demo-orders/Dockerfile
+    container_name: biopro-orders-service
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+      SPRING_KAFKA_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      BIOPRO_MONITORING_TYPE: prometheus
+    networks:
+      - biopro-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Collections Service
+  collections-service:
+    build:
+      context: .
+      dockerfile: biopro-demo-collections/Dockerfile
+    container_name: biopro-collections-service
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    ports:
+      - "8083:8081"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+      SPRING_KAFKA_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      BIOPRO_MONITORING_TYPE: prometheus
+    networks:
+      - biopro-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Manufacturing Service
+  manufacturing-service:
+    build:
+      context: .
+      dockerfile: biopro-demo-manufacturing/Dockerfile
+    container_name: biopro-manufacturing-service
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+      SPRING_KAFKA_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      BIOPRO_MONITORING_TYPE: prometheus
+    networks:
+      - biopro-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  biopro-network:
+    driver: bridge
+
+volumes:
+  redpanda-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local

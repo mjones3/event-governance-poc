@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: biopro-dlq
+  labels:
+    name: biopro-dlq
+    environment: local
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: biopro-kafka
+  labels:
+    name: biopro-kafka
+    environment: local

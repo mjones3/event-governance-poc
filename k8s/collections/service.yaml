@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: collections-service
+  namespace: biopro-dlq
+  labels:
+    app: collections
+spec:
+  type: ClusterIP
+  selector:
+    app: collections
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+      protocol: TCP

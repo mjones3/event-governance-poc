@@ -1,0 +1,20 @@
+kafka:
+  brokers:
+    - redpanda:9092
+  schemaRegistry:
+    enabled: true
+    urls:
+      - http://schema-registry:8081
+
+# Console configuration
+console:
+  topicDocumentation:
+    enabled: false
+
+# Server configuration
+server:
+  listenPort: 8080
+
+# Connect configuration (optional)
+connect:
+  enabled: false

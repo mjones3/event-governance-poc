@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service
+  namespace: biopro-dlq
+  labels:
+    app: orders
+    module: orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+        module: orders
+    spec:
+      containers:
+        - name: orders
+          image: local/biopro-orders:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: JAVA_OPTS
+              value: '-Xmx512m -Xms256m'
+            - name: SPRING_PROFILES_ACTIVE
+              value: 'dev'
+            - name: SERVER_PORT
+              value: "8080"
+            - name: BIOPRO_DLQ_ENABLED
+              value: "true"
+            - name: BIOPRO_DLQ_MODULE_NAME
+              value: "orders"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: 'kafka.biopro-kafka.svc.cluster.local:9092'
+            - name: SPRING_KAFKA_PROPERTIES_SCHEMA_REGISTRY_URL
+              value: 'http://schema-registry.biopro-kafka.svc.cluster.local:8081'
+            - name: MANAGEMENT_DYNATRACE_METRICS_EXPORT_ENABLED
+              value: "false"
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: "health,metrics,prometheus"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 30

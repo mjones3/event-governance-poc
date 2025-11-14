@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: manufacturing-service
+  namespace: biopro-dlq
+  labels:
+    app: manufacturing
+spec:
+  type: ClusterIP
+  selector:
+    app: manufacturing
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8082
+      protocol: TCP

@@ -1,0 +1,748 @@
+# BioPro Common DLQ Library - Proof of Concept
+
+**Enterprise Event Governance Framework for BioPro Healthcare Platform**
+
+[![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://openjdk.java.net/projects/jdk/17/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.1-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Kafka](https://img.shields.io/badge/Kafka-3.6.1-black.svg)](https://kafka.apache.org/)
+[![Confluent](https://img.shields.io/badge/Confluent-7.5.3-blue.svg)](https://www.confluent.io/)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Build Instructions](#build-instructions)
+- [Deployment](#deployment)
+- [Configuration](#configuration)
+- [Usage Examples](#usage-examples)
+- [Monitoring](#monitoring)
+- [Security](#security)
+- [FAQ](#faq)
+
+---
+
+## Overview
+
+The BioPro Common DLQ Library is an enterprise-grade Spring Boot starter that provides comprehensive event governance for all BioPro modules (Orders, Collections, Manufacturing, Distribution, Specialty Lab). This solution meets FDA compliance requirements and establishes reusable patterns for the entire healthcare platform.
+
+### Key Capabilities
+
+✅ **FDA Compliance** - Complete audit trail for all event operations
+✅ **Dead Letter Queue (DLQ)** - Automatic routing of failed events with retry logic
+✅ **Schema Governance** - Confluent Schema Registry integration with validation
+✅ **Resilience Patterns** - Circuit breaker and retry with Resilience4j
+✅ **Security** - JWT authentication, RBAC authorization, PII protection
+✅ **Monitoring** - Micrometer metrics, health checks, Dynatrace integration
+✅ **Zero Configuration** - Spring Boot auto-configuration
+
+---
+
+## Architecture
+
+### System Architecture
+
+```mermaid
+graph TB
+    subgraph "BioPro Modules"
+        Orders[Orders Service]
+        Collections[Collections Service]
+        Manufacturing[Manufacturing Service]
+    end
+
+    subgraph "BioPro Common DLQ Library"
+        Core[Core Engine]
+        Config[Auto Configuration]
+        Integration[Kafka Integration]
+        Security[Security Module]
+        Monitoring[Monitoring Module]
+    end
+
+    subgraph "Infrastructure"
+        Kafka[Kafka Cluster]
+        SchemaRegistry[Schema Registry]
+        Redis[Redis Cache]
+        Prometheus[Prometheus]
+    end
+
+    Orders --> Core
+    Collections --> Core
+    Manufacturing --> Core
+
+    Core --> Integration
+    Integration --> Kafka
+    Integration --> SchemaRegistry
+    Integration --> Redis
+
+    Security --> Core
+    Monitoring --> Core
+    Monitoring --> Prometheus
+
+    Core --> Config
+```
+
+### Module Structure
+
+```
+biopro-common-dlq-parent/
+├── biopro-common-core/              # Core DLQ processing engine
+│   ├── dlq-processing/              # DLQ routing and management
+│   ├── reprocessing/                # Event reprocessing logic
+│   └── models/                      # Domain models
+│
+├── biopro-common-config/            # Configuration management
+│   ├── auto-configuration/          # Spring Boot auto-config
+│   └── properties/                  # Type-safe configuration
+│
+├── biopro-common-integration/       # External integrations
+│   ├── kafka-integration/           # Kafka abstractions
+│   ├── schema-registry/             # Confluent Schema Registry
+│   └── redis-integration/           # Caching layer
+│
+├── biopro-common-security/          # Security module
+│   ├── audit/                       # Audit trail
+│   └── authorization/               # RBAC implementation
+│
+├── biopro-common-monitoring/        # Monitoring module
+│   └── metrics/                     # Micrometer integration
+│
+├── biopro-dlq-spring-boot-starter/ # Aggregating starter
+│
+└── biopro-demo-*/                   # Demo applications
+    ├── biopro-demo-orders/
+    ├── biopro-demo-collections/
+    └── biopro-demo-manufacturing/
+```
+
+### Event Flow Sequence
+
+```mermaid
+sequenceDiagram
+    participant App as BioPro Module
+    participant DLQ as DLQ Processor
+    participant Schema as Schema Registry
+    participant Kafka as Kafka Broker
+    participant Metrics as Metrics Collector
+
+    App->>Schema: Validate Event Schema
+
+    alt Schema Valid
+        Schema-->>App: Validation Success
+        App->>Kafka: Publish Event
+
+        alt Publish Success
+            Kafka-->>App: Ack
+            App->>Metrics: Record Success
+        else Publish Failure
+            Kafka-->>App: Error
+            App->>DLQ: Route to DLQ
+            DLQ->>Metrics: Record DLQ Event
+        end
+    else Schema Invalid
+        Schema-->>App: Validation Failure
+        App->>DLQ: Route to DLQ
+        DLQ->>Kafka: Publish to DLQ Topic
+        DLQ->>Metrics: Record Schema Error
+    end
+```
+
+### DLQ Reprocessing Flow
+
+```mermaid
+sequenceDiagram
+    participant Admin as Administrator
+    participant Reprocessor as DLQ Reprocessor
+    participant Audit as Audit Service
+    participant Kafka as Kafka Broker
+    participant Metrics as Metrics Collector
+
+    Admin->>Reprocessor: Request Reprocessing
+    Reprocessor->>Audit: Log Reprocessing Attempt
+
+    Reprocessor->>Kafka: Republish to Original Topic
+
+    alt Reprocessing Success
+        Kafka-->>Reprocessor: Ack
+        Reprocessor->>Metrics: Record Success
+        Reprocessor->>Audit: Log Success
+        Reprocessor-->>Admin: Success Response
+    else Reprocessing Failure
+        Kafka-->>Reprocessor: Error
+        Reprocessor->>Metrics: Record Failure
+        Reprocessor->>Audit: Log Failure
+        Reprocessor-->>Admin: Failure Response
+    end
+```
+
+### Component Interaction
+
+```mermaid
+graph LR
+    A[Spring Boot Application] --> B[BioPro DLQ Starter]
+    B --> C[Auto Configuration]
+    C --> D[DLQ Processor]
+    C --> E[Schema Service]
+    C --> F[Circuit Breaker]
+    C --> G[Retry Logic]
+
+    D --> H[Kafka Producer]
+    E --> I[Schema Registry Client]
+    F --> D
+    G --> D
+
+    H --> J[Kafka Topics]
+    I --> K[Schema Registry]
+
+    style B fill:#4CAF50
+    style C fill:#2196F3
+    style D fill:#FF9800
+```
+
+---
+
+## Features
+
+### Core Features
+
+#### 1. Dead Letter Queue (DLQ) Processing
+
+Automatically routes failed events to a dedicated DLQ topic with comprehensive error context:
+
+- **Error Classification**: Schema validation, deserialization, processing errors, timeouts
+- **Priority Management**: Critical, High, Medium, Low based on event type and module
+- **Business Context Preservation**: All original event data and metadata retained
+- **Retry Tracking**: Records number of retry attempts before DLQ routing
+
+#### 2. Schema Registry Integration
+
+Full integration with Confluent Schema Registry:
+
+- **Automatic Schema Validation**: All events validated against registered Avro schemas
+- **Multi-Level Caching**: L1 (Caffeine) and L2 (Redis) cache for performance
+- **Schema Compatibility Checking**: Ensures backward/forward compatibility
+- **Schema Registration API**: Programmatic schema registration and management
+
+#### 3. Resilience Patterns
+
+Enterprise-grade resilience with Resilience4j:
+
+- **Circuit Breaker**: Prevents cascading failures
+- **Retry Logic**: Configurable exponential backoff
+- **Timeout Handling**: Graceful degradation
+- **Bulkhead Isolation**: Resource isolation between modules
+
+#### 4. Monitoring & Observability
+
+Comprehensive monitoring with Micrometer:
+
+- **Metrics**: Event throughput, DLQ rates, processing duration, error rates
+- **Health Checks**: Kafka connectivity, Schema Registry availability
+- **Prometheus Export**: Native Prometheus metrics endpoint
+- **Business Events**: Dynatrace business event integration (framework included)
+
+#### 5. Security
+
+Enterprise security features:
+
+- **Audit Trail**: Complete audit log of all DLQ operations
+- **Authorization**: RBAC support for DLQ management operations
+- **PII Protection**: Framework for PII detection and masking (extendable)
+
+---
+
+## Prerequisites
+
+### Required Software
+
+- **Java 17** or higher ([OpenJDK](https://openjdk.java.net/))
+- **Maven 3.9.x** or higher
+- **Docker & Docker Compose** (for running Kafka and Schema Registry)
+- **Git** (for cloning the repository)
+
+### Optional Tools
+
+- **IntelliJ IDEA** or **VS Code** (for development)
+- **Postman** or **curl** (for testing REST APIs)
+
+---
+
+## Quick Start
+
+### 1. Start Infrastructure
+
+Start Kafka, Schema Registry, and supporting services:
+
+```bash
+cd C:\Users\MelvinJones\work\event-governance\poc
+docker-compose up -d
+```
+
+Wait for all services to be healthy (about 30-60 seconds):
+
+```bash
+docker-compose ps
+```
+
+**Expected Output:**
+```
+NAME                      STATUS              PORTS
+biopro-kafka              Up (healthy)        0.0.0.0:9092->9092/tcp
+biopro-schema-registry    Up (healthy)        0.0.0.0:8081->8081/tcp
+biopro-zookeeper          Up                  0.0.0.0:2181->2181/tcp
+biopro-kafka-ui           Up                  0.0.0.0:8090->8080/tcp
+biopro-redis              Up (healthy)        0.0.0.0:6379->6379/tcp
+```
+
+### 2. Build the Project
+
+```bash
+mvn clean install
+```
+
+This will:
+- Compile all modules
+- Generate Avro classes from schemas
+- Run unit tests
+- Package all artifacts
+
+### 3. Run Demo Application
+
+Start the Orders service:
+
+```bash
+cd biopro-demo-orders
+mvn spring-boot:run
+```
+
+The service will start on `http://localhost:8080`
+
+### 4. Test Event Publishing
+
+Create an order event:
+
+```bash
+curl -X POST http://localhost:8080/api/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderId": "ORD-12345",
+    "bloodType": "O_POSITIVE",
+    "quantity": 2,
+    "priority": "URGENT",
+    "facilityId": "FAC-001",
+    "requestedBy": "DR-SMITH"
+  }'
+```
+
+**Expected Response:**
+```json
+{
+  "success": true,
+  "message": "Order event published successfully",
+  "orderId": "ORD-12345"
+}
+```
+
+### 5. View Kafka Topics
+
+Access Kafka UI at: `http://localhost:8090`
+
+You'll see:
+- `biopro.orders.events` - Main events topic
+- `biopro.orders.dlq` - Dead Letter Queue topic
+
+---
+
+## Build Instructions
+
+### Full Build
+
+Build all modules:
+
+```bash
+mvn clean install
+```
+
+### Skip Tests
+
+For faster builds during development:
+
+```bash
+mvn clean install -DskipTests
+```
+
+### Build Specific Module
+
+```bash
+cd biopro-common-core
+mvn clean install
+```
+
+### Build Docker Images
+
+```bash
+mvn spring-boot:build-image
+```
+
+---
+
+## Deployment
+
+### Local Development
+
+1. Start infrastructure: `docker-compose up -d`
+2. Run application: `mvn spring-boot:run`
+
+### Docker Deployment
+
+Build and run with Docker:
+
+```bash
+# Build
+mvn clean package
+docker build -t biopro-orders:latest ./biopro-demo-orders
+
+# Run
+docker run -p 8080:8080 \
+  -e SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092 \
+  -e SPRING_KAFKA_SCHEMA_REGISTRY_URL=http://schema-registry:8081 \
+  --network poc_biopro-network \
+  biopro-orders:latest
+```
+
+### Kubernetes Deployment
+
+Sample Kubernetes deployment (create `k8s-deployment.yaml`):
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biopro-orders
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: biopro-orders
+  template:
+    metadata:
+      labels:
+        app: biopro-orders
+    spec:
+      containers:
+      - name: biopro-orders
+        image: biopro-orders:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka-service:9092"
+        - name: SPRING_KAFKA_SCHEMA_REGISTRY_URL
+          value: "http://schema-registry:8081"
+        - name: BIOPRO_DLQ_MODULE_NAME
+          value: "orders"
+```
+
+Deploy:
+
+```bash
+kubectl apply -f k8s-deployment.yaml
+```
+
+---
+
+## Configuration
+
+### Application Configuration
+
+Configure the library in your `application.yml`:
+
+```yaml
+biopro:
+  dlq:
+    enabled: true
+    module-name: orders
+
+    retry:
+      max-attempts: 3
+      initial-delay: 1s
+      multiplier: 2.0
+      max-delay: 5m
+
+    circuit-breaker:
+      enabled: true
+      failure-threshold: 50
+      minimum-number-of-calls: 10
+      wait-duration-in-open-state: 1m
+      permitted-number-of-calls-in-half-open-state: 3
+      sliding-window-size: 100
+
+    monitoring:
+      enabled: true
+      dynatrace-business-events-enabled: true
+      publish-interval: 30s
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    schema-registry:
+      url: http://localhost:8081
+    consumer:
+      group-id: biopro-orders-group
+    producer:
+      acks: all
+      retries: 3
+```
+
+### Environment Variables
+
+Override configuration with environment variables:
+
+```bash
+export SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+export SPRING_KAFKA_SCHEMA_REGISTRY_URL=http://schema-registry:8081
+export BIOPRO_DLQ_MODULE_NAME=orders
+export BIOPRO_DLQ_RETRY_MAX_ATTEMPTS=5
+```
+
+### Configuration Properties Reference
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `biopro.dlq.enabled` | `true` | Enable/disable DLQ processing |
+| `biopro.dlq.module-name` | Required | Module name (orders, collections, etc.) |
+| `biopro.dlq.retry.max-attempts` | `3` | Maximum retry attempts |
+| `biopro.dlq.retry.initial-delay` | `1s` | Initial retry delay |
+| `biopro.dlq.retry.multiplier` | `2.0` | Backoff multiplier |
+| `biopro.dlq.retry.max-delay` | `5m` | Maximum retry delay |
+| `biopro.dlq.circuit-breaker.enabled` | `true` | Enable circuit breaker |
+| `biopro.dlq.circuit-breaker.failure-threshold` | `50` | Failure rate threshold (%) |
+| `biopro.dlq.monitoring.enabled` | `true` | Enable monitoring |
+
+---
+
+## Usage Examples
+
+### 1. Adding the Starter to Your Project
+
+Add dependency to `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.biopro</groupId>
+    <artifactId>biopro-dlq-spring-boot-starter</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
+
+### 2. Publishing Events
+
+```java
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final SchemaRegistryService schemaRegistryService;
+    private final DLQProcessor dlqProcessor;
+
+    public void createOrder(OrderRequest request) {
+        String eventId = UUID.randomUUID().toString();
+
+        try {
+            // Build event
+            Map<String, Object> event = buildOrderEvent(request);
+
+            // Validate schema
+            ValidationResult validation =
+                schemaRegistryService.validateEvent("OrderCreatedEvent", event);
+
+            if (!validation.isValid()) {
+                // Route to DLQ on validation failure
+                dlqProcessor.routeToDLQ(
+                    eventId, "orders", "OrderCreatedEvent",
+                    "biopro.orders.events", serialize(event),
+                    new ValidationException(validation.getErrorMessage()),
+                    0
+                );
+                return;
+            }
+
+            // Publish to Kafka
+            kafkaTemplate.send("biopro.orders.events", eventId, event);
+
+        } catch (Exception e) {
+            // Route to DLQ on any error
+            dlqProcessor.routeToDLQ(
+                eventId, "orders", "OrderCreatedEvent",
+                "biopro.orders.events", new byte[0],
+                e, 0
+            );
+        }
+    }
+}
+```
+
+### 3. Reprocessing DLQ Events
+
+```java
+@Service
+@RequiredArgsConstructor
+public class DLQManagementService {
+
+    private final DLQReprocessingService reprocessingService;
+
+    @PreAuthorize("hasRole('DLQ_OPERATOR')")
+    public void reprocessEvent(String eventId, String username) {
+        DLQEvent dlqEvent = findDLQEvent(eventId);
+
+        ReprocessingResult result =
+            reprocessingService.reprocess(dlqEvent, username);
+
+        if (result.isSuccess()) {
+            log.info("Event {} reprocessed successfully", eventId);
+        } else {
+            log.error("Failed to reprocess event {}: {}",
+                eventId, result.getMessage());
+        }
+    }
+}
+```
+
+---
+
+## Monitoring
+
+### Actuator Endpoints
+
+Access monitoring endpoints:
+
+- **Health**: `http://localhost:8080/actuator/health`
+- **Metrics**: `http://localhost:8080/actuator/metrics`
+- **Prometheus**: `http://localhost:8080/actuator/prometheus`
+
+### Key Metrics
+
+| Metric | Description |
+|--------|-------------|
+| `biopro.dlq.events.total` | Total events routed to DLQ |
+| `biopro.dlq.reprocessing.success` | Successful reprocessing count |
+| `biopro.dlq.reprocessing.failure` | Failed reprocessing count |
+| `biopro.event.processing.duration` | Event processing duration |
+| `biopro.schema.validation` | Schema validation results |
+
+### Prometheus Query Examples
+
+```promql
+# DLQ event rate per module
+rate(biopro_dlq_events_total[5m])
+
+# Reprocessing success rate
+sum(rate(biopro_dlq_reprocessing_success[5m])) /
+sum(rate(biopro_dlq_events_total[5m]))
+
+# Average processing duration
+rate(biopro_event_processing_duration_sum[5m]) /
+rate(biopro_event_processing_duration_count[5m])
+```
+
+---
+
+## Security
+
+### FDA Compliance
+
+The framework provides:
+
+- **Complete Audit Trail**: All DLQ operations logged
+- **Data Retention**: Configurable retention policies
+- **Tamper-Proof Logging**: Append-only audit logs
+
+### Authorization
+
+Role-based access control for DLQ operations:
+
+```java
+@PreAuthorize("hasRole('DLQ_OPERATOR')")
+public void reprocessEvent(String eventId) { ... }
+
+@PreAuthorize("hasRole('SYSTEM_ADMINISTRATOR')")
+public void purgeOldEvents(Duration olderThan) { ... }
+```
+
+### PII Protection
+
+Framework included for PII detection and masking (extendable):
+
+```java
+@Service
+public class PIIProtectionService {
+    public void maskSensitiveFields(Event event) {
+        // Implementation for PII masking
+    }
+}
+```
+
+---
+
+## FAQ
+
+### Q: How do I add this to an existing BioPro module?
+
+**A:** Simply add the starter dependency to your `pom.xml` and configure the module name in `application.yml`. The framework auto-configures everything else.
+
+### Q: What happens if Schema Registry is unavailable?
+
+**A:** The circuit breaker will open after the configured failure threshold, preventing cascading failures. Events will be routed to DLQ for later reprocessing.
+
+### Q: How do I monitor DLQ queue size?
+
+**A:** Use the Kafka UI at `http://localhost:8090` or query the `biopro.dlq.events.total` metric in Prometheus.
+
+### Q: Can I customize the retry strategy?
+
+**A:** Yes, configure retry properties in `application.yml`:
+```yaml
+biopro:
+  dlq:
+    retry:
+      max-attempts: 5
+      initial-delay: 2s
+      multiplier: 3.0
+      max-delay: 10m
+```
+
+### Q: How do I register new schemas?
+
+**A:** Use the Schema Registry REST API or the provided `SchemaRegistryService`:
+```java
+schemaRegistryService.registerSchema("MyEvent", avroSchemaString);
+```
+
+### Q: Is this production-ready?
+
+**A:** This is a **Proof of Concept** demonstrating the architecture and key features. For production deployment, additional enhancements would include:
+- Complete security implementation (JWT, RBAC)
+- Full PII detection and encryption
+- Dynatrace OneAgent integration
+- AWS services integration (Secrets Manager, KMS, CloudWatch)
+- Comprehensive testing (integration, load, security)
+
+---
+
+## Support & Contact
+
+**Project Sponsor**: Melvin Jones, Solutions Architect
+**VP of Architecture**: Shalet (Charlotte)
+**Target Date**: December 31, 2025 (FDA Submission Deadline)
+
+For questions or issues, please contact the BioPro Platform Team.
+
+---
+
+## License
+
+Copyright © 2025 ARC-One BioPro. All rights reserved.
+
+This is proprietary enterprise software for internal use only.

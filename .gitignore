@@ -1,0 +1,67 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+
+# IDE
+.idea/
+*.iml
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Docker
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+*-logs.txt
+
+# Test outputs
+test-*.html
+test-*.txt
+orders-*.txt
+schema-*.txt
+final-test.txt
+invalid-event-test.txt
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+
+# Grafana/Prometheus/Redpanda data directories
+grafana-data/
+prometheus-data/
+redpanda-data/
+nul
+*schema-payload.json*

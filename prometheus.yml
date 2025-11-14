@@ -1,0 +1,41 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'biopro-event-governance'
+
+scrape_configs:
+  # BioPro Orders Service
+  - job_name: 'biopro-orders'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['orders-service:8080']
+        labels:
+          service: 'orders'
+          module: 'orders'
+          environment: 'local'
+
+  # BioPro Collections Service
+  - job_name: 'biopro-collections'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['collections-service:8081']
+        labels:
+          service: 'collections'
+          module: 'collections'
+          environment: 'local'
+
+  # BioPro Manufacturing Service
+  - job_name: 'biopro-manufacturing'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['manufacturing-service:8082']
+        labels:
+          service: 'manufacturing'
+          module: 'manufacturing'
+          environment: 'local'
+
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
