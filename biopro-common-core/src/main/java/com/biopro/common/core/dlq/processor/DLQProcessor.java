@@ -1,6 +1,7 @@
 package com.biopro.common.core.dlq.processor;
 
 import com.biopro.common.core.dlq.model.DLQEvent;
+import com.biopro.common.monitoring.metrics.DlqMetricsCollector;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.retry.Retry;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +23,17 @@ public class DLQProcessor {
     private final KafkaTemplate<String, Object> dlqKafkaTemplate;
     private final CircuitBreaker circuitBreaker;
     private final Retry retry;
+    private final DlqMetricsCollector metricsCollector;
 
     public DLQProcessor(
             @Qualifier("dlqKafkaTemplate") KafkaTemplate<String, Object> dlqKafkaTemplate,
             CircuitBreaker circuitBreaker,
-            Retry retry) {
+            Retry retry,
+            DlqMetricsCollector metricsCollector) {
         this.dlqKafkaTemplate = dlqKafkaTemplate;
         this.circuitBreaker = circuitBreaker;
         this.retry = retry;
+        this.metricsCollector = metricsCollector;
     }
 
     /**
@@ -59,6 +63,9 @@ public class DLQProcessor {
 
             log.warn("Routing event to DLQ. EventId: {}, Module: {}, EventType: {}, RetryCount: {}, Error: {}",
                     originalEventId, module, eventType, retryCount, exception.getMessage());
+
+            // Record DLQ metrics
+            metricsCollector.recordDlqEvent(module, eventType, dlqEvent.getErrorType().name());
 
             // Send to DLQ with circuit breaker and retry
             String result = executeWithResilience(() -> {

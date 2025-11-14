@@ -46,7 +46,16 @@
       "Bash(git init:*)",
       "Bash(git config:*)",
       "Bash(git add:*)",
-      "Bash(.gitignore)"
+      "Bash(.gitignore)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(docker-compose stop:*)",
+      "Bash(for subject in biopro.manufacturing.events-value biopro.collections.events-value biopro.orders.events-value)",
+      "Bash(do curl -X DELETE \"http://localhost:8081/subjects/$subject\")",
+      "Bash(done)",
+      "Bash(python generate_demo_events.py:*)"
     ],
     "deny": [],
     "ask": []

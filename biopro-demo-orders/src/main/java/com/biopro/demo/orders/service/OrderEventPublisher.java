@@ -71,11 +71,8 @@ public class OrderEventPublisher {
 
             metricsCollector.recordSchemaValidation("orders", true);
 
-            // Convert Map to GenericRecord for Avro serialization
-            GenericRecord avroRecord = convertToGenericRecord(event);
-
-            // Publish to Kafka
-            kafkaTemplate.send(ORDERS_TOPIC, eventId, avroRecord)
+            // Send as JSON
+            kafkaTemplate.send(ORDERS_TOPIC, eventId, event)
                     .whenComplete((result, ex) -> {
                         if (ex != null) {
                             log.error("Failed to publish order event: {}", eventId, ex);
