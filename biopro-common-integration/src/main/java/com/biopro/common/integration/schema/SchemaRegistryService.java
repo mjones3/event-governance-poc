@@ -28,7 +28,7 @@ public class SchemaRegistryService {
 
     // In-memory Caffeine cache for frequently accessed schemas
     private final Cache<String, Schema> schemaCache = Caffeine.newBuilder()
-            .expireAfterWrite(30, TimeUnit.MINUTES)
+            .expireAfterWrite(1, TimeUnit.MINUTES)  // TESTING: Set to 1 minute for testing
             .maximumSize(1000)
             .recordStats()
             .build();

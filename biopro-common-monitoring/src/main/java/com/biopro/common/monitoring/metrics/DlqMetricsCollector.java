@@ -84,4 +84,21 @@ public class DlqMetricsCollector {
                 .register(meterRegistry)
                 .increment();
     }
+
+    /**
+     * Records event published with specific schema version
+     * This enables tracking schema evolution (v1.0 vs v2.0 usage)
+     */
+    public void recordEventSchemaVersion(String module, String eventType, String schemaVersion) {
+        Counter.builder("biopro.event.schema.version")
+                .tag("module", module)
+                .tag("eventType", eventType)
+                .tag("version", schemaVersion)
+                .description("Events published by schema version")
+                .register(meterRegistry)
+                .increment();
+
+        log.debug("Recorded schema version metric: module={}, type={}, version={}",
+                module, eventType, schemaVersion);
+    }
 }

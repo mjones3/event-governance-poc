@@ -75,6 +75,10 @@ public class OrderEventPublisher {
 
             metricsCollector.recordSchemaValidation("orders", true);
 
+            // Track schema version usage for evolution monitoring
+            String schemaVersion = (String) event.get("eventVersion");
+            metricsCollector.recordEventSchemaVersion("orders", "OrderCreatedEvent", schemaVersion);
+
             // Convert to GenericRecord for Avro serialization
             // This embeds the schema ID in the message automatically
             GenericRecord avroRecord = convertToGenericRecord(event);
@@ -139,7 +143,12 @@ public class OrderEventPublisher {
         event.put("eventId", eventId);
         event.put("occurredOn", currentTime);
         event.put("eventType", "OrderCreated");
-        event.put("eventVersion", "1.0");
+
+        // Determine schema version based on whether v2 fields are present
+        boolean isV2 = request.getOrderSource() != null ||
+                       request.getRequestedDeliveryDate() != null ||
+                       request.getEmergencyContact() != null;
+        event.put("eventVersion", isV2 ? "2.0" : "1.0");
 
         // Build payload - send data EXACTLY as received, no defaults!
         Map<String, Object> payload = new HashMap<>();
@@ -173,6 +182,21 @@ public class OrderEventPublisher {
         } else {
             // Send empty array if data missing - validation will catch this
             payload.put("orderItems", new ArrayList<>());
+        }
+
+        // v2.0 fields (optional) - only include if present
+        if (request.getOrderSource() != null) {
+            payload.put("orderSource", request.getOrderSource());
+        }
+        if (request.getRequestedDeliveryDate() != null) {
+            payload.put("requestedDeliveryDate", request.getRequestedDeliveryDate());
+        }
+        if (request.getEmergencyContact() != null) {
+            Map<String, Object> emergencyContact = new HashMap<>();
+            emergencyContact.put("name", request.getEmergencyContact().getName());
+            emergencyContact.put("phone", request.getEmergencyContact().getPhone());
+            emergencyContact.put("relationship", request.getEmergencyContact().getRelationship());
+            payload.put("emergencyContact", emergencyContact);
         }
 
         event.put("payload", payload);
@@ -252,6 +276,31 @@ public class OrderEventPublisher {
 
             payload.put("orderItems", orderItemRecords);
 
+            // v2.0 fields (optional) - only populate if schema has these fields
+            // This allows backward compatibility with v1.0 schema
+            if (payloadSchema.getField("orderSource") != null) {
+                payload.put("orderSource", payloadData.get("orderSource"));
+            }
+            if (payloadSchema.getField("requestedDeliveryDate") != null) {
+                payload.put("requestedDeliveryDate", payloadData.get("requestedDeliveryDate"));
+            }
+            if (payloadSchema.getField("emergencyContact") != null && payloadData.get("emergencyContact") != null) {
+                Map<String, Object> emergencyContactData = (Map<String, Object>) payloadData.get("emergencyContact");
+                Schema emergencyContactSchema = payloadSchema.getField("emergencyContact").schema();
+                Schema unwrappedSchema = emergencyContactSchema.getType() == Schema.Type.UNION
+                    ? emergencyContactSchema.getTypes().stream()
+                        .filter(s -> s.getType() == Schema.Type.RECORD)
+                        .findFirst()
+                        .orElse(emergencyContactSchema)
+                    : emergencyContactSchema;
+
+                GenericRecord emergencyContact = new GenericData.Record(unwrappedSchema);
+                emergencyContact.put("name", emergencyContactData.get("name"));
+                emergencyContact.put("phone", emergencyContactData.get("phone"));
+                emergencyContact.put("relationship", emergencyContactData.get("relationship"));
+                payload.put("emergencyContact", emergencyContact);
+            }
+
             record.put("payload", payload);
 
             return record;
@@ -272,5 +321,20 @@ public class OrderEventPublisher {
         private String facilityId;
         private String requestedBy;
         private String orderStatus;
+
+        // v2.0 fields (optional - backward compatible)
+        private String orderSource;  // WEB, MOBILE, API, INTERNAL
+        private Long requestedDeliveryDate;  // timestamp millis
+        private EmergencyContact emergencyContact;
+    }
+
+    @lombok.Data
+    @lombok.Builder
+    @lombok.NoArgsConstructor
+    @lombok.AllArgsConstructor
+    public static class EmergencyContact {
+        private String name;
+        private String phone;
+        private String relationship;  // SPOUSE, PARENT, SIBLING, FRIEND, etc.
     }
 }

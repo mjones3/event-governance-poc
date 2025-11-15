@@ -32,6 +32,10 @@ public class OrderController {
                             .facilityId(request.getFacilityId())
                             .requestedBy(request.getRequestedBy())
                             .orderStatus(request.getOrderStatus())
+                            // v2.0 fields (optional)
+                            .orderSource(request.getOrderSource())
+                            .requestedDeliveryDate(request.getRequestedDeliveryDate())
+                            .emergencyContact(request.getEmergencyContact())
                             .build();
 
             eventPublisher.publishOrderCreated(eventRequest);
@@ -61,6 +65,11 @@ public class OrderController {
         private String facilityId;
         private String requestedBy;
         private String orderStatus;
+
+        // v2.0 fields (optional - backward compatible)
+        private String orderSource;
+        private Long requestedDeliveryDate;
+        private OrderEventPublisher.EmergencyContact emergencyContact;
     }
 
     @lombok.Data
