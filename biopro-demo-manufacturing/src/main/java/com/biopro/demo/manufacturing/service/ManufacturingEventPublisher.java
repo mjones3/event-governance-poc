@@ -66,8 +66,12 @@ public class ManufacturingEventPublisher {
 
             metricsCollector.recordSchemaValidation("manufacturing", true);
 
-            // Send as JSON
-            kafkaTemplate.send(MANUFACTURING_TOPIC, eventId, event)
+            // Convert to GenericRecord for Avro serialization
+            // This embeds the schema ID in the message automatically
+            GenericRecord avroRecord = convertToGenericRecord(event);
+
+            // Send as Avro (schema ID automatically embedded by KafkaAvroSerializer)
+            kafkaTemplate.send(MANUFACTURING_TOPIC, eventId, avroRecord)
                     .whenComplete((sendResult, ex) -> {
                         if (ex != null) {
                             log.error("Failed to publish manufacturing event: {}", eventId, ex);

@@ -75,8 +75,12 @@ public class OrderEventPublisher {
 
             metricsCollector.recordSchemaValidation("orders", true);
 
-            // Send as JSON
-            kafkaTemplate.send(ORDERS_TOPIC, eventId, event)
+            // Convert to GenericRecord for Avro serialization
+            // This embeds the schema ID in the message automatically
+            GenericRecord avroRecord = convertToGenericRecord(event);
+
+            // Send as Avro (schema ID automatically embedded by KafkaAvroSerializer)
+            kafkaTemplate.send(ORDERS_TOPIC, eventId, avroRecord)
                     .whenComplete((result, ex) -> {
                         if (ex != null) {
                             log.error("Failed to publish order event: {}", eventId, ex);
@@ -151,8 +155,10 @@ public class OrderEventPublisher {
         payload.put("orderStatus", request.getOrderStatus());
         payload.put("locationCode", request.getFacilityId());
         payload.put("createDate", currentTime);
+        payload.put("createDateTimeZone", "UTC");  // Required by schema
         payload.put("createEmployeeCode", request.getRequestedBy());
         payload.put("priority", request.getPriority());
+        payload.put("willPickUp", false);  // Required boolean with default false
         payload.put("transactionId", correlationId);
 
         // Build order items only if blood type and quantity provided

@@ -127,9 +127,34 @@ public class SchemaRegistryService {
                 } else {
                     record.put(field.name(), value);
                 }
-            } else if (value instanceof java.util.List && field.schema().getType() == Schema.Type.ARRAY) {
-                // Array field
-                record.put(field.name(), value);
+            } else if (value instanceof java.util.List) {
+                // Array field - need to handle arrays of records
+                Schema fieldSchema = unwrapUnion(field.schema());
+                if (fieldSchema.getType() == Schema.Type.ARRAY) {
+                    Schema elementSchema = fieldSchema.getElementType();
+                    if (elementSchema.getType() == Schema.Type.RECORD) {
+                        // Array of records - convert each Map to GenericRecord
+                        java.util.List<Object> sourceList = (java.util.List<Object>) value;
+                        java.util.List<org.apache.avro.generic.GenericData.Record> recordList = new java.util.ArrayList<>();
+                        for (Object item : sourceList) {
+                            if (item instanceof Map) {
+                                org.apache.avro.generic.GenericData.Record itemRecord =
+                                    new org.apache.avro.generic.GenericData.Record(elementSchema);
+                                populateRecord(itemRecord, (Map<String, Object>) item, elementSchema);
+                                recordList.add(itemRecord);
+                            } else {
+                                // Item is already a GenericRecord or primitive
+                                recordList.add((org.apache.avro.generic.GenericData.Record) item);
+                            }
+                        }
+                        record.put(field.name(), recordList);
+                    } else {
+                        // Array of primitives
+                        record.put(field.name(), value);
+                    }
+                } else {
+                    record.put(field.name(), value);
+                }
             } else {
                 // Primitive or other type - Avro will validate
                 record.put(field.name(), value);

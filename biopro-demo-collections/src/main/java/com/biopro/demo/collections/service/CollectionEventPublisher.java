@@ -68,8 +68,12 @@ public class CollectionEventPublisher {
 
             metricsCollector.recordSchemaValidation("collections", true);
 
-            // Send as JSON
-            kafkaTemplate.send(COLLECTIONS_TOPIC, eventId, event)
+            // Convert to GenericRecord for Avro serialization
+            // This embeds the schema ID in the message automatically
+            GenericRecord avroRecord = convertToGenericRecord(event);
+
+            // Send as Avro (schema ID automatically embedded by KafkaAvroSerializer)
+            kafkaTemplate.send(COLLECTIONS_TOPIC, eventId, avroRecord)
                     .whenComplete((sendResult, ex) -> {
                         if (ex != null) {
                             log.error("Failed to publish collection event: {}", eventId, ex);
