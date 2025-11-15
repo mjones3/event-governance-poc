@@ -3,6 +3,7 @@ package com.biopro.demo.manufacturing.service;
 import com.biopro.common.core.dlq.processor.DLQProcessor;
 import com.biopro.common.integration.schema.SchemaRegistryService;
 import com.biopro.common.monitoring.metrics.DlqMetricsCollector;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +30,18 @@ public class ManufacturingEventPublisher {
     private final SchemaRegistryClient schemaRegistryClient;
     private final DLQProcessor dlqProcessor;
     private final DlqMetricsCollector metricsCollector;
+    private final ObjectMapper objectMapper;
 
     private static final String MANUFACTURING_TOPIC = "biopro.manufacturing.events";
     private static final String MANUFACTURING_SUBJECT = "ApheresisPlasmaProductCreatedEvent";
 
     public void publishProductCreated(ProductCreatedRequest request) {
         String eventId = UUID.randomUUID().toString();
+        Map<String, Object> event = null;
 
         try {
-            Map<String, Object> event = buildProductEvent(eventId, request);
+            event = buildProductEvent(eventId, request);
+            String eventPayload = objectMapper.writeValueAsString(event);
 
             SchemaRegistryService.ValidationResult validation =
                     schemaRegistryService.validateEvent("ApheresisPlasmaProductCreatedEvent", event);
@@ -47,12 +51,13 @@ public class ManufacturingEventPublisher {
                         eventId, validation.getErrorMessage());
                 metricsCollector.recordSchemaValidation("manufacturing", false);
 
+                // Route to DLQ with full payload
                 dlqProcessor.routeToDLQ(
                         eventId,
                         "manufacturing",
                         "ApheresisPlasmaProductCreatedEvent",
                         MANUFACTURING_TOPIC,
-                        event.toString().getBytes(),
+                        eventPayload,
                         new RuntimeException("Schema validation failed: " + validation.getErrorMessage()),
                         0
                 );
@@ -66,12 +71,13 @@ public class ManufacturingEventPublisher {
                     .whenComplete((sendResult, ex) -> {
                         if (ex != null) {
                             log.error("Failed to publish manufacturing event: {}", eventId, ex);
+                            // Route to DLQ with full payload
                             dlqProcessor.routeToDLQ(
                                     eventId,
                                     "manufacturing",
                                     "ApheresisPlasmaProductCreatedEvent",
                                     MANUFACTURING_TOPIC,
-                                    event.toString().getBytes(),
+                                    eventPayload,
                                     (Exception) ex,
                                     1
                             );
@@ -85,12 +91,21 @@ public class ManufacturingEventPublisher {
             log.error("Error processing manufacturing event: {}", eventId, e);
             metricsCollector.recordDlqEvent("manufacturing", "ApheresisPlasmaProductCreatedEvent", "PROCESSING_ERROR");
 
+            // Route to DLQ with full payload if available
+            String payload = "";
+            if (event != null) {
+                try {
+                    payload = objectMapper.writeValueAsString(event);
+                } catch (Exception jsonEx) {
+                    payload = event.toString(); // Fallback to toString if JSON serialization fails
+                }
+            }
             dlqProcessor.routeToDLQ(
                     eventId,
                     "manufacturing",
                     "ApheresisPlasmaProductCreatedEvent",
                     MANUFACTURING_TOPIC,
-                    new byte[0],
+                    payload,
                     e,
                     0
             );
@@ -104,51 +119,38 @@ public class ManufacturingEventPublisher {
         // Event envelope matching ApheresisPlasmaProductCreatedEvent schema
         event.put("eventId", eventId);
         event.put("occurredOn", now);
-        event.put("occurredOnTimeZone", "UTC");
+        event.put("occurredOnTimeZone", request.getOccurredOnTimeZone());
         event.put("eventType", "ApheresisPlasmaProductCreated");
         event.put("eventVersion", "1.0");
 
-        // Build complete payload with all required fields
+        // Build payload - send data EXACTLY as received, no defaults!
+        // Schema validation will catch missing required fields
         Map<String, Object> payload = new HashMap<>();
         payload.put("unitNumber", request.getProductId());
         payload.put("productCode", request.getProductType());
-        payload.put("productDescription", "Apheresis Plasma Product");
-        payload.put("productFamily", "PLASMA");
-        payload.put("completionStage", "FINAL");
-
-        // Weight (optional)
-        Map<String, Object> weight = new HashMap<>();
-        weight.put("value", 250);
-        weight.put("unit", "GRAMS");
-        payload.put("weight", weight);
-
-        // Volume (optional)
-        Map<String, Object> volume = new HashMap<>();
-        volume.put("value", 500);
-        volume.put("unit", "MILLILITERS");
-        payload.put("volume", volume);
-
-        // Anticoagulant volume (optional)
-        payload.put("anticoagulantVolume", null);
-
-        // Required timing fields
-        payload.put("drawTime", now);
-        payload.put("drawTimeZone", "UTC");
-        payload.put("donationType", "ALLOGENEIC");
-        payload.put("procedureType", "APHERESIS_PLASMA");
-        payload.put("collectionLocation", "LAB-001");
-        payload.put("manufacturingLocation", "FAC-001");
-        payload.put("aboRh", "OP");
-        payload.put("performedBy", "EMP-001");
+        payload.put("productDescription", request.getProductDescription());
+        payload.put("productFamily", request.getProductFamily());
+        payload.put("completionStage", request.getCompletionStage());
+        payload.put("weight", request.getWeight());
+        payload.put("volume", request.getVolume());
+        payload.put("anticoagulantVolume", request.getAnticoagulantVolume());
+        payload.put("drawTime", request.getDrawTime() != null ? request.getDrawTime() : now);
+        payload.put("drawTimeZone", request.getDrawTimeZone());
+        payload.put("donationType", request.getDonationType());
+        payload.put("procedureType", request.getProcedureType());
+        payload.put("collectionLocation", request.getCollectionLocation());
+        payload.put("manufacturingLocation", request.getManufacturingLocation());
+        payload.put("aboRh", request.getAboRh());
+        payload.put("performedBy", request.getPerformedBy());
         payload.put("createDate", now);
-        payload.put("createDateTimeZone", "UTC");
-        payload.put("expirationDate", null);
-        payload.put("expirationTime", null);
-        payload.put("collectionTimeZone", "UTC");
-        payload.put("bagType", "TRIPLE");
-        payload.put("autoConverted", false);
-        payload.put("inputProducts", null);
-        payload.put("additionalSteps", null);
+        payload.put("createDateTimeZone", request.getCreateDateTimeZone());
+        payload.put("expirationDate", request.getExpirationDate());
+        payload.put("expirationTime", request.getExpirationTime());
+        payload.put("collectionTimeZone", request.getCollectionTimeZone());
+        payload.put("bagType", request.getBagType());
+        payload.put("autoConverted", request.getAutoConverted());
+        payload.put("inputProducts", request.getInputProducts());
+        payload.put("additionalSteps", request.getAdditionalSteps());
 
         event.put("payload", payload);
         return event;
@@ -247,5 +249,28 @@ public class ManufacturingEventPublisher {
         private String productId;
         private String productType;
         private String status;
+        private String occurredOnTimeZone;
+        private String productDescription;
+        private String productFamily;
+        private String completionStage;
+        private Object weight;
+        private Object volume;
+        private Object anticoagulantVolume;
+        private Long drawTime;
+        private String drawTimeZone;
+        private String donationType;
+        private String procedureType;
+        private String collectionLocation;
+        private String manufacturingLocation;
+        private String aboRh;
+        private String performedBy;
+        private String createDateTimeZone;
+        private Object expirationDate;
+        private Object expirationTime;
+        private String collectionTimeZone;
+        private String bagType;
+        private Boolean autoConverted;
+        private Object inputProducts;
+        private Object additionalSteps;
     }
 }

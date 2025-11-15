@@ -3,6 +3,7 @@ package com.biopro.demo.orders.service;
 import com.biopro.common.core.dlq.processor.DLQProcessor;
 import com.biopro.common.integration.schema.SchemaRegistryService;
 import com.biopro.common.monitoring.metrics.DlqMetricsCollector;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class OrderEventPublisher {
     private final SchemaRegistryClient schemaRegistryClient;
     private final DLQProcessor dlqProcessor;
     private final DlqMetricsCollector metricsCollector;
+    private final ObjectMapper objectMapper;
 
     private static final String ORDERS_TOPIC = "biopro.orders.events";
     private static final String ORDER_CREATED_SUBJECT = "OrderCreatedEvent";
@@ -42,10 +44,12 @@ public class OrderEventPublisher {
     public void publishOrderCreated(OrderCreatedRequest request) {
         String eventId = UUID.randomUUID().toString();
         String correlationId = UUID.randomUUID().toString();
+        Map<String, Object> event = null;
 
         try {
             // Build event payload
-            Map<String, Object> event = buildOrderEvent(eventId, correlationId, request);
+            event = buildOrderEvent(eventId, correlationId, request);
+            String eventPayload = objectMapper.writeValueAsString(event);
 
             // Validate against schema
             SchemaRegistryService.ValidationResult validation =
@@ -56,13 +60,13 @@ public class OrderEventPublisher {
                         eventId, validation.getErrorMessage());
                 metricsCollector.recordSchemaValidation("orders", false);
 
-                // Route to DLQ
+                // Route to DLQ with full payload
                 dlqProcessor.routeToDLQ(
                         eventId,
                         "orders",
                         "OrderCreatedEvent",
                         ORDERS_TOPIC,
-                        event.toString().getBytes(),
+                        eventPayload,
                         new RuntimeException("Schema validation failed: " + validation.getErrorMessage()),
                         0
                 );
@@ -77,13 +81,13 @@ public class OrderEventPublisher {
                         if (ex != null) {
                             log.error("Failed to publish order event: {}", eventId, ex);
 
-                            // Route to DLQ on failure
+                            // Route to DLQ on failure with full payload
                             dlqProcessor.routeToDLQ(
                                     eventId,
                                     "orders",
                                     "OrderCreatedEvent",
                                     ORDERS_TOPIC,
-                                    event.toString().getBytes(),
+                                    eventPayload,
                                     (Exception) ex,
                                     1
                             );
@@ -98,13 +102,21 @@ public class OrderEventPublisher {
             log.error("Error processing order event: {}", eventId, e);
             metricsCollector.recordDlqEvent("orders", "OrderCreatedEvent", "PROCESSING_ERROR");
 
-            // Route to DLQ
+            // Route to DLQ with full payload if available
+            String payload = "";
+            if (event != null) {
+                try {
+                    payload = objectMapper.writeValueAsString(event);
+                } catch (Exception jsonEx) {
+                    payload = event.toString(); // Fallback to toString if JSON serialization fails
+                }
+            }
             dlqProcessor.routeToDLQ(
                     eventId,
                     "orders",
                     "OrderCreatedEvent",
                     ORDERS_TOPIC,
-                    new byte[0],
+                    payload,
                     e,
                     0
             );
@@ -119,44 +131,44 @@ public class OrderEventPublisher {
         Map<String, Object> event = new HashMap<>();
         long currentTime = System.currentTimeMillis();
 
-        // Top-level event fields
+        // Top-level event fields (always required)
         event.put("eventId", eventId);
         event.put("occurredOn", currentTime);
         event.put("eventType", "OrderCreated");
         event.put("eventVersion", "1.0");
 
-        // Build payload object (nested structure required by schema)
+        // Build payload - send data EXACTLY as received, no defaults!
         Map<String, Object> payload = new HashMap<>();
 
-        // Generate order number from order ID or use timestamp
-        long orderNumber = request.getOrderId() != null ?
-            Math.abs(request.getOrderId().hashCode()) : currentTime;
+        // Only include fields that are actually provided
+        // Schema validation will catch missing required fields
+        if (request.getOrderId() != null) {
+            payload.put("orderNumber", Math.abs(request.getOrderId().hashCode()));
+            payload.put("externalId", request.getOrderId());
+        }
 
-        payload.put("orderNumber", orderNumber);
-        payload.put("externalId", request.getOrderId());
-        payload.put("orderStatus", "PENDING");
+        // Send values as-is - no defaults
+        payload.put("orderStatus", request.getOrderStatus());
         payload.put("locationCode", request.getFacilityId());
-        payload.put("locationName", null); // Not provided in request
         payload.put("createDate", currentTime);
-        payload.put("createDateTimeZone", "UTC");
         payload.put("createEmployeeCode", request.getRequestedBy());
-        payload.put("shipmentType", null); // Not provided in request
         payload.put("priority", request.getPriority());
-        payload.put("transactionId", correlationId); // Required by schema
+        payload.put("transactionId", correlationId);
 
-        // Build order items array - must match schema fields
-        List<Map<String, Object>> orderItems = new ArrayList<>();
-        Map<String, Object> orderItem = new HashMap<>();
-        orderItem.put("productFamily", "BLOOD_PRODUCTS");
-        orderItem.put("bloodType", request.getBloodType());
-        orderItem.put("quantity", request.getQuantity());
-        orderItem.put("comments", null);
-        orderItem.put("attributes", null);
-        orderItems.add(orderItem);
+        // Build order items only if blood type and quantity provided
+        if (request.getBloodType() != null && request.getQuantity() != null) {
+            List<Map<String, Object>> orderItems = new ArrayList<>();
+            Map<String, Object> orderItem = new HashMap<>();
+            orderItem.put("productFamily", "BLOOD_PRODUCTS");
+            orderItem.put("bloodType", request.getBloodType());
+            orderItem.put("quantity", request.getQuantity());
+            orderItems.add(orderItem);
+            payload.put("orderItems", orderItems);
+        } else {
+            // Send empty array if data missing - validation will catch this
+            payload.put("orderItems", new ArrayList<>());
+        }
 
-        payload.put("orderItems", orderItems);
-
-        // Put payload into event
         event.put("payload", payload);
 
         return event;
@@ -249,9 +261,10 @@ public class OrderEventPublisher {
     public static class OrderCreatedRequest {
         private String orderId;
         private String bloodType;
-        private int quantity;
+        private Integer quantity;
         private String priority;
         private String facilityId;
         private String requestedBy;
+        private String orderStatus;
     }
 }

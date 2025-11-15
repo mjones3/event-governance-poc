@@ -34,7 +34,8 @@ public class SchemaRegistryService {
             .build();
 
     /**
-     * Validates an event against its registered schema
+     * Validates an event against its registered schema using Avro's built-in validation.
+     * This catches ALL violations including nested structures, types, enums, etc.
      */
     public ValidationResult validateEvent(String subject, Object event) {
         try {
@@ -47,25 +48,44 @@ public class SchemaRegistryService {
                         .build();
             }
 
-            // Validate event structure against schema
+            // Validate by actually serializing to Avro
+            // This uses Avro's complete validation logic
             log.debug("Validating event against schema: {}", subject);
 
-            // For Map-based events, check required fields
             if (event instanceof Map) {
                 Map<String, Object> eventMap = (Map<String, Object>) event;
 
-                // Check all required fields from schema
-                for (Schema.Field field : schema.getFields()) {
-                    // Field is required if it has no default value
-                    if (field.defaultVal() == null) {
-                        // Check if field exists and is not null
-                        if (!eventMap.containsKey(field.name()) || eventMap.get(field.name()) == null) {
-                            return ValidationResult.builder()
-                                    .valid(false)
-                                    .errorMessage("Missing required field: " + field.name())
-                                    .build();
-                        }
-                    }
+                try {
+                    // Attempt to create GenericRecord from the data
+                    // This will throw AvroRuntimeException if validation fails
+                    org.apache.avro.generic.GenericData.Record record =
+                        new org.apache.avro.generic.GenericData.Record(schema);
+
+                    // Populate the record
+                    populateRecord(record, eventMap, schema);
+
+                    // CRITICAL: Actually serialize to trigger full Avro validation
+                    // Avro only validates on serialization, not on record creation!
+                    java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+                    org.apache.avro.io.DatumWriter<org.apache.avro.generic.GenericRecord> writer =
+                        new org.apache.avro.generic.GenericDatumWriter<>(schema);
+                    org.apache.avro.io.Encoder encoder = org.apache.avro.io.EncoderFactory.get().binaryEncoder(out, null);
+                    writer.write(record, encoder);
+                    encoder.flush();
+
+                    // If we got here, validation succeeded
+                    return ValidationResult.builder()
+                            .valid(true)
+                            .schemaId(schema.getName())
+                            .schemaVersion(getLatestVersion(subject))
+                            .build();
+
+                } catch (org.apache.avro.AvroRuntimeException | java.io.IOException e) {
+                    // Avro validation failed
+                    return ValidationResult.builder()
+                            .valid(false)
+                            .errorMessage("Schema validation failed: " + extractAvroError(e))
+                            .build();
                 }
             }
 
@@ -82,6 +102,64 @@ public class SchemaRegistryService {
                     .errorMessage("Validation error: " + e.getMessage())
                     .build();
         }
+    }
+
+    /**
+     * Recursively populates an Avro GenericRecord from a Map.
+     * Avro will validate all fields, types, and constraints.
+     */
+    private void populateRecord(org.apache.avro.generic.GenericData.Record record,
+                                Map<String, Object> data, Schema schema) {
+        for (Schema.Field field : schema.getFields()) {
+            Object value = data.get(field.name());
+
+            if (value == null) {
+                // Avro will validate if null is allowed for this field
+                record.put(field.name(), null);
+            } else if (value instanceof Map && field.schema().getType() == Schema.Type.RECORD) {
+                // Nested record - recurse
+                Schema fieldSchema = unwrapUnion(field.schema());
+                if (fieldSchema.getType() == Schema.Type.RECORD) {
+                    org.apache.avro.generic.GenericData.Record nestedRecord =
+                        new org.apache.avro.generic.GenericData.Record(fieldSchema);
+                    populateRecord(nestedRecord, (Map<String, Object>) value, fieldSchema);
+                    record.put(field.name(), nestedRecord);
+                } else {
+                    record.put(field.name(), value);
+                }
+            } else if (value instanceof java.util.List && field.schema().getType() == Schema.Type.ARRAY) {
+                // Array field
+                record.put(field.name(), value);
+            } else {
+                // Primitive or other type - Avro will validate
+                record.put(field.name(), value);
+            }
+        }
+    }
+
+    /**
+     * Unwraps union schemas to get the actual type
+     */
+    private Schema unwrapUnion(Schema schema) {
+        if (schema.getType() == Schema.Type.UNION) {
+            for (Schema unionType : schema.getTypes()) {
+                if (unionType.getType() != Schema.Type.NULL) {
+                    return unionType;
+                }
+            }
+        }
+        return schema;
+    }
+
+    /**
+     * Extracts a clean error message from Avro exceptions
+     */
+    private String extractAvroError(Exception e) {
+        String message = e.getMessage();
+        if (message == null && e.getCause() != null) {
+            message = e.getCause().getMessage();
+        }
+        return message != null ? message : "Unknown Avro validation error";
     }
 
     /**

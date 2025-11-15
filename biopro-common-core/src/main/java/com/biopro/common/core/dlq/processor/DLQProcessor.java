@@ -44,7 +44,7 @@ public class DLQProcessor {
             String module,
             String eventType,
             String originalTopic,
-            byte[] originalPayload,
+            String originalPayload,
             Exception exception,
             int retryCount) {
 
@@ -95,7 +95,7 @@ public class DLQProcessor {
             String module,
             String eventType,
             String originalTopic,
-            byte[] originalPayload,
+            String originalPayload,
             Exception exception,
             int retryCount) {
 

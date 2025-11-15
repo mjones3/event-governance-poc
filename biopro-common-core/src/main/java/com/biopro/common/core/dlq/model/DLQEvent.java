@@ -40,9 +40,9 @@ public class DLQEvent {
     private String originalTopic;
 
     /**
-     * Original event payload (serialized as JSON or Avro)
+     * Original event payload as plaintext JSON for human readability
      */
-    private byte[] originalPayload;
+    private String originalPayload;
 
     /**
      * Error category (e.g., SCHEMA_VALIDATION, PROCESSING_ERROR, BUSINESS_RULE_VIOLATION)

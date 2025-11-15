@@ -31,6 +31,7 @@ public class OrderController {
                             .priority(request.getPriority())
                             .facilityId(request.getFacilityId())
                             .requestedBy(request.getRequestedBy())
+                            .orderStatus(request.getOrderStatus())
                             .build();
 
             eventPublisher.publishOrderCreated(eventRequest);
@@ -55,10 +56,11 @@ public class OrderController {
     public static class OrderRequest {
         private String orderId;
         private String bloodType;
-        private int quantity;
+        private Integer quantity;
         private String priority;
         private String facilityId;
         private String requestedBy;
+        private String orderStatus;
     }
 
     @lombok.Data

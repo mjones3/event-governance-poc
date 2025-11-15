@@ -3,6 +3,7 @@ package com.biopro.demo.collections.service;
 import com.biopro.common.core.dlq.processor.DLQProcessor;
 import com.biopro.common.integration.schema.SchemaRegistryService;
 import com.biopro.common.monitoring.metrics.DlqMetricsCollector;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,15 +32,18 @@ public class CollectionEventPublisher {
     private final SchemaRegistryClient schemaRegistryClient;
     private final DLQProcessor dlqProcessor;
     private final DlqMetricsCollector metricsCollector;
+    private final ObjectMapper objectMapper;
 
     private static final String COLLECTIONS_TOPIC = "biopro.collections.events";
     private static final String COLLECTIONS_SUBJECT = "CollectionReceivedEvent";
 
     public void publishCollectionReceived(CollectionReceivedRequest request) {
         String eventId = UUID.randomUUID().toString();
+        Map<String, Object> event = null;
 
         try {
-            Map<String, Object> event = buildCollectionEvent(eventId, request);
+            event = buildCollectionEvent(eventId, request);
+            String eventPayload = objectMapper.writeValueAsString(event);
 
             SchemaRegistryService.ValidationResult validation =
                     schemaRegistryService.validateEvent("CollectionReceivedEvent", event);
@@ -49,12 +53,13 @@ public class CollectionEventPublisher {
                         eventId, validation.getErrorMessage());
                 metricsCollector.recordSchemaValidation("collections", false);
 
+                // Route to DLQ with full payload
                 dlqProcessor.routeToDLQ(
                         eventId,
                         "collections",
                         "CollectionReceivedEvent",
                         COLLECTIONS_TOPIC,
-                        event.toString().getBytes(),
+                        eventPayload,
                         new RuntimeException("Schema validation failed: " + validation.getErrorMessage()),
                         0
                 );
@@ -68,12 +73,13 @@ public class CollectionEventPublisher {
                     .whenComplete((sendResult, ex) -> {
                         if (ex != null) {
                             log.error("Failed to publish collection event: {}", eventId, ex);
+                            // Route to DLQ with full payload
                             dlqProcessor.routeToDLQ(
                                     eventId,
                                     "collections",
                                     "CollectionReceivedEvent",
                                     COLLECTIONS_TOPIC,
-                                    event.toString().getBytes(),
+                                    eventPayload,
                                     (Exception) ex,
                                     1
                             );
@@ -87,12 +93,21 @@ public class CollectionEventPublisher {
             log.error("Error processing collection event: {}", eventId, e);
             metricsCollector.recordDlqEvent("collections", "CollectionReceivedEvent", "PROCESSING_ERROR");
 
+            // Route to DLQ with full payload if available
+            String payload = "";
+            if (event != null) {
+                try {
+                    payload = objectMapper.writeValueAsString(event);
+                } catch (Exception jsonEx) {
+                    payload = event.toString(); // Fallback to toString if JSON serialization fails
+                }
+            }
             dlqProcessor.routeToDLQ(
                     eventId,
                     "collections",
                     "CollectionReceivedEvent",
                     COLLECTIONS_TOPIC,
-                    new byte[0],
+                    payload,
                     e,
                     0
             );
@@ -103,37 +118,32 @@ public class CollectionEventPublisher {
         Map<String, Object> event = new HashMap<>();
         long now = System.currentTimeMillis();
 
-        // Required fields matching CollectionReceivedEvent schema
+        // Send data EXACTLY as received - no defaults!
+        // Schema validation will catch missing required fields
         event.put("unitNumber", request.getUnitNumber());
         event.put("status", request.getStatus());
-        event.put("bagType", request.getBagType() != null ? request.getBagType() : "TRIPLE");
+        event.put("bagType", request.getBagType());
         event.put("drawTime", now);
-        event.put("drawTimeZone", "UTC");
+        event.put("drawTimeZone", request.getDrawTimeZone());
         event.put("withdrawalTime", now);
-        event.put("withdrawalTimeZone", "UTC");
+        event.put("withdrawalTimeZone", request.getWithdrawalTimeZone());
         event.put("donationType", request.getDonationType());
-        event.put("procedureType", request.getProcedureType() != null ? request.getProcedureType() : "APHERESIS");
-        event.put("collectionLocation", request.getCollectionLocation() != null ? request.getCollectionLocation() : "LAB-001");
-        event.put("aboRh", request.getAboRh() != null ? request.getAboRh() : "OP");
+        event.put("procedureType", request.getProcedureType());
+        event.put("collectionLocation", request.getCollectionLocation());
+        event.put("aboRh", request.getAboRh());
 
-        // Optional fields
-        event.put("machineSerialNumber", null);
-        event.put("machineType", null);
-        event.put("donationProperties", null);
-        event.put("drawProperties", null);
+        // Optional fields - pass as-is
+        event.put("machineSerialNumber", request.getMachineSerialNumber());
+        event.put("machineType", request.getMachineType());
+        event.put("donationProperties", request.getDonationProperties());
+        event.put("drawProperties", request.getDrawProperties());
 
-        // Required volumes array with sample plasma volume
-        Map<String, Object> plasmaVolume = new HashMap<>();
-        plasmaVolume.put("type", "PLASMA");
-        plasmaVolume.put("amount", 600);
-        plasmaVolume.put("excludeInCalculation", false);
-
-        Map<String, Object> anticoagVolume = new HashMap<>();
-        anticoagVolume.put("type", "ANTICOAGULANT");
-        anticoagVolume.put("amount", 100);
-        anticoagVolume.put("excludeInCalculation", false);
-
-        event.put("volumes", java.util.List.of(plasmaVolume, anticoagVolume));
+        // Volumes - only create if provided, otherwise send empty or null
+        if (request.getVolumes() != null) {
+            event.put("volumes", request.getVolumes());
+        } else {
+            event.put("volumes", new ArrayList<>());
+        }
 
         return event;
     }
@@ -202,5 +212,12 @@ public class CollectionEventPublisher {
         private String procedureType;
         private String collectionLocation;
         private String aboRh;
+        private String drawTimeZone;
+        private String withdrawalTimeZone;
+        private String machineSerialNumber;
+        private String machineType;
+        private Object donationProperties;
+        private Object drawProperties;
+        private Object volumes;
     }
 }
