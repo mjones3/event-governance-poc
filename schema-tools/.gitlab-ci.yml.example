@@ -1,0 +1,94 @@
+# GitLab CI/CD Pipeline for Automatic Schema Registry Registration
+# Place this file in your service repository as .gitlab-ci.yml
+
+stages:
+  - validate
+  - register
+  - deploy
+
+variables:
+  SCHEMA_REGISTRY_URL: "http://schema-registry.biopro.com:8081"
+  SCHEMA_DIR: "schemas"
+  PYTHON_VERSION: "3.9"
+
+#########################################
+# Stage 1: Validate Avro Schemas
+#########################################
+validate-schemas:
+  stage: validate
+  image: python:${PYTHON_VERSION}
+  before_script:
+    - pip install avro-python3
+  script:
+    - echo "Validating Avro schemas in ${SCHEMA_DIR}/"
+    - python3 scripts/validate-schemas.py ${SCHEMA_DIR}
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+  tags:
+    - docker
+
+#########################################
+# Stage 2: Register Schemas to Schema Registry
+#########################################
+register-schemas:
+  stage: register
+  image: curlimages/curl:latest
+  script:
+    - echo "Registering schemas to ${SCHEMA_REGISTRY_URL}"
+    - chmod +x scripts/register-schemas.sh
+    - ./scripts/register-schemas.sh ${SCHEMA_DIR} ${SCHEMA_REGISTRY_URL}
+  only:
+    refs:
+      - main
+      - develop
+    changes:
+      - schemas/**/*.avsc
+  tags:
+    - docker
+  artifacts:
+    reports:
+      dotenv: schema-registration.env
+    paths:
+      - schema-registration.log
+    expire_in: 30 days
+
+#########################################
+# Stage 3: Deploy Service (if schemas registered successfully)
+#########################################
+deploy-service:
+  stage: deploy
+  image: maven:3.8-openjdk-17
+  before_script:
+    - echo "Deploying service after schema registration"
+  script:
+    - mvn clean package -DskipTests
+    - echo "Deploy to environment..."
+    # Add your deployment commands here
+  only:
+    refs:
+      - main
+  dependencies:
+    - register-schemas
+  tags:
+    - docker
+
+#########################################
+# Schema Evolution Check (runs on MR)
+#########################################
+check-schema-compatibility:
+  stage: validate
+  image: python:${PYTHON_VERSION}
+  before_script:
+    - pip install requests
+  script:
+    - echo "Checking schema compatibility with Schema Registry"
+    - python3 scripts/check-compatibility.py ${SCHEMA_DIR} ${SCHEMA_REGISTRY_URL}
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - schemas/**/*.avsc
+  allow_failure: false  # Block MR if schemas are not compatible
+  tags:
+    - docker
