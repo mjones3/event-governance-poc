@@ -204,6 +204,23 @@ services:
       timeout: 10s
       retries: 3
 
+
+  # Schema Registry UI - Web UI for browsing schemas  
+  schema-registry-ui:
+    image: landoop/schema-registry-ui:latest
+    container_name: biopro-schema-registry-ui
+    depends_on:
+      schema-registry:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      SCHEMAREGISTRY_URL: http://schema-registry:8081
+      PROXY: "true"
+    networks:
+      - biopro-network
+    restart: unless-stopped
+
 networks:
   biopro-network:
     driver: bridge

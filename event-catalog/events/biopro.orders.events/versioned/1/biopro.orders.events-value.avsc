@@ -1,0 +1,289 @@
+{
+  "type": "record",
+  "name": "OrderCreatedEvent",
+  "namespace": "com.biopro.events.orders",
+  "doc": "Event published when a blood product order is created",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "OrderCreated"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "payload",
+      "type": {
+        "type": "record",
+        "name": "OrderCreatedPayload",
+        "fields": [
+          {
+            "name": "orderNumber",
+            "type": "long",
+            "doc": "Unique order number"
+          },
+          {
+            "name": "externalId",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "External system order ID",
+            "default": null
+          },
+          {
+            "name": "orderStatus",
+            "type": "string",
+            "doc": "Current status of the order"
+          },
+          {
+            "name": "locationCode",
+            "type": "string",
+            "doc": "Location code where order originated"
+          },
+          {
+            "name": "locationName",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Location name",
+            "default": null
+          },
+          {
+            "name": "createDate",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            },
+            "doc": "Date/time when order was created"
+          },
+          {
+            "name": "createDateTimeZone",
+            "type": "string",
+            "doc": "Timezone for createDate",
+            "default": "UTC"
+          },
+          {
+            "name": "createEmployeeCode",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Employee code who created the order",
+            "default": null
+          },
+          {
+            "name": "shipmentType",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Type of shipment",
+            "default": null
+          },
+          {
+            "name": "priority",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Order priority (ROUTINE, URGENT, LIFE_THREATENING)",
+            "default": null
+          },
+          {
+            "name": "shippingMethod",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Method of shipping",
+            "default": null
+          },
+          {
+            "name": "productCategory",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Category of products ordered",
+            "default": null
+          },
+          {
+            "name": "desiredShippingDate",
+            "type": [
+              "null",
+              {
+                "type": "int",
+                "logicalType": "date"
+              }
+            ],
+            "doc": "Desired shipping date",
+            "default": null
+          },
+          {
+            "name": "shippingCustomerCode",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Shipping customer code",
+            "default": null
+          },
+          {
+            "name": "shippingCustomerName",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Shipping customer name",
+            "default": null
+          },
+          {
+            "name": "billingCustomerCode",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Billing customer code",
+            "default": null
+          },
+          {
+            "name": "comments",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Order comments",
+            "default": null
+          },
+          {
+            "name": "willPickUp",
+            "type": "boolean",
+            "doc": "Whether customer will pick up the order",
+            "default": false
+          },
+          {
+            "name": "willPickUpPhoneNumber",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Phone number for pickup coordination",
+            "default": null
+          },
+          {
+            "name": "transactionId",
+            "type": {
+              "type": "string",
+              "logicalType": "uuid"
+            },
+            "doc": "Transaction ID for idempotency"
+          },
+          {
+            "name": "quarantinedProducts",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "doc": "Whether order includes quarantined products",
+            "default": null
+          },
+          {
+            "name": "labelStatus",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Status of order labels",
+            "default": null
+          },
+          {
+            "name": "version",
+            "type": [
+              "null",
+              "int"
+            ],
+            "doc": "Order version for optimistic locking",
+            "default": null
+          },
+          {
+            "name": "orderItems",
+            "type": {
+              "type": "array",
+              "items": {
+                "type": "record",
+                "name": "OrderItemCreated",
+                "fields": [
+                  {
+                    "name": "productFamily",
+                    "type": "string",
+                    "doc": "Product family code"
+                  },
+                  {
+                    "name": "bloodType",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "doc": "Required blood type (e.g., A_POSITIVE, O_NEGATIVE)",
+                    "default": null
+                  },
+                  {
+                    "name": "quantity",
+                    "type": "int",
+                    "doc": "Quantity ordered"
+                  },
+                  {
+                    "name": "comments",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "doc": "Item-specific comments",
+                    "default": null
+                  },
+                  {
+                    "name": "attributes",
+                    "type": [
+                      "null",
+                      {
+                        "type": "map",
+                        "values": "string"
+                      }
+                    ],
+                    "doc": "Additional item attributes",
+                    "default": null
+                  }
+                ]
+              }
+            },
+            "doc": "List of items in the order"
+          }
+        ]
+      },
+      "doc": "Order created event payload"
+    }
+  ]
+}
