@@ -1,0 +1,35 @@
+---
+id: collections-service
+name: collections-service
+version: 1.0.0
+summary: collections-service - BioPro Event Producer
+owners:
+    - BioPro Platform Team
+---
+
+# collections-service
+
+BioPro microservice that publishes events to Kafka.
+
+## Published Events
+
+- **CollectionReceived** (v1)
+
+## Domain
+
+**Collections**
+
+## Infrastructure
+
+- **Kafka Broker**: Redpanda
+- **Schema Registry**: Confluent Schema Registry
+- **Serialization**: Avro with schema validation
+- **DLQ**: Dead Letter Queue for failed messages
+
+## Metrics
+
+- Schema validation success/failure rates
+- Event publish success/failure rates
+- DLQ routing metrics
+
+<NodeGraph />

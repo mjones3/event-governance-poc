@@ -1,0 +1,31 @@
+---
+id: Manufacturing
+name: Manufacturing
+version: 1.0.0
+summary: Manufacturing Domain - BioPro Event Governance
+owners:
+    - BioPro Platform Team
+---
+
+# Manufacturing Domain
+
+Domain containing events and services related to manufacturing operations in the BioPro system.
+
+## Events
+
+- **ApheresisPlasmaProductCreated** (v1)
+
+## Services
+
+- manufacturing-service
+
+## Event Governance
+
+All events in this domain:
+- Are validated against registered Avro schemas
+- Use Confluent Schema Registry for schema management
+- Support schema evolution with compatibility checks
+- Include DLQ routing for validation failures
+- Publish metrics for monitoring
+
+<NodeGraph />

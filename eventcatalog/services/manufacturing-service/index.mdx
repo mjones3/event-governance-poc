@@ -1,0 +1,35 @@
+---
+id: manufacturing-service
+name: manufacturing-service
+version: 1.0.0
+summary: manufacturing-service - BioPro Event Producer
+owners:
+    - BioPro Platform Team
+---
+
+# manufacturing-service
+
+BioPro microservice that publishes events to Kafka.
+
+## Published Events
+
+- **ApheresisPlasmaProductCreated** (v1)
+
+## Domain
+
+**Manufacturing**
+
+## Infrastructure
+
+- **Kafka Broker**: Redpanda
+- **Schema Registry**: Confluent Schema Registry
+- **Serialization**: Avro with schema validation
+- **DLQ**: Dead Letter Queue for failed messages
+
+## Metrics
+
+- Schema validation success/failure rates
+- Event publish success/failure rates
+- DLQ routing metrics
+
+<NodeGraph />

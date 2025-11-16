@@ -1,0 +1,11 @@
+{
+  "name": "eventcatalog-plugin-schema-registry",
+  "version": "1.0.0",
+  "description": "EventCatalog generator plugin for Confluent Schema Registry",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "avsc": "^5.7.7"
+  }
+}

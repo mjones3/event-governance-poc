@@ -1,0 +1,35 @@
+---
+id: orders-service
+name: orders-service
+version: 1.0.0
+summary: orders-service - BioPro Event Producer
+owners:
+    - BioPro Platform Team
+---
+
+# orders-service
+
+BioPro microservice that publishes events to Kafka.
+
+## Published Events
+
+- **OrderCreated** (v2)
+
+## Domain
+
+**Orders**
+
+## Infrastructure
+
+- **Kafka Broker**: Redpanda
+- **Schema Registry**: Confluent Schema Registry
+- **Serialization**: Avro with schema validation
+- **DLQ**: Dead Letter Queue for failed messages
+
+## Metrics
+
+- Schema validation success/failure rates
+- Event publish success/failure rates
+- DLQ routing metrics
+
+<NodeGraph />

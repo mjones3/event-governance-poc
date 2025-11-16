@@ -1,0 +1,31 @@
+---
+id: Collections
+name: Collections
+version: 1.0.0
+summary: Collections Domain - BioPro Event Governance
+owners:
+    - BioPro Platform Team
+---
+
+# Collections Domain
+
+Domain containing events and services related to collections operations in the BioPro system.
+
+## Events
+
+- **CollectionReceived** (v1)
+
+## Services
+
+- collections-service
+
+## Event Governance
+
+All events in this domain:
+- Are validated against registered Avro schemas
+- Use Confluent Schema Registry for schema management
+- Support schema evolution with compatibility checks
+- Include DLQ routing for validation failures
+- Publish metrics for monitoring
+
+<NodeGraph />

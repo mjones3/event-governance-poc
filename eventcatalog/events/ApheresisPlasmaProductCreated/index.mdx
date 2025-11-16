@@ -1,0 +1,458 @@
+---
+id: ApheresisPlasmaProductCreated
+name: ApheresisPlasmaProductCreated
+version: '1'
+summary: Event ApheresisPlasmaProductCreated - BioPro System
+owners:
+    - manufacturing-service
+---
+
+# ApheresisPlasmaProductCreated Event
+
+**Schema ID**: 3
+**Schema Version**: 1
+**Subject**: ApheresisPlasmaProductCreatedEvent
+**Domain**: Manufacturing
+
+## Description
+
+Event published when an apheresis plasma product is created
+
+## Schema
+
+```json
+{
+  "type": "record",
+  "name": "ApheresisPlasmaProductCreatedEvent",
+  "namespace": "com.biopro.events.manufacturing",
+  "doc": "Event published when an apheresis plasma product is created",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "ApheresisPlasmaProductCreated"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "payload",
+      "type": {
+        "type": "record",
+        "name": "ProductCreatedPayload",
+        "fields": [
+          {
+            "name": "unitNumber",
+            "type": "string",
+            "doc": "Unique unit identifier (e.g., W036202412345)"
+          },
+          {
+            "name": "productCode",
+            "type": "string",
+            "doc": "Product code (e.g., E086900)"
+          },
+          {
+            "name": "productDescription",
+            "type": "string",
+            "doc": "Human-readable product description"
+          },
+          {
+            "name": "productFamily",
+            "type": "string",
+            "doc": "Product family classification"
+          },
+          {
+            "name": "completionStage",
+            "type": {
+              "type": "enum",
+              "name": "ProductCompletionStage",
+              "symbols": [
+                "INTERMEDIATE",
+                "FINAL"
+              ]
+            },
+            "doc": "Whether this is an intermediate or final product"
+          },
+          {
+            "name": "weight",
+            "type": [
+              "null",
+              {
+                "type": "record",
+                "name": "Weight",
+                "fields": [
+                  {
+                    "name": "value",
+                    "type": "int",
+                    "doc": "Weight value"
+                  },
+                  {
+                    "name": "unit",
+                    "type": {
+                      "type": "enum",
+                      "name": "WeightUnit",
+                      "symbols": [
+                        "GRAMS",
+                        "KILOGRAMS"
+                      ]
+                    },
+                    "doc": "Unit of measurement",
+                    "default": "GRAMS"
+                  }
+                ]
+              }
+            ],
+            "doc": "Product weight",
+            "default": null
+          },
+          {
+            "name": "volume",
+            "type": [
+              "null",
+              {
+                "type": "record",
+                "name": "ProductVolume",
+                "fields": [
+                  {
+                    "name": "value",
+                    "type": "int",
+                    "doc": "Volume value"
+                  },
+                  {
+                    "name": "unit",
+                    "type": {
+                      "type": "enum",
+                      "name": "VolumeUnit",
+                      "symbols": [
+                        "MILLILITERS",
+                        "LITERS"
+                      ]
+                    },
+                    "doc": "Unit of measurement",
+                    "default": "MILLILITERS"
+                  }
+                ]
+              }
+            ],
+            "doc": "Product volume",
+            "default": null
+          },
+          {
+            "name": "anticoagulantVolume",
+            "type": [
+              "null",
+              "ProductVolume"
+            ],
+            "doc": "Volume of anticoagulant",
+            "default": null
+          },
+          {
+            "name": "drawTime",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            },
+            "doc": "Time when collection was drawn"
+          },
+          {
+            "name": "drawTimeZone",
+            "type": "string",
+            "doc": "Timezone for drawTime",
+            "default": "UTC"
+          },
+          {
+            "name": "donationType",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Type of donation",
+            "default": null
+          },
+          {
+            "name": "procedureType",
+            "type": "string",
+            "doc": "Procedure type (e.g., APHERESIS_PLASMA)"
+          },
+          {
+            "name": "collectionLocation",
+            "type": "string",
+            "doc": "Location where collection occurred"
+          },
+          {
+            "name": "manufacturingLocation",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Location where manufacturing occurred",
+            "default": null
+          },
+          {
+            "name": "aboRh",
+            "type": "string",
+            "doc": "ABO/Rh blood type (e.g., AP, AN, BP, BN)"
+          },
+          {
+            "name": "performedBy",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Operator/employee who performed the procedure",
+            "default": null
+          },
+          {
+            "name": "createDate",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            },
+            "doc": "Date/time when product was created"
+          },
+          {
+            "name": "createDateTimeZone",
+            "type": "string",
+            "doc": "Timezone for createDate",
+            "default": "UTC"
+          },
+          {
+            "name": "expirationDate",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Expiration date (YYYY-MM-DD format)",
+            "default": null
+          },
+          {
+            "name": "expirationTime",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Expiration time (HH:MM format)",
+            "default": null
+          },
+          {
+            "name": "collectionTimeZone",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Timezone for collection",
+            "default": null
+          },
+          {
+            "name": "bagType",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Type of bag used",
+            "default": null
+          },
+          {
+            "name": "autoConverted",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "doc": "Whether product was auto-converted",
+            "default": null
+          },
+          {
+            "name": "inputProducts",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "InputProduct",
+                  "fields": [
+                    {
+                      "name": "unitNumber",
+                      "type": "string",
+                      "doc": "Input unit number"
+                    },
+                    {
+                      "name": "productCode",
+                      "type": "string",
+                      "doc": "Input product code"
+                    },
+                    {
+                      "name": "completionStage",
+                      "type": "ProductCompletionStage",
+                      "doc": "Completion stage of input"
+                    }
+                  ]
+                }
+              }
+            ],
+            "doc": "List of input products used to create this product",
+            "default": null
+          },
+          {
+            "name": "additionalSteps",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "ProductStep",
+                  "fields": [
+                    {
+                      "name": "stepType",
+                      "type": "string",
+                      "doc": "Type of step performed"
+                    },
+                    {
+                      "name": "status",
+                      "type": "string",
+                      "doc": "Status of the step"
+                    },
+                    {
+                      "name": "lastUpdated",
+                      "type": {
+                        "type": "long",
+                        "logicalType": "timestamp-millis"
+                      },
+                      "doc": "When step was last updated"
+                    },
+                    {
+                      "name": "lastUpdatedTimeZone",
+                      "type": "string",
+                      "doc": "Timezone for lastUpdated",
+                      "default": "UTC"
+                    }
+                  ]
+                }
+              }
+            ],
+            "doc": "Additional manufacturing steps",
+            "default": null
+          }
+        ]
+      },
+      "doc": "Product created event payload"
+    }
+  ]
+}
+```
+
+## Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `string` | Yes | Unique identifier for this event |
+| `occurredOn` | `long` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | Yes | Timezone for occurredOn |
+| `eventType` | `string` | Yes | Type of event |
+| `eventVersion` | `string` | Yes | Version of the event schema |
+| `payload` | `ProductCreatedPayload` | Yes | Product created event payload |
+
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 3
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Producers
+
+- **Service**: manufacturing-service
+- **Topic**: `biopro.manufacturing.events`
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Example Payload
+
+```json
+{
+  "eventId": null,
+  "occurredOn": null,
+  "occurredOnTimeZone": "example-string",
+  "eventType": "example-string",
+  "eventVersion": "example-string",
+  "payload": {
+    "unitNumber": "example-string",
+    "productCode": "example-string",
+    "productDescription": "example-string",
+    "productFamily": "example-string",
+    "completionStage": null,
+    "weight": {
+      "value": 123,
+      "unit": null
+    },
+    "volume": {
+      "value": 123,
+      "unit": null
+    },
+    "anticoagulantVolume": "example",
+    "drawTime": null,
+    "drawTimeZone": "example-string",
+    "donationType": "example-string",
+    "procedureType": "example-string",
+    "collectionLocation": "example-string",
+    "manufacturingLocation": "example-string",
+    "aboRh": "example-string",
+    "performedBy": "example-string",
+    "createDate": null,
+    "createDateTimeZone": "example-string",
+    "expirationDate": "example-string",
+    "expirationTime": "example-string",
+    "collectionTimeZone": "example-string",
+    "bagType": "example-string",
+    "autoConverted": true,
+    "inputProducts": [
+      {
+        "unitNumber": "example-string",
+        "productCode": "example-string",
+        "completionStage": "example"
+      }
+    ],
+    "additionalSteps": [
+      {
+        "stepType": "example-string",
+        "status": "example-string",
+        "lastUpdated": null,
+        "lastUpdatedTimeZone": "example-string"
+      }
+    ]
+  }
+}
+```
+
+<NodeGraph />

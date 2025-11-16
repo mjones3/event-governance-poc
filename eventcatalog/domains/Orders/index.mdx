@@ -1,0 +1,31 @@
+---
+id: Orders
+name: Orders
+version: 1.0.0
+summary: Orders Domain - BioPro Event Governance
+owners:
+    - BioPro Platform Team
+---
+
+# Orders Domain
+
+Domain containing events and services related to orders operations in the BioPro system.
+
+## Events
+
+- **OrderCreated** (v2)
+
+## Services
+
+- orders-service
+
+## Event Governance
+
+All events in this domain:
+- Are validated against registered Avro schemas
+- Use Confluent Schema Registry for schema management
+- Support schema evolution with compatibility checks
+- Include DLQ routing for validation failures
+- Publish metrics for monitoring
+
+<NodeGraph />

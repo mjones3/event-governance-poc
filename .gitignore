@@ -65,3 +65,13 @@ prometheus-data/
 redpanda-data/
 nul
 *schema-payload.json*
+
+# Node/NPM
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# EventCatalog build artifacts
+eventcatalog/.eventcatalog-core/
+eventcatalog/dist/
+eventcatalog/.astro/
