@@ -1,0 +1,127 @@
+---
+id: apheresisplatelet-service
+version: '1.0.0'
+name: Apheresisplatelet Service
+summary: BioPro Manufacturing domain service
+badges:
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-manufacturing"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 12 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: ApheresisPlateletProductCompleted
+      version: '1.0'
+    - id: ApheresisPlateletProductCreated
+      version: '1.0'
+    - id: ApheresisPlateletProductUpdated
+      version: '1.0'
+    - id: ApheresisPlateletQCRequested
+      version: '1.0'
+    - id: ApheresisPlateletReadyForCAD
+      version: '1.0'
+    - id: ApheresisPlateletSampleCollected
+      version: '1.0'
+    - id: ApheresisPlateletVolumeCalculated
+      version: '1.0'
+    - id: ProductBottleCreated
+      version: '1.0'
+    - id: ProductUnsuitable
+      version: '1.0'
+    - id: QuarantineProduct
+      version: '1.0'
+    - id: QuarantineUnit
+      version: '1.0'
+    - id: RemoveQuarantine
+      version: '1.0'
+receives:
+    - id: ProductUnsuitable
+      version: '1.0'
+    - id: QuarantineRemoved
+      version: '1.0'
+    - id: DeviceCreated
+      version: '1.0'
+    - id: ProductStored
+      version: '1.0'
+    - id: DeviceUpdated
+      version: '1.0'
+    - id: CheckInUpdated
+      version: '1.0'
+    - id: TestResultPanelCompleted
+      version: '1.0'
+    - id: UnitUnsuitable
+      version: '1.0'
+    - id: ProductDiscarded
+      version: '1.0'
+    - id: ProductQuarantined
+      version: '1.0'
+    - id: CheckInCompleted
+      version: '1.0'
+    - id: ProductRecovered
+      version: '1.0'
+    - id: LabelApplied
+      version: '1.0'
+    - id: PqcTestTypeRequestCreated
+      version: '1.0'
+    - id: PqcTestCompleted
+      version: '1.0'
+---
+
+# Apheresisplatelet Service
+
+**Domain**: Manufacturing
+**Repository**: biopro-manufacturing
+
+## Overview
+
+The apheresisplatelet service is responsible for handling apheresisplatelet operations within the BioPro Manufacturing domain.
+
+## Events Published
+
+This service publishes 12 events:
+
+- **ApheresisPlateletProductCompleted**: ApheresisPlateletProductCompletedEvent
+- **ApheresisPlateletProductCreated**: ApheresisPlateletProductCreatedEvent
+- **ApheresisPlateletProductUpdated**: ApheresisPlateletProductUpdatedEvent
+- **ApheresisPlateletQCRequested**: ApheresisPlateletQCRequestedEvent
+- **ApheresisPlateletReadyForCAD**: ApheresisPlateletReadyForCADEvent
+- **ApheresisPlateletSampleCollected**: ApheresisPlateletSampleCollectedEvent
+- **ApheresisPlateletVolumeCalculated**: ApheresisPlateletVolumeCalculatedEvent
+- **ProductBottleCreated**: ProductBottleCreatedEvent
+- **ProductUnsuitable**: ProductUnsuitableEvent
+- **QuarantineProduct**: QuarantineProductEvent
+- **QuarantineUnit**: QuarantineUnitEvent
+- **RemoveQuarantine**: RemoveQuarantineEvent
+
+## Events Consumed
+
+This service consumes 15 events:
+
+- **ProductUnsuitable**: Consumed from upstream services
+- **QuarantineRemoved**: Consumed from upstream services
+- **DeviceCreated**: Consumed from upstream services
+- **ProductStored**: Consumed from upstream services
+- **DeviceUpdated**: Consumed from upstream services
+- **CheckInUpdated**: Consumed from upstream services
+- **TestResultPanelCompleted**: Consumed from upstream services
+- **UnitUnsuitable**: Consumed from upstream services
+- **ProductDiscarded**: Consumed from upstream services
+- **ProductQuarantined**: Consumed from upstream services
+- **CheckInCompleted**: Consumed from upstream services
+- **ProductRecovered**: Consumed from upstream services
+- **LabelApplied**: Consumed from upstream services
+- **PqcTestTypeRequestCreated**: Consumed from upstream services
+- **PqcTestCompleted**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

@@ -1,0 +1,50 @@
+---
+id: supply-service
+version: '1.0.0'
+name: Supply Service
+summary: BioPro Operations domain service
+badges:
+  - content: "Domain: Operations"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-operations"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 0 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    []
+receives:
+    []
+---
+
+# Supply Service
+
+**Domain**: Operations
+**Repository**: biopro-operations
+
+## Overview
+
+The supply service is responsible for handling supply operations within the BioPro Operations domain.
+
+## Events Published
+
+This service publishes 0 events:
+
+- None
+
+## Events Consumed
+
+This service consumes 1 events:
+
+- ****: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

@@ -1,19 +1,44 @@
 ---
 id: manufacturing-service
-name: manufacturing-service
+name: Manufacturing Service
 version: 1.0.0
-summary: manufacturing-service - BioPro Event Producer
+summary: Manages apheresis plasma product manufacturing lifecycle - creation, updates, and completion
 owners:
-    - BioPro Platform Team
+    - Manufacturing Team
+sends:
+    - id: ApheresisPlasmaProductCreated
+      version: '2.3'
+    - id: ApheresisPlasmaProductUpdated
+      version: '1.0'
+    - id: ApheresisPlasmaProductCompleted
+      version: '1.0'
+    - id: ApheresisPlasmaProductUnsuitable
+      version: '1'
+receives:
+    - id: CollectionReceived
+      version: '2.1'
+badges:
+  - content: "Java 17"
+    backgroundColor: "#007396"
+    textColor: white
+  - content: "Spring Boot 3.x"
+    backgroundColor: "#6db33f"
+    textColor: white
+  - content: "Production"
+    backgroundColor: "#22c55e"
+    textColor: white
 ---
 
-# manufacturing-service
+# Manufacturing Service
 
-BioPro microservice that publishes events to Kafka.
+BioPro microservice that manages the complete lifecycle of apheresis plasma products from creation through completion.
 
 ## Published Events
 
-- **ApheresisPlasmaProductCreated** (v1)
+- **ApheresisPlasmaProductCreated** (v2.3) - When new product is created
+- **ApheresisPlasmaProductUpdated** (v1.0) - When product information changes
+- **ApheresisPlasmaProductCompleted** (v1.0) - When manufacturing is completed
+- **ApheresisPlasmaProductUnsuitable** (v1) - When product fails quality checks
 
 ## Domain
 

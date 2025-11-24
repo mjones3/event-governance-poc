@@ -1,0 +1,166 @@
+---
+id: eventbridge-service
+version: '1.0.0'
+name: Eventbridge Service
+summary: BioPro Distribution domain service
+badges:
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-distribution"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 9 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: InventoryUpdatedOutbound
+      version: '1.0'
+    - id: OrderCancelledOutbound
+      version: '1.0'
+    - id: OrderCompletedOutbound
+      version: '1.0'
+    - id: OrderCreatedOutbound
+      version: '1.0'
+    - id: OrderModifiedOutbound
+      version: '1.0'
+    - id: OrderPackingStartedOutbound
+      version: '1.0'
+    - id: RecoveredPlasmaShipmentClosedOutbound
+      version: '1.0'
+    - id: RecruitmentAndEligibilityOutbound
+      version: '1.0'
+    - id: ShipmentCompletedOutbound
+      version: '1.0'
+receives:
+    - id: RecoveredPlasmaShipmentClosed
+      version: '1.0'
+    - id: ShipmentCompleted
+      version: '1.0'
+    - id: InventoryUpdatedOutbound
+      version: '1.0'
+    - id: OrderCancelledOutbound
+      version: '1.0'
+    - id: OrderCompletedOutbound
+      version: '1.0'
+    - id: OrderCreatedOutbound
+      version: '1.0'
+    - id: OrderModifiedOutbound
+      version: '1.0'
+    - id: OrderPackingStartedOutbound
+      version: '1.0'
+    - id: RecoveredPlasmaShipmentClosedOutbound
+      version: '1.0'
+    - id: RecruitmentAndEligibilityOutbound
+      version: '1.0'
+    - id: ShipmentCompletedOutbound
+      version: '1.0'
+    - id: BaseOrder
+      version: '1.0'
+    - id: OrderCreated
+      version: '1.0'
+    - id: OrderModifiedOutbound
+      version: '1.0'
+    - id: OrderCompletedOutbound
+      version: '1.0'
+    - id: OrderCreatedOutbound
+      version: '1.0'
+    - id: RecruitmentAndEligibility
+      version: '1.0'
+    - id: OrderPackingStartedOutbound
+      version: '1.0'
+    - id: InventoryUpdated
+      version: '1.0'
+    - id: RecruitmentAndEligibilityOutbound
+      version: '1.0'
+    - id: OrderModified
+      version: '1.0'
+    - id: OrderPackingStartedOutboundOutput
+      version: '1.0'
+    - id: OrderOutboundOutput
+      version: '1.0'
+    - id: ShipmentPackingStarted
+      version: '1.0'
+    - id: OrderCancelledOutbound
+      version: '1.0'
+    - id: ShipmentCompletedOutbound
+      version: '1.0'
+    - id: RecoveredPlasmaShipmentClosedOutbound
+      version: '1.0'
+    - id: OrderCompleted
+      version: '1.0'
+    - id: ShipmentCompletedOutboundOutput
+      version: '1.0'
+    - id: OrderCancelled
+      version: '1.0'
+    - id: InventoryUpdatedOutbound
+      version: '1.0'
+---
+
+# Eventbridge Service
+
+**Domain**: Distribution
+**Repository**: biopro-distribution
+
+## Overview
+
+The eventbridge service is responsible for handling eventbridge operations within the BioPro Distribution domain.
+
+## Events Published
+
+This service publishes 9 events:
+
+- **InventoryUpdatedOutbound**: InventoryUpdatedOutboundEvent
+- **OrderCancelledOutbound**: OrderCancelledOutboundEvent
+- **OrderCompletedOutbound**: OrderCompletedOutboundEvent
+- **OrderCreatedOutbound**: OrderCreatedOutboundEvent
+- **OrderModifiedOutbound**: OrderModifiedOutboundEvent
+- **OrderPackingStartedOutbound**: OrderPackingStartedOutboundEvent
+- **RecoveredPlasmaShipmentClosedOutbound**: RecoveredPlasmaShipmentClosedOutboundEvent
+- **RecruitmentAndEligibilityOutbound**: RecruitmentAndEligibilityOutboundEvent
+- **ShipmentCompletedOutbound**: ShipmentCompletedOutboundEvent
+
+## Events Consumed
+
+This service consumes 31 events:
+
+- **RecoveredPlasmaShipmentClosed**: Consumed from upstream services
+- **ShipmentCompleted**: Consumed from upstream services
+- **InventoryUpdatedOutbound**: Consumed from upstream services
+- **OrderCancelledOutbound**: Consumed from upstream services
+- **OrderCompletedOutbound**: Consumed from upstream services
+- **OrderCreatedOutbound**: Consumed from upstream services
+- **OrderModifiedOutbound**: Consumed from upstream services
+- **OrderPackingStartedOutbound**: Consumed from upstream services
+- **RecoveredPlasmaShipmentClosedOutbound**: Consumed from upstream services
+- **RecruitmentAndEligibilityOutbound**: Consumed from upstream services
+- **ShipmentCompletedOutbound**: Consumed from upstream services
+- **BaseOrder**: Consumed from upstream services
+- **OrderCreated**: Consumed from upstream services
+- **OrderModifiedOutbound**: Consumed from upstream services
+- **OrderCompletedOutbound**: Consumed from upstream services
+- **OrderCreatedOutbound**: Consumed from upstream services
+- **RecruitmentAndEligibility**: Consumed from upstream services
+- **OrderPackingStartedOutbound**: Consumed from upstream services
+- **InventoryUpdated**: Consumed from upstream services
+- **RecruitmentAndEligibilityOutbound**: Consumed from upstream services
+- **OrderModified**: Consumed from upstream services
+- **OrderPackingStartedOutboundOutput**: Consumed from upstream services
+- **OrderOutboundOutput**: Consumed from upstream services
+- **ShipmentPackingStarted**: Consumed from upstream services
+- **OrderCancelledOutbound**: Consumed from upstream services
+- **ShipmentCompletedOutbound**: Consumed from upstream services
+- **RecoveredPlasmaShipmentClosedOutbound**: Consumed from upstream services
+- **OrderCompleted**: Consumed from upstream services
+- **ShipmentCompletedOutboundOutput**: Consumed from upstream services
+- **OrderCancelled**: Consumed from upstream services
+- **InventoryUpdatedOutbound**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

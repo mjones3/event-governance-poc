@@ -1,0 +1,175 @@
+{
+  "type": "record",
+  "name": "ApheresisPlasmaProductCompletedEvent",
+  "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event",
+  "doc": "Event published when apheresisplasmaproductcompleted occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "default": "UTC",
+      "doc": "Timezone for occurredOn"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "default": "ApheresisPlasmaProductCompleted",
+      "doc": "Type of event"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Version of the event schema"
+    },
+    {
+      "name": "payload",
+      "type": {
+        "type": "record",
+        "name": "ProductCompletedPayload",
+        "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event.payload",
+        "doc": "Apheresis Plasma Product Completed Payload",
+        "fields": [
+          {
+            "name": "unitNumber",
+            "type": "string",
+            "doc": "Unit Number (example: W036202412345)"
+          },
+          {
+            "name": "productCode",
+            "type": "string",
+            "doc": "Product Code"
+          },
+          {
+            "name": "completionStage",
+            "type": {
+              "type": "enum",
+              "name": "ProductCompletionStage",
+              "symbols": [
+                "INTERMEDIATE",
+                "FINAL"
+              ],
+              "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event.payload.valueobject"
+            },
+            "doc": "Completion Stage"
+          },
+          {
+            "name": "completionDate",
+            "type": [
+              "null",
+              {
+                "type": "long",
+                "logicalType": "timestamp-millis"
+              }
+            ],
+            "doc": "Completion Date",
+            "default": null
+          },
+          {
+            "name": "additionalSteps",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": {
+                  "type": "record",
+                  "name": "Step",
+                  "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event.payload.valueobject",
+                  "fields": [
+                    {
+                      "name": "stepType",
+                      "type": {
+                        "type": "enum",
+                        "name": "StepType",
+                        "symbols": [
+                          "SCREENING_TESTS"
+                        ],
+                        "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event.payload.valueobject"
+                      },
+                      "doc": "stepType field"
+                    },
+                    {
+                      "name": "status",
+                      "type": {
+                        "type": "enum",
+                        "name": "StepStatus",
+                        "symbols": [
+                          "PENDING",
+                          "IN_PROGRESS",
+                          "COMPLETED"
+                        ],
+                        "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event.payload.valueobject"
+                      },
+                      "doc": "status field"
+                    },
+                    {
+                      "name": "lastUpdated",
+                      "type": {
+                        "type": "long",
+                        "logicalType": "timestamp-millis"
+                      },
+                      "doc": "lastUpdated field"
+                    }
+                  ]
+                }
+              }
+            ],
+            "doc": "Step state to complete manufacturing",
+            "default": null
+          },
+          {
+            "name": "anticoagulantVolume",
+            "type": [
+              "null",
+              {
+                "type": "record",
+                "name": "Volume",
+                "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.valueobject",
+                "fields": [
+                  {
+                    "name": "value",
+                    "type": "int",
+                    "doc": "value field"
+                  }
+                ]
+              }
+            ],
+            "doc": "Anticoagulant Volume",
+            "default": null
+          },
+          {
+            "name": "volume",
+            "type": [
+              "null",
+              "com.arcone.biopro.manufacturing.apheresisplasma.domain.valueobject.Volume"
+            ],
+            "doc": "Product Volume",
+            "default": null
+          },
+          {
+            "name": "aboRh",
+            "type": "string",
+            "doc": "ABO/Rh (example: AP)"
+          }
+        ]
+      },
+      "doc": "ApheresisPlasmaProductCompletedEvent payload"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+---
+id: inventory-service
+version: '1.0.0'
+name: Inventory Service
+summary: BioPro Distribution domain service
+badges:
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-distribution"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 2 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: InventoryCreated
+      version: '1.0'
+    - id: InventoryUpdatedApplication
+      version: '1.0'
+receives:
+    - id: ProductStored
+      version: '1.0'
+    - id: ProductDiscarded
+      version: '1.0'
+    - id: CheckInCompleted
+      version: '1.0'
+    - id: ProductRecovered
+      version: '1.0'
+    - id: LabelApplied
+      version: '1.0'
+    - id: Unsuitable
+      version: '1.0'
+    - id: ProductModified
+      version: '1.0'
+    - id: ProductsImported
+      version: '1.0'
+    - id: ProductCreated
+      version: '1.0'
+    - id: RemoveQuarantined
+      version: '1.0'
+    - id: RecoveredPlasmaCartonRemoved
+      version: '1.0'
+    - id: RecoveredPlasmaCartonUnpacked
+      version: '1.0'
+    - id: RecoveredPlasmaShipmentClosed
+      version: '1.0'
+    - id: ShipmentCompleted
+      version: '1.0'
+    - id: RecoveredPlasmaCartonPacked
+      version: '1.0'
+    - id: InventoryCreated
+      version: '1.0'
+    - id: ProductsReceived
+      version: '1.0'
+    - id: AddQuarantined
+      version: '1.0'
+    - id: LabelInvalidated
+      version: '1.0'
+    - id: FlagUnitForResearch
+      version: '1.0'
+    - id: UpdateQuarantined
+      version: '1.0'
+    - id: InventoryCreated
+      version: '1.0'
+    - id: ProductCompleted
+      version: '1.0'
+    - id: RareProductProperty
+      version: '1.0'
+---
+
+# Inventory Service
+
+**Domain**: Distribution
+**Repository**: biopro-distribution
+
+## Overview
+
+The inventory service is responsible for handling inventory operations within the BioPro Distribution domain.
+
+## Events Published
+
+This service publishes 2 events:
+
+- **InventoryCreated**: InventoryCreatedEvent
+- **InventoryUpdatedApplication**: InventoryUpdatedApplicationEvent
+
+## Events Consumed
+
+This service consumes 24 events:
+
+- **ProductStored**: Consumed from upstream services
+- **ProductDiscarded**: Consumed from upstream services
+- **CheckInCompleted**: Consumed from upstream services
+- **ProductRecovered**: Consumed from upstream services
+- **LabelApplied**: Consumed from upstream services
+- **Unsuitable**: Consumed from upstream services
+- **ProductModified**: Consumed from upstream services
+- **ProductsImported**: Consumed from upstream services
+- **ProductCreated**: Consumed from upstream services
+- **RemoveQuarantined**: Consumed from upstream services
+- **RecoveredPlasmaCartonRemoved**: Consumed from upstream services
+- **RecoveredPlasmaCartonUnpacked**: Consumed from upstream services
+- **RecoveredPlasmaShipmentClosed**: Consumed from upstream services
+- **ShipmentCompleted**: Consumed from upstream services
+- **RecoveredPlasmaCartonPacked**: Consumed from upstream services
+- **InventoryCreated**: Consumed from upstream services
+- **ProductsReceived**: Consumed from upstream services
+- **AddQuarantined**: Consumed from upstream services
+- **LabelInvalidated**: Consumed from upstream services
+- **FlagUnitForResearch**: Consumed from upstream services
+- **UpdateQuarantined**: Consumed from upstream services
+- **InventoryCreated**: Consumed from upstream services
+- **ProductCompleted**: Consumed from upstream services
+- **RareProductProperty**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

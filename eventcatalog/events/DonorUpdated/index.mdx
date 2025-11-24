@@ -1,0 +1,212 @@
+---
+id: DonorUpdated
+name: DonorUpdated
+version: '1.0'
+summary: Event published by history service when donorupdated occurs
+owners:
+  - history-service
+producers:
+  - history-service
+consumers:
+  []
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Donor"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# DonorUpdated Event
+
+**Schema ID**: 999
+**Schema Version**: 1.0
+**Subject**: DonorUpdatedEvent
+**Domain**: Donor
+**Service**: history-service
+**Repository**: biopro-donor
+
+## Business Context
+
+Event published when donorupdated occurs in the history service.
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| eventId | UUID | Yes | Unique event identifier |
+| occurredOn | timestamp-millis | Yes | When the event occurred |
+| eventType | string | Yes | Event type identifier |
+| eventVersion | string | Yes | Schema version |
+| donorId | Long | No |  |
+| externalId | String | No |  |
+| donor | Donor | No |  |
+| occurredOn | ZonedDateTime | No |  |
+| eventType | String | No |  |
+
+## Consumer Implementation with DLQ Support
+
+### Spring Boot Kafka Listener
+
+```java
+package com.arcone.biopro.history.infrastructure.listener;
+
+import com.arcone.biopro.history.domain.event.DonorUpdatedEvent;
+import com.arcone.biopro.common.infrastructure.listener.AbstractListener;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class DonorUpdatedEventListener extends AbstractListener<DonorUpdatedEvent> {
+
+    private final YourBusinessService businessService;
+
+    @KafkaListener(
+        topics = "${kafka.topics.donorupdated}",
+        groupId = "${kafka.consumer.group-id}",
+        containerFactory = "kafkaListenerContainerFactory",
+        errorHandler = "kafkaListenerErrorHandler"
+    )
+    public void listen(
+            @Payload DonorUpdatedEvent event,
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+            @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
+            @Header(KafkaHeaders.OFFSET) long offset
+    ) {
+        log.info("Received DonorUpdatedEvent: eventId={}, topic={}, partition={}, offset={}",
+                event.getEventId(), topic, partition, offset);
+
+        processMessage(event)
+            .doOnSuccess(result ->
+                log.info("Successfully processed DonorUpdatedEvent: {}", event.getEventId()))
+            .doOnError(error ->
+                log.error("Failed to process DonorUpdatedEvent: {}", event.getEventId(), error))
+            .subscribe();
+    }
+
+    @Override
+    protected Mono<DonorUpdatedEvent> processMessage(DonorUpdatedEvent event) {
+        return Mono.defer(() -> {
+            try {
+                validateEvent(event);
+                return businessService.handle(event)
+                    .doOnError(this::handleBusinessError)
+                    .onErrorResume(this::recoverFromError);
+            } catch (InvalidEventException e) {
+                log.error("Invalid event detected - routing to DLQ: {}", event.getEventId(), e);
+                sendToDLQ(event, e);
+                return Mono.empty();
+            } catch (Exception e) {
+                return handleUnexpectedError(event, e);
+            }
+        });
+    }
+
+    private void validateEvent(DonorUpdatedEvent event) {
+        if (event.getEventId() == null || event.getEventId().isEmpty()) {
+            throw new InvalidEventException("Event ID is required");
+        }
+        // Add domain-specific validations
+    }
+}
+```
+
+## Complete Avro Schema
+
+```json
+{
+  "type": "record",
+  "name": "DonorUpdatedEvent",
+  "namespace": "com.arcone.biopro.donor.history.domain.event",
+  "doc": "Event published when donorupdated occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "DONORUPDATED"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "donorId",
+      "type": "long",
+      "doc": "donorId field",
+      "default": 0
+    },
+    {
+      "name": "externalId",
+      "type": "string",
+      "doc": "externalId field",
+      "default": ""
+    },
+    {
+      "name": "donor",
+      "type": "string",
+      "doc": "donor field",
+      "default": ""
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "occurredOn field"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "eventType field",
+      "default": ""
+    }
+  ]
+}
+```
+
+## Change Log
+
+### v1.0 (2025-11-16)
+- Schema registered with ID 999
+- Integrated with Schema Registry
+- DLQ error handling configured
+
+<NodeGraph />

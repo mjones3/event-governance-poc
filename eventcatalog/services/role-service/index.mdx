@@ -1,0 +1,77 @@
+---
+id: role-service
+version: '1.0.0'
+name: Role Service
+summary: BioPro Operations domain service
+badges:
+  - content: "Domain: Operations"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-operations"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 5 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: RoleCreated
+      version: '1.0'
+    - id: UserCreated
+      version: '1.0'
+    - id: UserDeactivated
+      version: '1.0'
+    - id: UserRolesAssigned
+      version: '1.0'
+    - id: UserUpdated
+      version: '1.0'
+receives:
+    - id: UserCreated
+      version: '1.0'
+    - id: UserUpdated
+      version: '1.0'
+    - id: UserInactivated
+      version: '1.0'
+    - id: ApplicationReady
+      version: '1.0'
+    - id: Startup
+      version: '1.0'
+---
+
+# Role Service
+
+**Domain**: Operations
+**Repository**: biopro-operations
+
+## Overview
+
+The role service is responsible for handling role operations within the BioPro Operations domain.
+
+## Events Published
+
+This service publishes 5 events:
+
+- **RoleCreated**: RoleCreatedEvent
+- **UserCreated**: UserCreatedEvent
+- **UserDeactivated**: UserDeactivatedEvent
+- **UserRolesAssigned**: UserRolesAssignedEvent
+- **UserUpdated**: UserUpdatedEvent
+
+## Events Consumed
+
+This service consumes 6 events:
+
+- ****: Consumed from upstream services
+- **UserCreated**: Consumed from upstream services
+- **UserUpdated**: Consumed from upstream services
+- **UserInactivated**: Consumed from upstream services
+- **ApplicationReady**: Consumed from upstream services
+- **Startup**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

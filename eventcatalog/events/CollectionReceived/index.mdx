@@ -5,211 +5,70 @@ version: '1'
 summary: Event CollectionReceived - BioPro System
 owners:
     - collections-service
+producers:
+    - collections-service
+consumers: []
 ---
 
-# CollectionReceived Event
+# CollectionReceivedEvent
 
 **Schema ID**: 4
 **Schema Version**: 1
 **Subject**: CollectionReceivedEvent
 **Domain**: Collections
+**Namespace**: com.biopro.events.collections
 
-## Description
+## Business Context
 
 Event published when a blood collection is received
 
-## Schema
-
-```json
-{
-  "type": "record",
-  "name": "CollectionReceivedEvent",
-  "namespace": "com.biopro.events.collections",
-  "doc": "Event published when a blood collection is received",
-  "fields": [
-    {
-      "name": "unitNumber",
-      "type": "string",
-      "doc": "Unique identifier for the collection unit (e.g., W036202412345)"
-    },
-    {
-      "name": "status",
-      "type": "string",
-      "doc": "Current status of the collection"
-    },
-    {
-      "name": "bagType",
-      "type": "string",
-      "doc": "Type of collection bag used"
-    },
-    {
-      "name": "drawTime",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
-      "doc": "Time when blood was drawn"
-    },
-    {
-      "name": "drawTimeZone",
-      "type": "string",
-      "doc": "Timezone for drawTime (e.g., America/New_York)",
-      "default": "UTC"
-    },
-    {
-      "name": "withdrawalTime",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
-      "doc": "Time when collection was withdrawn/completed"
-    },
-    {
-      "name": "withdrawalTimeZone",
-      "type": "string",
-      "doc": "Timezone for withdrawalTime",
-      "default": "UTC"
-    },
-    {
-      "name": "donationType",
-      "type": {
-        "type": "enum",
-        "name": "DonationType",
-        "symbols": [
-          "ALLOGENEIC",
-          "AUTOLOGOUS"
-        ]
-      },
-      "doc": "Type of donation"
-    },
-    {
-      "name": "procedureType",
-      "type": "string",
-      "doc": "Procedure type used for collection"
-    },
-    {
-      "name": "collectionLocation",
-      "type": "string",
-      "doc": "Location where collection occurred"
-    },
-    {
-      "name": "aboRh",
-      "type": "string",
-      "doc": "ABO/Rh blood type (e.g., AP, AN, BP, BN, OP, ON, ABP, ABN)"
-    },
-    {
-      "name": "machineSerialNumber",
-      "type": [
-        "null",
-        "string"
-      ],
-      "doc": "Serial number of collection machine (if apheresis)",
-      "default": null
-    },
-    {
-      "name": "machineType",
-      "type": [
-        "null",
-        "string"
-      ],
-      "doc": "Type of collection machine used",
-      "default": null
-    },
-    {
-      "name": "donationProperties",
-      "type": [
-        "null",
-        {
-          "type": "map",
-          "values": "string"
-        }
-      ],
-      "doc": "Additional donation-specific properties",
-      "default": null
-    },
-    {
-      "name": "drawProperties",
-      "type": [
-        "null",
-        {
-          "type": "map",
-          "values": "string"
-        }
-      ],
-      "doc": "Additional draw-specific properties",
-      "default": null
-    },
-    {
-      "name": "volumes",
-      "type": {
-        "type": "array",
-        "items": {
-          "type": "record",
-          "name": "Volume",
-          "fields": [
-            {
-              "name": "type",
-              "type": {
-                "type": "enum",
-                "name": "VolumeType",
-                "symbols": [
-                  "PLASMA",
-                  "RBC",
-                  "PLASMA_ANTICOAGULANT",
-                  "PLATELET",
-                  "PAS",
-                  "ANTICOAGULANT",
-                  "RBC_ANTICOAGULANT",
-                  "PLATELET_ANTICOAGULANT",
-                  "WHOLE_BLOOD",
-                  "GRANULOCYTE",
-                  "PLASMA_VOLUME_LOSS",
-                  "RBC_VOLUME_LOSS"
-                ]
-              },
-              "doc": "Type of volume measurement"
-            },
-            {
-              "name": "amount",
-              "type": "int",
-              "doc": "Volume amount in milliliters"
-            },
-            {
-              "name": "excludeInCalculation",
-              "type": "boolean",
-              "doc": "Whether to exclude this volume in calculations",
-              "default": false
-            }
-          ]
-        }
-      },
-      "doc": "List of volumes associated with the collection"
-    }
-  ]
-}
-```
-
-## Fields
+## Event Schema Fields
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `unitNumber` | `string` | Yes | Unique identifier for the collection unit (e.g., W036202412345) |
 | `status` | `string` | Yes | Current status of the collection |
 | `bagType` | `string` | Yes | Type of collection bag used |
-| `drawTime` | `long` | Yes | Time when blood was drawn |
-| `drawTimeZone` | `string` | Yes | Timezone for drawTime (e.g., America/New_York) |
-| `withdrawalTime` | `long` | Yes | Time when collection was withdrawn/completed |
-| `withdrawalTimeZone` | `string` | Yes | Timezone for withdrawalTime |
-| `donationType` | `enum` | Yes | Type of donation |
+| `drawTime` | `timestamp-millis` | Yes | Time when blood was drawn |
+| `drawTimeZone` | `string` | No | Timezone for drawTime (e.g., America/New_York) |
+| `withdrawalTime` | `timestamp-millis` | Yes | Time when collection was withdrawn/completed |
+| `withdrawalTimeZone` | `string` | No | Timezone for withdrawalTime |
+| `donationType` | `enum (ALLOGENEIC, AUTOLOGOUS)` | Yes | Type of donation |
 | `procedureType` | `string` | Yes | Procedure type used for collection |
 | `collectionLocation` | `string` | Yes | Location where collection occurred |
 | `aboRh` | `string` | Yes | ABO/Rh blood type (e.g., AP, AN, BP, BN, OP, ON, ABP, ABN) |
 | `machineSerialNumber` | `string` | No | Serial number of collection machine (if apheresis) |
 | `machineType` | `string` | No | Type of collection machine used |
-| `donationProperties` | map<string, `string`> | No | Additional donation-specific properties |
-| `drawProperties` | map<string, `string`> | No | Additional draw-specific properties |
-| `volumes` | array<`Volume`> | Yes | List of volumes associated with the collection |
+| `donationProperties` | `map<string, string>` | No | Additional donation-specific properties |
+| `drawProperties` | `map<string, string>` | No | Additional draw-specific properties |
+| `volumes` | `array<Volume>` | Yes | List of volumes associated with the collection |
 
+
+## Sample Event
+
+```json
+{
+  "unitNumber": "W835534375",
+  "status": "ACTIVE",
+  "bagType": "STANDARD",
+  "drawTime": 1763355987125,
+  "drawTimeZone": 1763355987125,
+  "withdrawalTime": 1763355987125,
+  "withdrawalTimeZone": 1763355987125,
+  "donationType": "ALLOGENEIC",
+  "procedureType": "STANDARD",
+  "collectionLocation": "New York Blood Center",
+  "aboRh": "AP",
+  "donationProperties": {},
+  "volumes": [
+    {
+      "type": "PLASMA",
+      "amount": 450,
+      "excludeInCalculation": false
+    }
+  ]
+}
+```
 
 ## Schema Evolution
 
@@ -219,46 +78,28 @@ This event uses Avro schema validation through Confluent Schema Registry.
 - **Version**: 1
 - **Compatibility**: BACKWARD (default)
 
-## Producers
-
-- **Service**: collections-service
-- **Topic**: `biopro.collections.events`
-
 ## Message Format
 
 Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
 
-## Example Payload
+## Integration Notes
 
-```json
-{
-  "unitNumber": "example-string",
-  "status": "example-string",
-  "bagType": "example-string",
-  "drawTime": null,
-  "drawTimeZone": "example-string",
-  "withdrawalTime": null,
-  "withdrawalTimeZone": "example-string",
-  "donationType": null,
-  "procedureType": "example-string",
-  "collectionLocation": "example-string",
-  "aboRh": "example-string",
-  "machineSerialNumber": "example-string",
-  "machineType": "example-string",
-  "donationProperties": {
-    "key1": "example-string"
-  },
-  "drawProperties": {
-    "key1": "example-string"
-  },
-  "volumes": [
-    {
-      "type": null,
-      "amount": 123,
-      "excludeInCalculation": true
-    }
-  ]
-}
-```
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./CollectionReceivedEvent.avsc) - Complete Avro schema definition
 
 <NodeGraph />

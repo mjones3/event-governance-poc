@@ -1,0 +1,60 @@
+---
+id: eventmanagement-service
+version: '1.0.0'
+name: Eventmanagement Service
+summary: BioPro Donor domain service
+badges:
+  - content: "Domain: Donor"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-donor"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 4 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: FlagUnitForResearch
+      version: '1.0'
+    - id: ProductUnsuitable
+      version: '1.0'
+    - id: QuarantineProduct
+      version: '1.0'
+    - id: RemoveQuarantine
+      version: '1.0'
+receives:
+    []
+---
+
+# Eventmanagement Service
+
+**Domain**: Donor
+**Repository**: biopro-donor
+
+## Overview
+
+The eventmanagement service is responsible for handling eventmanagement operations within the BioPro Donor domain.
+
+## Events Published
+
+This service publishes 4 events:
+
+- **FlagUnitForResearch**: FlagUnitForResearchEvent
+- **ProductUnsuitable**: ProductUnsuitableEvent
+- **QuarantineProduct**: QuarantineProductEvent
+- **RemoveQuarantine**: RemoveQuarantineEvent
+
+## Events Consumed
+
+This service consumes 0 events:
+
+- None
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>BioPro Event Governance & Interface Exception Collector - Metrics Briefing</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .header-info {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .business-value {
+            background-color: #e8f8f5;
+            padding: 10px;
+            border-left: 4px solid #1abc9c;
+            margin: 10px 0;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        @media print {
+            body {
+                font-size: 11pt;
+            }
+            h1 {
+                font-size: 18pt;
+            }
+            h2 {
+                font-size: 14pt;
+                page-break-after: avoid;
+            }
+            h3 {
+                font-size: 12pt;
+                page-break-after: avoid;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>BioPro Event Governance & Interface Exception Collector</h1>
+<h2>Metrics Collection Briefing for IBM Consultants</h2>
+
+<div class="header-info">
+    <p><strong>Date:</strong> November 17, 2025</p>
+    <p><strong>Purpose:</strong> Comprehensive inventory of all metrics collected across BioPro Event Governance Framework and Interface Exception Collector</p>
+    <p><strong>Audience:</strong> IBM Consulting Team - Observability & Monitoring</p>
+</div>
+
+<h2>Table of Contents</h2>
+<ol>
+    <li><a href="#event-governance">Event Governance Framework Metrics</a></li>
+    <li><a href="#interface-exception">Interface Exception Collector Metrics</a></li>
+    <li><a href="#export-access">Metrics Export & Access</a></li>
+    <li><a href="#dashboards-alerts">Recommended Dashboards & Alerts</a></li>
+</ol>
+
+<div class="page-break"></div>
+
+<h1 id="event-governance">Event Governance Framework Metrics</h1>
+
+<div class="header-info">
+    <p><strong>Services:</strong> Orders, Collections, Manufacturing (3 microservices)</p>
+    <p><strong>Monitoring Stack:</strong> Prometheus + Grafana</p>
+</div>
+
+<h2>1. Custom BioPro Metrics</h2>
+
+<h3>1.1 Dead Letter Queue (DLQ) Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>biopro.dlq.events.total</code></td>
+        <td>Counter</td>
+        <td>Tracks total events routed to Dead Letter Queue</td>
+        <td>Tags: <code>module=orders</code>, <code>eventType=OrderCreatedEvent</code>, <code>errorType=SCHEMA_VALIDATION</code></td>
+    </tr>
+    <tr>
+        <td><code>biopro.dlq.reprocessing.success</code></td>
+        <td>Counter</td>
+        <td>Successfully reprocessed events from DLQ</td>
+        <td>Tags: <code>module=manufacturing</code>, <code>eventType=PlasmaProductCreated</code></td>
+    </tr>
+    <tr>
+        <td><code>biopro.dlq.reprocessing.failure</code></td>
+        <td>Counter</td>
+        <td>Failed DLQ reprocessing attempts</td>
+        <td>Tags: <code>module=collections</code>, <code>eventType=CollectionReceived</code>, <code>reason=INVALID_DATA</code></td>
+    </tr>
+    <tr>
+        <td><code>biopro.dlq.business.event</code></td>
+        <td>Counter</td>
+        <td>Dynatrace business events for DLQ operations</td>
+        <td>Tags: <code>module=orders</code>, <code>priority=CRITICAL</code>, <code>environment=prod</code></td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Track event failures, identify poison messages, measure recovery success rates
+</div>
+
+<h3>1.2 Event Processing Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>biopro.event.processing.duration</code></td>
+        <td>Timer</td>
+        <td>End-to-end event processing time with percentiles (p50, p95, p99)</td>
+        <td>Tags: <code>module=orders</code>, <code>eventType=OrderCreated</code><br>Example: p95=150ms, p99=300ms</td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Identify slow event processing, detect performance degradation, SLA monitoring
+</div>
+
+<h3>1.3 Schema Validation & Registry Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>biopro.schema.validation</code></td>
+        <td>Counter</td>
+        <td>Schema validation success and failure rates</td>
+        <td>Tags: <code>module=orders</code>, <code>result=success/failure</code></td>
+    </tr>
+    <tr>
+        <td><code>biopro.event.schema.version</code></td>
+        <td>Counter</td>
+        <td>Events by schema version for evolution tracking</td>
+        <td>Tags: <code>module=manufacturing</code>, <code>version=2.0</code></td>
+    </tr>
+    <tr>
+        <td><code>biopro.schema.operations</code></td>
+        <td>Counter</td>
+        <td>Schema Registry operations (registration, validation, compatibility)</td>
+        <td>Tags: <code>module=orders</code>, <code>operation=register</code>, <code>result=success</code></td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Monitor schema evolution adoption, detect breaking changes, track validation failures
+</div>
+
+<h3>1.4 Circuit Breaker Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>biopro.circuit.breaker.state</code></td>
+        <td>Gauge</td>
+        <td>Current circuit breaker state</td>
+        <td>Value: <code>0</code> (CLOSED), <code>0.5</code> (HALF_OPEN), <code>1</code> (OPEN)</td>
+    </tr>
+</table>
+
+<p><strong>Configuration:</strong></p>
+<ul>
+    <li>Failure threshold: 50%</li>
+    <li>Minimum calls: 10</li>
+    <li>Wait duration (open): 1 minute</li>
+    <li>Sliding window: 100 calls</li>
+</ul>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Prevent cascading failures, automatic recovery, dependency health monitoring
+</div>
+
+<h3>1.5 Retry Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>biopro.retry.attempts</code></td>
+        <td>Counter</td>
+        <td>Retry attempts before DLQ routing</td>
+        <td>Tags: <code>module=orders</code>, <code>eventType=OrderCreated</code>, <code>attemptNumber=3</code></td>
+    </tr>
+</table>
+
+<p><strong>Configuration:</strong></p>
+<ul>
+    <li>Max attempts: 3</li>
+    <li>Initial delay: 1 second</li>
+    <li>Backoff: Exponential (1s → 2s → 4s)</li>
+</ul>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Track transient failures, measure retry effectiveness, identify persistent issues
+</div>
+
+<div class="page-break"></div>
+
+<h2>2. Spring Boot Actuator Metrics (Auto-configured)</h2>
+
+<h3>2.1 JVM Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><code>jvm.memory.used</code></td>
+        <td>Gauge</td>
+        <td>JVM memory usage by area</td>
+        <td>Value: <code>512MB</code> (heap.used)</td>
+    </tr>
+    <tr>
+        <td><code>jvm.memory.max</code></td>
+        <td>Gauge</td>
+        <td>Maximum JVM memory</td>
+        <td>Value: <code>2048MB</code> (heap.max)</td>
+    </tr>
+    <tr>
+        <td><code>jvm.gc.pause</code></td>
+        <td>Timer</td>
+        <td>Garbage collection pause time</td>
+        <td>p99=50ms</td>
+    </tr>
+    <tr>
+        <td><code>jvm.threads.live</code></td>
+        <td>Gauge</td>
+        <td>Live thread count</td>
+        <td>Value: <code>45</code></td>
+    </tr>
+    <tr>
+        <td><code>jvm.classes.loaded</code></td>
+        <td>Gauge</td>
+        <td>Loaded class count</td>
+        <td>Value: <code>12543</code></td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Memory leak detection, GC tuning, thread leak detection
+</div>
+
+<h3>2.2 System Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><code>system.cpu.usage</code></td>
+        <td>Gauge</td>
+        <td>System-wide CPU usage</td>
+        <td>Value: <code>0.65</code> (65%)</td>
+    </tr>
+    <tr>
+        <td><code>system.cpu.count</code></td>
+        <td>Gauge</td>
+        <td>Available CPU cores</td>
+        <td>Value: <code>8</code></td>
+    </tr>
+    <tr>
+        <td><code>process.cpu.usage</code></td>
+        <td>Gauge</td>
+        <td>Application CPU usage</td>
+        <td>Value: <code>0.12</code> (12%)</td>
+    </tr>
+    <tr>
+        <td><code>process.uptime</code></td>
+        <td>Gauge</td>
+        <td>Application uptime in seconds</td>
+        <td>Value: <code>86400</code> (24 hours)</td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Resource utilization tracking, capacity planning
+</div>
+
+<h3>2.3 HTTP Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>http.server.requests</code></td>
+        <td>Timer</td>
+        <td>HTTP request duration and count</td>
+        <td>Tags: <code>uri=/api/orders</code>, <code>method=POST</code>, <code>status=200</code><br>p95=100ms, count=15000</td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> API performance monitoring, error rate tracking, endpoint usage analysis
+</div>
+
+<div class="page-break"></div>
+
+<h2>3. Kafka Metrics (Auto-configured via Spring Kafka)</h2>
+
+<h3>3.1 Producer Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><code>kafka.producer.request.total</code></td>
+        <td>Counter</td>
+        <td>Total producer requests</td>
+        <td>Value: <code>25000</code></td>
+    </tr>
+    <tr>
+        <td><code>kafka.producer.request.rate</code></td>
+        <td>Gauge</td>
+        <td>Producer requests per second</td>
+        <td>Value: <code>150/sec</code></td>
+    </tr>
+    <tr>
+        <td><code>kafka.producer.record.send.total</code></td>
+        <td>Counter</td>
+        <td>Total records sent</td>
+        <td>Value: <code>24950</code></td>
+    </tr>
+    <tr>
+        <td><code>kafka.producer.record.error.total</code></td>
+        <td>Counter</td>
+        <td>Producer errors</td>
+        <td>Value: <code>50</code></td>
+    </tr>
+    <tr>
+        <td><code>kafka.producer.request.latency.avg</code></td>
+        <td>Gauge</td>
+        <td>Average request latency</td>
+        <td>Value: <code>15ms</code></td>
+    </tr>
+</table>
+
+<p><strong>Configuration:</strong> ACKS=all, Retries=3, Idempotence=enabled</p>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Message delivery reliability, throughput monitoring, latency tracking
+</div>
+
+<h3>3.2 Consumer Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><code>kafka.consumer.records.consumed.total</code></td>
+        <td>Counter</td>
+        <td>Total records consumed</td>
+        <td>Value: <code>24800</code></td>
+    </tr>
+    <tr>
+        <td><code>kafka.consumer.records.lag</code></td>
+        <td>Gauge</td>
+        <td>Consumer lag per partition</td>
+        <td>Value: <code>150</code> messages</td>
+    </tr>
+    <tr>
+        <td><code>kafka.consumer.fetch.latency.avg</code></td>
+        <td>Gauge</td>
+        <td>Average fetch latency</td>
+        <td>Value: <code>25ms</code></td>
+    </tr>
+</table>
+
+<p><strong>Configuration:</strong> Auto-offset-reset=earliest, Auto-commit=false, Max-poll=100, Concurrency=3</p>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Consumer lag monitoring, throughput tracking, rebalance detection
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="interface-exception">Interface Exception Collector Metrics</h1>
+
+<div class="header-info">
+    <p><strong>Technology:</strong> Spring Boot + GraphQL + RSocket</p>
+</div>
+
+<h2>8. Custom Application Metrics</h2>
+
+<h3>8.1 Exception Processing Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>exceptions.processed.total</code></td>
+        <td>Counter</td>
+        <td>Total exceptions processed</td>
+        <td>Value: <code>5423</code></td>
+    </tr>
+    <tr>
+        <td><code>exceptions.by.severity.total</code></td>
+        <td>Counter</td>
+        <td>Exceptions by severity level</td>
+        <td>Tags: <code>severity=CRITICAL</code><br>Value: <code>145</code></td>
+    </tr>
+    <tr>
+        <td><code>exception.processing.duration</code></td>
+        <td>Timer</td>
+        <td>Exception processing time</td>
+        <td>p50=50ms, p95=200ms, p99=500ms</td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Exception volume tracking, severity distribution, processing performance
+</div>
+
+<h3>8.2 Retry Operation Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>retry.operations.total</code></td>
+        <td>Counter</td>
+        <td>Total retry operations attempted</td>
+        <td>Value: <code>1250</code></td>
+    </tr>
+    <tr>
+        <td><code>retry.success.total</code></td>
+        <td>Counter</td>
+        <td>Successful retry operations</td>
+        <td>Value: <code>1100</code></td>
+    </tr>
+    <tr>
+        <td><code>retry.failure.total</code></td>
+        <td>Counter</td>
+        <td>Failed retry operations</td>
+        <td>Value: <code>150</code></td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Retry effectiveness (88% success rate), identify problematic interfaces
+</div>
+
+<h2>9. GraphQL Metrics</h2>
+
+<h3>9.1 Query Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>graphql_query_count_total</code></td>
+        <td>Counter</td>
+        <td>Total GraphQL queries executed</td>
+        <td>Tags: <code>operation=getExceptionById</code>, <code>status=success</code><br>Value: <code>3542</code></td>
+    </tr>
+    <tr>
+        <td><code>graphql_query_duration_seconds</code></td>
+        <td>Timer</td>
+        <td>GraphQL query execution duration</td>
+        <td>p50=0.085s, p95=0.250s, p99=0.650s</td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Query performance monitoring, usage analytics
+</div>
+
+<h3>9.2 Subscription Metrics</h3>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>graphql_subscription_connections_active</code></td>
+        <td>Gauge</td>
+        <td>Active GraphQL subscription connections</td>
+        <td>Value: <code>42</code> connections</td>
+    </tr>
+    <tr>
+        <td><code>graphql_subscription_messages_sent_total</code></td>
+        <td>Counter</td>
+        <td>Total subscription messages sent</td>
+        <td>Value: <code>18542</code></td>
+    </tr>
+    <tr>
+        <td><code>graphql_subscription_message_delivery_seconds</code></td>
+        <td>Timer</td>
+        <td>Message delivery latency</td>
+        <td>p95=0.025s</td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Real-time connection monitoring, message delivery reliability (99.3% success)
+</div>
+
+<div class="page-break"></div>
+
+<h2>11. RSocket Metrics</h2>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example/Tags</th>
+    </tr>
+    <tr>
+        <td><code>rsocket.calls.total</code></td>
+        <td>Counter</td>
+        <td>Total RSocket calls to mock server</td>
+        <td>Value: <code>8542</code></td>
+    </tr>
+    <tr>
+        <td><code>rsocket.calls.success</code></td>
+        <td>Counter</td>
+        <td>Successful RSocket calls</td>
+        <td>Value: <code>8450</code></td>
+    </tr>
+    <tr>
+        <td><code>rsocket.call.duration</code></td>
+        <td>Timer</td>
+        <td>RSocket call duration</td>
+        <td>p50=25ms, p95=100ms, p99=250ms</td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> RSocket performance monitoring, success rate tracking (98.9%)
+</div>
+
+<h2>13. HikariCP Connection Pool Metrics</h2>
+
+<table>
+    <tr>
+        <th>Metric Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><code>hikari.connections.active</code></td>
+        <td>Gauge</td>
+        <td>Active database connections</td>
+        <td>Value: <code>8</code></td>
+    </tr>
+    <tr>
+        <td><code>hikari.connections.idle</code></td>
+        <td>Gauge</td>
+        <td>Idle connections in pool</td>
+        <td>Value: <code>12</code></td>
+    </tr>
+    <tr>
+        <td><code>hikari.connections.max</code></td>
+        <td>Gauge</td>
+        <td>Maximum pool size</td>
+        <td>Value: <code>50</code></td>
+    </tr>
+    <tr>
+        <td><code>hikari.connections.pending</code></td>
+        <td>Gauge</td>
+        <td>Pending connection requests</td>
+        <td>Value: <code>0</code></td>
+    </tr>
+</table>
+
+<div class="business-value">
+    <strong>Business Value:</strong> Connection pool health, resource utilization, timeout detection
+</div>
+
+<div class="page-break"></div>
+
+<h1 id="dashboards-alerts">Recommended Dashboards & Alerts</h1>
+
+<h2>Event Governance Framework - Recommended Alerts</h2>
+
+<table>
+    <tr>
+        <th>Alert Name</th>
+        <th>Condition</th>
+        <th>Severity</th>
+        <th>Purpose</th>
+    </tr>
+    <tr>
+        <td>High DLQ Rate</td>
+        <td><code>rate(biopro_dlq_events_total[5m]) > 10</code></td>
+        <td>CRITICAL</td>
+        <td>Detect event processing failures</td>
+    </tr>
+    <tr>
+        <td>Schema Validation Failures</td>
+        <td><code>rate(biopro_schema_validation_total{result="failure"}[5m]) > 5</code></td>
+        <td>HIGH</td>
+        <td>Breaking schema changes</td>
+    </tr>
+    <tr>
+        <td>Circuit Breaker Open</td>
+        <td><code>biopro_circuit_breaker_state == 1</code></td>
+        <td>CRITICAL</td>
+        <td>Dependency failure</td>
+    </tr>
+    <tr>
+        <td>High Consumer Lag</td>
+        <td><code>kafka_consumer_records_lag > 1000</code></td>
+        <td>HIGH</td>
+        <td>Consumer performance degradation</td>
+    </tr>
+</table>
+
+<h2>Interface Exception Collector - Recommended Alerts</h2>
+
+<table>
+    <tr>
+        <th>Alert Name</th>
+        <th>Condition</th>
+        <th>Severity</th>
+        <th>Purpose</th>
+    </tr>
+    <tr>
+        <td>High GraphQL Error Rate</td>
+        <td><code>(rate(graphql_error_count_total[5m]) / rate(graphql_query_count_total[5m])) > 0.05</code></td>
+        <td>HIGH</td>
+        <td>GraphQL error threshold breach (5%)</td>
+    </tr>
+    <tr>
+        <td>Slow GraphQL Queries</td>
+        <td><code>histogram_quantile(0.95, graphql_query_duration_seconds_bucket) > 0.5</code></td>
+        <td>MEDIUM</td>
+        <td>Query performance SLA breach (500ms)</td>
+    </tr>
+    <tr>
+        <td>High Active Subscriptions</td>
+        <td><code>graphql_subscription_connections_active > 900</code></td>
+        <td>MEDIUM</td>
+        <td>Approaching capacity (1000 max)</td>
+    </tr>
+    <tr>
+        <td>Database Connection Pool Exhaustion</td>
+        <td><code>hikari.connections.pending > 0</code></td>
+        <td>CRITICAL</td>
+        <td>Connection pool saturation</td>
+    </tr>
+</table>
+
+<div class="page-break"></div>
+
+<h2>Key Performance Indicators (KPIs)</h2>
+
+<h3>Event Governance Framework</h3>
+<ol>
+    <li><strong>DLQ Rate:</strong> < 1% of total events</li>
+    <li><strong>Schema Validation Success Rate:</strong> > 99%</li>
+    <li><strong>Event Processing p95:</strong> < 500ms</li>
+    <li><strong>Consumer Lag:</strong> < 100 messages</li>
+    <li><strong>Retry Success Rate:</strong> > 80%</li>
+    <li><strong>Circuit Breaker Uptime:</strong> > 99.9%</li>
+</ol>
+
+<h3>Interface Exception Collector</h3>
+<ol>
+    <li><strong>GraphQL Query p95:</strong> < 500ms</li>
+    <li><strong>GraphQL Mutation p95:</strong> < 3s</li>
+    <li><strong>GraphQL Error Rate:</strong> < 5%</li>
+    <li><strong>Exception Retry Success Rate:</strong> > 70%</li>
+    <li><strong>Cache Hit Rate:</strong> > 80%</li>
+    <li><strong>Database Connection Pool Utilization:</strong> < 80%</li>
+    <li><strong>RSocket Call Success Rate:</strong> > 95%</li>
+</ol>
+
+<h2>Summary Statistics</h2>
+
+<h3>Event Governance Framework</h3>
+<ul>
+    <li><strong>Total Metric Categories:</strong> 7</li>
+    <li><strong>Custom Metrics:</strong> 11</li>
+    <li><strong>Auto-configured Metrics:</strong> 50+</li>
+    <li><strong>Total Metrics:</strong> 60+</li>
+    <li><strong>Services Monitored:</strong> 3 (Orders, Collections, Manufacturing)</li>
+</ul>
+
+<h3>Interface Exception Collector</h3>
+<ul>
+    <li><strong>Total Metric Categories:</strong> 10</li>
+    <li><strong>Custom Metrics:</strong> 60+</li>
+    <li><strong>Auto-configured Metrics:</strong> 40+</li>
+    <li><strong>Total Metrics:</strong> 100+</li>
+    <li><strong>Services Monitored:</strong> 1</li>
+</ul>
+
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "type": "record",
+  "name": "VolumeCalculatedRequestEvent",
+  "namespace": "com.arcone.biopro.manufacturing.qualitycontrol.domain.event",
+  "doc": "Event published when volumecalculatedrequest occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "VOLUMECALCULATEDREQUEST"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "Number",
+      "type": "string",
+      "doc": "Number field"
+    },
+    {
+      "name": "Unit",
+      "type": "string",
+      "doc": "Unit field"
+    },
+    {
+      "name": "completed",
+      "type": "string",
+      "doc": "completed field"
+    },
+    {
+      "name": "pqc",
+      "type": "string",
+      "doc": "pqc field"
+    },
+    {
+      "name": "result",
+      "type": "string",
+      "doc": "result field"
+    }
+  ]
+}

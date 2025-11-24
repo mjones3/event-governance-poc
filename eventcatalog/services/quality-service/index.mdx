@@ -1,0 +1,115 @@
+---
+id: quality-service
+name: Quality Service
+version: '1.0.0'
+summary: Manages quality assurance, testing schedules, and compliance verification for plasma products
+owners:
+  - Quality Assurance Team
+repository:
+  language: Java
+  url: https://github.com/biopro/quality-service
+receives:
+  - id: ApheresisPlasmaProductCreated
+    version: '2.3'
+  - id: ApheresisPlasmaProductCompleted
+    version: '1.0'
+  - id: CollectionReceived
+    version: '2.1'
+sends:
+  - id: QualityCheckScheduled
+    version: '1.0'
+  - id: QualityCheckCompleted
+    version: '1.0'
+  - id: QualityCheckFailed
+    version: '1.0'
+  - id: ComplianceVerified
+    version: '1.0'
+badges:
+  - content: "Java 17"
+    backgroundColor: "#007396"
+    textColor: white
+  - content: "Spring Boot 3.x"
+    backgroundColor: "#6db33f"
+    textColor: white
+  - content: "Production"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "FDA Validated"
+    backgroundColor: "#dc2626"
+    textColor: white
+---
+
+# Quality Service
+
+The Quality Service manages all quality assurance activities for plasma products, including scheduling tests, recording results, and ensuring regulatory compliance.
+
+## Responsibilities
+
+- Schedule quality checks for new products
+- Perform final quality verification before distribution
+- Track test results and compliance status
+- Maintain audit trail for regulatory requirements
+- Generate quality reports
+
+## Events Consumed
+
+### ApheresisPlasmaProductCreated
+**From**: manufacturing-service
+**Purpose**: Schedule quality checks for new products
+**Critical**: Yes
+**Handler**: `ApheresisPlasmaProductCreatedListener`
+
+### ApheresisPlasmaProductCompleted
+**From**: manufacturing-service
+**Purpose**: Trigger final quality verification
+**Critical**: Yes
+**Handler**: `ApheresisPlasmaProductCompletedListener`
+
+## Events Published
+
+- `QualityCheckScheduled` - When tests are scheduled
+- `QualityCheckCompleted` - When tests complete
+- `QualityCheckFailed` - When products fail quality standards
+- `ComplianceVerified` - When regulatory compliance is confirmed
+
+## Technical Details
+
+### Technology Stack
+- **Runtime**: Java 17
+- **Framework**: Spring Boot 3.x
+- **Messaging**: Apache Kafka with Avro
+- **Database**: PostgreSQL
+- **Document Storage**: S3 (for test results)
+
+### Deployment
+- **Environment**: Kubernetes
+- **Replicas**: 2
+- **Port**: 8085
+
+### Compliance & Security
+- FDA 21 CFR Part 11 compliant
+- SOC 2 Type II certified
+- HIPAA compliant
+- Audit logging enabled
+
+## Team Information
+
+- **Team**: Quality Assurance Team
+- **Lead**: QA Manager
+- **Contact**: quality-team@biopro.com
+- **Slack**: #quality-assurance
+- **On-Call**: PagerDuty - QA Rotation
+
+## Monitoring
+
+### Key Metrics
+- Test completion rate
+- Time to quality verification
+- Compliance check success rate
+- Failed test rate
+
+### Critical Alerts
+- Quality check failures
+- Compliance violations
+- Audit log failures
+- System unavailability during business hours

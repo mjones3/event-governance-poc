@@ -1,0 +1,101 @@
+---
+id: UnitDiscard
+name: UnitDiscard
+version: '1.0'
+summary: Event published by history service when unitdiscard occurs
+owners:
+  - history-service
+producers:
+  - history-service
+consumers:
+  []
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Donor"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# UnitDiscardEvent
+
+**Schema ID**: 73
+**Schema Version**: 1
+**Subject**: UnitDiscardEvent
+**Domain**: Unknown
+**Namespace**: com.arcone.biopro.donor.history.domain.event
+
+## Business Context
+
+Event published when unitdiscard occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+| `unitNumber` | `string` | Yes | unitNumber field |
+| `reasonKey` | `string` | Yes | reasonKey field |
+| `triggeredBy` | `string` | Yes | triggeredBy field |
+| `performedBy` | `string` | Yes | performedBy field |
+| `createDate` | `timestamp-millis` | Yes | createDate field |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "3ccc5b99-ec74-4c9b-be79-2b790dae4d38",
+  "occurredOn": 1763355988074,
+  "occurredOnTimeZone": 1763355988074,
+  "eventType": "STANDARD",
+  "eventVersion": "1.0",
+  "unitNumber": "W674089870",
+  "reasonKey": "reasonKey_value",
+  "triggeredBy": "triggeredBy_value",
+  "performedBy": "performedBy_value",
+  "createDate": 1763355988074
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 73
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./UnitDiscardEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

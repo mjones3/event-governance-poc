@@ -1,0 +1,91 @@
+---
+id: InventoryCreated
+name: InventoryCreated
+version: '1.0'
+summary: Event published by inventory service when inventorycreated occurs
+owners:
+  - inventory-service
+producers:
+  - inventory-service
+consumers:
+  - inventory-service
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# InventoryCreatedEvent
+
+**Schema ID**: 64
+**Schema Version**: 1
+**Subject**: InventoryCreatedEvent
+**Domain**: Distribution
+**Namespace**: com.arcone.biopro.distribution.inventory.domain.event
+
+## Business Context
+
+Event published when inventorycreated occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+| `aggregate` | `string` | Yes | aggregate field |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "4e0e52cd-6c51-48ee-882c-301c0625f9f8",
+  "occurredOn": 1763355987371,
+  "occurredOnTimeZone": 1763355987371,
+  "aggregate": "aggregate_value"
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 64
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./InventoryCreatedEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

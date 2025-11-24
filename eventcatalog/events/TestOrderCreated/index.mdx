@@ -1,0 +1,95 @@
+---
+id: TestOrderCreated
+name: TestOrderCreated
+version: '1.0'
+summary: Event published by testresultmanagement service when testordercreated occurs
+owners:
+  - testresultmanagement-service
+producers:
+  - testresultmanagement-service
+consumers:
+  - testresultmanagement-service
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Donor"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# TestOrderCreatedEvent
+
+**Schema ID**: 85
+**Schema Version**: 1
+**Subject**: TestOrderCreatedEvent
+**Domain**: Unknown
+**Namespace**: com.arcone.biopro.donor.testresultmanagement.domain.event
+
+## Business Context
+
+Event published when testordercreated occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+| `BioProDefaultEventData` | `string` | Yes | BioProDefaultEventData field |
+| `payload` | `string` | Yes | payload field |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "93da3ddb-194e-4b59-a947-38ce1362f7ce",
+  "occurredOn": 1763355987971,
+  "occurredOnTimeZone": 1763355987971,
+  "eventType": "STANDARD",
+  "eventVersion": "1.0",
+  "BioProDefaultEventData": "BioProDefaultEventData_value",
+  "payload": "payload_value"
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 85
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./TestOrderCreatedEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

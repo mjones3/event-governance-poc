@@ -1,0 +1,43 @@
+{
+  "eventId": "550e8400-e29b-41d4-a716-446655440000",
+  "occurredOn": 1704067200000,
+  "occurredOnTimeZone": "America/Chicago",
+  "eventType": "ApheresisPlasmaProductCreated",
+  "eventVersion": "1.0",
+  "payload": {
+    "unitNumber": "UNIT-2024-001",
+    "productCode": "PLASMA_APHERESIS",
+    "productDescription": "Apheresis Plasma Product",
+    "productFamily": "PLASMA",
+    "completionStage": "COMPLETE",
+    "weight": {
+      "value": 250.5,
+      "unit": "GRAMS"
+    },
+    "volume": {
+      "value": 600.0,
+      "unit": "ML"
+    },
+    "anticoagulantVolume": {
+      "value": 63.0,
+      "unit": "ML"
+    },
+    "drawTime": 1704067200000,
+    "drawTimeZone": "America/Chicago",
+    "donationType": "APHERESIS",
+    "procedureType": "AUTOMATED",
+    "collectionLocation": "CENTER-001",
+    "manufacturingLocation": "FACILITY-002",
+    "aboRh": "O_POS",
+    "performedBy": "TECH-123",
+    "createDate": 1704067200000,
+    "createDateTimeZone": "UTC",
+    "expirationDate": 1735689600000,
+    "expirationTime": 1735689600000,
+    "collectionTimeZone": "America/Chicago",
+    "bagType": "TRIPLE_BAG",
+    "autoConverted": false,
+    "inputProducts": [],
+    "additionalSteps": []
+  }
+}

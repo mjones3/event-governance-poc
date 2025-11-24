@@ -1,0 +1,106 @@
+---
+id: shipping-service
+version: '1.0.0'
+name: Shipping Service
+summary: BioPro Distribution domain service
+badges:
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-distribution"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 5 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: ExternalTransferCompleted
+      version: '1.0'
+    - id: ShipmentCompleted
+      version: '1.0'
+    - id: ShipmentCreated
+      version: '1.0'
+    - id: ShipmentItemPacked
+      version: '1.0'
+    - id: ShipmentPackingStarted
+      version: '1.0'
+receives:
+    - id: ShipmentCompleted
+      version: '1.0'
+    - id: ShipmentPackingStarted
+      version: '1.0'
+    - id: CustomerCreated
+      version: '1.0'
+    - id: CustomerUpdated
+      version: '1.0'
+    - id: ShipmentCreated
+      version: '1.0'
+    - id: ExternalTransferCompleted
+      version: '1.0'
+    - id: ShipmentCreated
+      version: '1.0'
+    - id: ShipmentPackingStartedOutput
+      version: '1.0'
+    - id: ShipmentCompletedOutput
+      version: '1.0'
+    - id: ShipmentPackingStartedDomain
+      version: '1.0'
+    - id: ExternalTransferCompleted
+      version: '1.0'
+    - id: OrderFulfilled
+      version: '1.0'
+    - id: ProductLocationHistory
+      version: '1.0'
+    - id: ShipmentCreatedOutput
+      version: '1.0'
+    - id: ExternalTransferCompletedOutput
+      version: '1.0'
+---
+
+# Shipping Service
+
+**Domain**: Distribution
+**Repository**: biopro-distribution
+
+## Overview
+
+The shipping service is responsible for handling shipping operations within the BioPro Distribution domain.
+
+## Events Published
+
+This service publishes 5 events:
+
+- **ExternalTransferCompleted**: ExternalTransferCompletedEvent
+- **ShipmentCompleted**: ShipmentCompletedEvent
+- **ShipmentCreated**: ShipmentCreatedEvent
+- **ShipmentItemPacked**: ShipmentItemPackedEvent
+- **ShipmentPackingStarted**: ShipmentPackingStartedEvent
+
+## Events Consumed
+
+This service consumes 15 events:
+
+- **ShipmentCompleted**: Consumed from upstream services
+- **ShipmentPackingStarted**: Consumed from upstream services
+- **CustomerCreated**: Consumed from upstream services
+- **CustomerUpdated**: Consumed from upstream services
+- **ShipmentCreated**: Consumed from upstream services
+- **ExternalTransferCompleted**: Consumed from upstream services
+- **ShipmentCreated**: Consumed from upstream services
+- **ShipmentPackingStartedOutput**: Consumed from upstream services
+- **ShipmentCompletedOutput**: Consumed from upstream services
+- **ShipmentPackingStartedDomain**: Consumed from upstream services
+- **ExternalTransferCompleted**: Consumed from upstream services
+- **OrderFulfilled**: Consumed from upstream services
+- **ProductLocationHistory**: Consumed from upstream services
+- **ShipmentCreatedOutput**: Consumed from upstream services
+- **ExternalTransferCompletedOutput**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

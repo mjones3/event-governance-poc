@@ -1,0 +1,98 @@
+---
+id: VolumeCalculatedRequest
+name: VolumeCalculatedRequest
+version: '1.0'
+summary: Event published by qualitycontrol service when volumecalculatedrequest occurs
+owners:
+  - qualitycontrol-service
+producers:
+  - qualitycontrol-service
+consumers:
+  - qualitycontrol-service
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# VolumeCalculatedRequestEvent
+
+**Schema ID**: 129
+**Schema Version**: 1
+**Subject**: VolumeCalculatedRequestEvent
+**Domain**: Manufacturing
+**Namespace**: com.arcone.biopro.manufacturing.qualitycontrol.domain.event
+
+## Business Context
+
+Event published when volumecalculatedrequest occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+| `Number` | `string` | Yes | Number field |
+| `Unit` | `string` | Yes | Unit field |
+| `completed` | `string` | Yes | completed field |
+| `pqc` | `string` | Yes | pqc field |
+| `result` | `string` | Yes | result field |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "892387b8-7fce-49a0-9d6e-43609c4b022c",
+  "occurredOn": 1763355988139,
+  "Number": "W992601344",
+  "Unit": "W176707536",
+  "completed": "completed_value",
+  "pqc": "pqc_value",
+  "result": "result_value"
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 129
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./VolumeCalculatedRequestEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

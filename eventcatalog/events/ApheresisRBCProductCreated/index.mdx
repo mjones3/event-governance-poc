@@ -1,0 +1,89 @@
+---
+id: ApheresisRBCProductCreated
+name: ApheresisRBCProductCreated
+version: '1.0'
+summary: Event published by apheresisrbc service when apheresis plasma product created occurs
+owners:
+  - apheresisrbc-service
+producers:
+  - apheresisrbc-service
+consumers:
+  - storage-service
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# ApheresisRBCProductCreatedEvent
+
+**Schema ID**: 110
+**Schema Version**: 2
+**Subject**: ApheresisRBCProductCreatedEvent
+**Domain**: Manufacturing
+**Namespace**: com.arcone.biopro.manufacturing.apheresisrbc.domain.event
+
+## Business Context
+
+Event published when apheresis plasma product created occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "2f13db57-99cc-45e9-b85d-65078c1beb4d",
+  "occurredOn": 1763355986936,
+  "occurredOnTimeZone": 1763355986936
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 110
+- **Version**: 2
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./ApheresisRBCProductCreatedEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

@@ -1,0 +1,139 @@
+---
+id: qualitycontrol-service
+version: '1.0.0'
+name: Qualitycontrol Service
+summary: BioPro Manufacturing domain service
+badges:
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-manufacturing"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 11 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: BottleInformationRequest
+      version: '1.0'
+    - id: PQCCompletedConsequence
+      version: '1.0'
+    - id: PQCCompleted
+      version: '1.0'
+    - id: PQCNotifyTestRequestCreated
+      version: '1.0'
+    - id: PQCTestType
+      version: '1.0'
+    - id: QCRequest
+      version: '1.0'
+    - id: QcSampleCollectedRequest
+      version: '1.0'
+    - id: Quarantine
+      version: '1.0'
+    - id: QuarantineProduct
+      version: '1.0'
+    - id: VolumeCalculatedRequest
+      version: '1.0'
+    - id: VolumeDetailRequest
+      version: '1.0'
+receives:
+    - id: DeviceCreated
+      version: '1.0'
+    - id: ProductCreated
+      version: '1.0'
+    - id: QCRequest
+      version: '1.0'
+    - id: QcSampleCollectedRequest
+      version: '1.0'
+    - id: VolumeCalculatedRequest
+      version: '1.0'
+    - id: LocationAdded
+      version: '1.0'
+    - id: ApheresisRbcQc
+      version: '1.0'
+    - id: ApheresisPlateletsQc
+      version: '1.0'
+    - id: LocationModified
+      version: '1.0'
+    - id: WholeBloodSampleCollected
+      version: '1.0'
+    - id: ApheresisPlateletsVolumeCalculated
+      version: '1.0'
+    - id: BottleInformation
+      version: '1.0'
+    - id: ProductDesignation
+      version: '1.0'
+    - id: ApheresisPlateletsSampleCollected
+      version: '1.0'
+    - id: WholeBloodQc
+      version: '1.0'
+    - id: LocationDecommissioned
+      version: '1.0'
+    - id: ApheresisRbcVolumeCalculated
+      version: '1.0'
+    - id: WholeBloodVolumeCalculated
+      version: '1.0'
+    - id: ApheresisRbcSampleCollected
+      version: '1.0'
+    - id: DeviceUpdate
+      version: '1.0'
+---
+
+# Qualitycontrol Service
+
+**Domain**: Manufacturing
+**Repository**: biopro-manufacturing
+
+## Overview
+
+The qualitycontrol service is responsible for handling qualitycontrol operations within the BioPro Manufacturing domain.
+
+## Events Published
+
+This service publishes 11 events:
+
+- **BottleInformationRequest**: BottleInformationRequestEvent
+- **PQCCompletedConsequence**: PQCCompletedConsequenceEvent
+- **PQCCompleted**: PQCCompletedEvent
+- **PQCNotifyTestRequestCreated**: PQCNotifyTestRequestCreatedEvent
+- **PQCTestType**: PQCTestTypeEvent
+- **QCRequest**: QCRequestEvent
+- **QcSampleCollectedRequest**: QcSampleCollectedRequestEvent
+- **Quarantine**: QuarantineEvent
+- **QuarantineProduct**: QuarantineProductEvent
+- **VolumeCalculatedRequest**: VolumeCalculatedRequestEvent
+- **VolumeDetailRequest**: VolumeDetailRequestEvent
+
+## Events Consumed
+
+This service consumes 20 events:
+
+- **DeviceCreated**: Consumed from upstream services
+- **ProductCreated**: Consumed from upstream services
+- **QCRequest**: Consumed from upstream services
+- **QcSampleCollectedRequest**: Consumed from upstream services
+- **VolumeCalculatedRequest**: Consumed from upstream services
+- **LocationAdded**: Consumed from upstream services
+- **ApheresisRbcQc**: Consumed from upstream services
+- **ApheresisPlateletsQc**: Consumed from upstream services
+- **LocationModified**: Consumed from upstream services
+- **WholeBloodSampleCollected**: Consumed from upstream services
+- **ApheresisPlateletsVolumeCalculated**: Consumed from upstream services
+- **BottleInformation**: Consumed from upstream services
+- **ProductDesignation**: Consumed from upstream services
+- **ApheresisPlateletsSampleCollected**: Consumed from upstream services
+- **WholeBloodQc**: Consumed from upstream services
+- **LocationDecommissioned**: Consumed from upstream services
+- **ApheresisRbcVolumeCalculated**: Consumed from upstream services
+- **WholeBloodVolumeCalculated**: Consumed from upstream services
+- **ApheresisRbcSampleCollected**: Consumed from upstream services
+- **DeviceUpdate**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

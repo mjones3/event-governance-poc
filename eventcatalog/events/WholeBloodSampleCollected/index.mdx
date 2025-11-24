@@ -1,0 +1,90 @@
+---
+id: WholeBloodSampleCollected
+name: WholeBloodSampleCollected
+version: '1.0'
+summary: Event published by wholeblood service when whole blood sample collected occurs
+owners:
+  - wholeblood-service
+producers:
+  - wholeblood-service
+consumers:
+  - qualitycontrol-service
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# WholeBloodSampleCollectedEvent
+
+**Schema ID**: 138
+**Schema Version**: 2
+**Subject**: WholeBloodSampleCollectedEvent
+**Domain**: Manufacturing
+**Namespace**: com.arcone.biopro.manufacturing.wholeblood.domain.event
+
+## Business Context
+
+Event published when whole blood sample collected occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "de14cfd8-d31c-45cf-b511-2a62108f8466",
+  "occurredOn": 1763355988277,
+  "occurredOnTimeZone": 1763355988277,
+  "eventVersion": "1.0"
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 138
+- **Version**: 2
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./WholeBloodSampleCollectedEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

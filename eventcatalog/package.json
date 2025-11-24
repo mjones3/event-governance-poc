@@ -4,17 +4,18 @@
   "description": "BioPro Event Governance - Event Catalog with Schema Registry Integration",
   "type": "module",
   "scripts": {
-    "dev": "set PORT=3002 && eventcatalog dev",
+    "dev": "cross-env PORT=3002 eventcatalog dev",
     "build": "eventcatalog build",
     "generate": "eventcatalog generate",
-    "serve": "set PORT=3002 && eventcatalog serve",
+    "serve": "cross-env PORT=3002 eventcatalog serve",
     "sync": "node sync-schemas.js"
   },
   "dependencies": {
-    "@eventcatalog/core": "^2.10.0"
+    "@eventcatalog/core": "^2.10.0",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
-    "axios": "^1.6.0",
-    "avsc": "^5.7.7"
+    "avsc": "^5.7.7",
+    "axios": "^1.6.0"
   }
 }

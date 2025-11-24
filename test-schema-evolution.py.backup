@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""
+Schema Evolution Test Script
+Simulates gradual migration from v1.0 to v2.0 schema
+"""
+import requests
+import time
+import random
+import json
+from datetime import datetime
+
+ORDERS_SERVICE_URL = "http://localhost:8080"
+
+# Schema versions with their probabilities over time
+def get_version_probability(iteration, total_iterations):
+    """
+    Calculate probability of using v2.0 based on iteration
+    Simulates gradual rollout: 0% -> 100% v2.0
+    """
+    progress = iteration / total_iterations
+    v2_probability = progress  # Linear rollout
+    return v2_probability
+
+def create_v1_order():
+    """Create order using v1.0 schema (no new fields)"""
+    return {
+        "orderId": f"ORD-V1-{random.randint(10000, 99999)}",
+        "bloodType": random.choice(["A_POSITIVE", "A_NEGATIVE", "B_POSITIVE", "O_NEGATIVE"]),
+        "quantity": random.randint(1, 10),
+        "priority": random.choice(["ROUTINE", "URGENT", "LIFE_THREATENING"]),
+        "facilityId": f"FAC-{random.randint(100, 999)}",
+        "requestedBy": f"EMP{random.randint(1000, 9999)}",
+        "orderStatus": "PENDING"
+    }
+
+def create_v2_order():
+    """Create order using v2.0 schema (includes new optional fields)"""
+    order = create_v1_order()
+    order['orderId'] = order['orderId'].replace('V1', 'V2')
+    
+    # Add v2.0 fields
+    order['orderSource'] = random.choice(["WEB", "MOBILE", "API", "INTERNAL"])
+    order['requestedDeliveryDate'] = int(time.time() * 1000) + random.randint(86400, 604800) * 1000
+    
+    if random.choice([True, False]):  # 50% chance of emergency contact
+        order['emergencyContact'] = {
+            "name": f"Contact-{random.randint(100, 999)}",
+            "phone": f"+1-555-{random.randint(1000, 9999)}",
+            "relationship": random.choice(["SPOUSE", "PARENT", "SIBLING", "FRIEND", None])
+        }
+    
+    return order
+
+def send_order(order, version):
+    """Send order to orders service"""
+    try:
+        response = requests.post(
+            f"{ORDERS_SERVICE_URL}/api/orders",
+            json=order,
+            headers={"Content-Type": "application/json"},
+            timeout=5
+        )
+        
+        if response.status_code == 200:
+            return True, version
+        else:
+            print(f"❌ Failed to send {version} order: {response.status_code}")
+            return False, version
+    except Exception as e:
+        print(f"❌ Error sending {version} order: {e}")
+        return False, version
+
+def main():
+    print("=" * 70)
+    print("  BioPro Schema Evolution Test")
+    print("  Simulating gradual migration from v1.0 to v2.0")
+    print("=" * 70)
+    print()
+    
+    # Configuration
+    total_messages = 100
+    messages_per_batch = 10
+    batch_delay = 2  # seconds between batches
+    
+    stats = {"v1.0": 0, "v2.0": 0, "failed": 0}
+    
+    print(f"Configuration:")
+    print(f"  Total messages: {total_messages}")
+    print(f"  Batch size: {messages_per_batch}")
+    print(f"  Batch delay: {batch_delay}s")
+    print(f"  Evolution pattern: Linear 0% -> 100% v2.0")
+    print()
+    
+    print("Starting test...")
+    print()
+    
+    for i in range(0, total_messages, messages_per_batch):
+        batch_num = (i // messages_per_batch) + 1
+        total_batches = total_messages // messages_per_batch
+        
+        print(f"[Batch {batch_num}/{total_batches}] Sending {messages_per_batch} messages...")
+        
+        batch_stats = {"v1.0": 0, "v2.0": 0}
+        
+        for j in range(messages_per_batch):
+            iteration = i + j
+            v2_prob = get_version_probability(iteration, total_messages)
+            
+            # Decide version based on probability
+            use_v2 = random.random() < v2_prob
+            
+            if use_v2:
+                order = create_v2_order()
+                version = "v2.0"
+            else:
+                order = create_v1_order()
+                version = "v1.0"
+            
+            success, ver = send_order(order, version)
+            
+            if success:
+                stats[ver] += 1
+                batch_stats[ver] += 1
+            else:
+                stats["failed"] += 1
+            
+            time.sleep(0.1)  # Small delay between messages
+        
+        # Print batch summary
+        v2_percentage = (batch_stats["v2.0"] / messages_per_batch) * 100
+        print(f"  ├─ v1.0: {batch_stats['v1.0']} | v2.0: {batch_stats['v2.0']} ({v2_percentage:.0f}% v2.0)")
+        print(f"  └─ Cumulative: v1.0={stats['v1.0']}, v2.0={stats['v2.0']}, failed={stats['failed']}")
+        print()
+        
+        if i + messages_per_batch < total_messages:
+            print(f"Waiting {batch_delay}s before next batch...")
+            time.sleep(batch_delay)
+    
+    print("=" * 70)
+    print("  Test Complete!")
+    print("=" * 70)
+    print()
+    print("Final Statistics:")
+    print(f"  v1.0 messages: {stats['v1.0']} ({stats['v1.0']/total_messages*100:.1f}%)")
+    print(f"  v2.0 messages: {stats['v2.0']} ({stats['v2.0']/total_messages*100:.1f}%)")
+    print(f"  Failed: {stats['failed']}")
+    print(f"  Total: {stats['v1.0'] + stats['v2.0'] + stats['failed']}")
+    print()
+    print("✅ Check Grafana dashboard to visualize schema version distribution!")
+    print()
+
+if __name__ == "__main__":
+    main()

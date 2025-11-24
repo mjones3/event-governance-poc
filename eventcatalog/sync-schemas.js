@@ -188,6 +188,9 @@ version: '${version}'
 summary: Event ${eventName} - BioPro System
 owners:
     - ${service}
+producers:
+    - ${service}
+consumers: []
 ---
 
 # ${eventName} Event
@@ -240,6 +243,8 @@ ${generateExamplePayload(schema)}
 
 // Generate service markdown
 function generateServiceMarkdown(serviceName, events, domain) {
+  const publishesYaml = events.map(e => `    - id: ${e.name}\n      version: '${e.version}'`).join('\n');
+
   return `---
 id: ${serviceName}
 name: ${serviceName}
@@ -247,6 +252,9 @@ version: 1.0.0
 summary: ${serviceName} - BioPro Event Producer
 owners:
     - BioPro Platform Team
+publishes:
+${publishesYaml}
+subscribes: []
 ---
 
 # ${serviceName}

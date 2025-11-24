@@ -1,0 +1,95 @@
+{
+  "type": "record",
+  "name": "ApheresisPlasmaProductUnsuitableEvent",
+  "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event",
+  "doc": "Event published when apheresisplasmaproductunsuitable occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "ApheresisPlasmaProductUnsuitable"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "payload",
+      "type": {
+        "type": "record",
+        "name": "ProductUnsuitablePayload",
+        "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event.payload",
+        "doc": "Product Unsuitable Payload",
+        "fields": [
+          {
+            "name": "unitNumber",
+            "type": "string",
+            "doc": "Unit Number (example: W036202412345)"
+          },
+          {
+            "name": "productCode",
+            "type": "string",
+            "doc": "Product Code"
+          },
+          {
+            "name": "reasonKey",
+            "type": "string",
+            "doc": "Reason Key"
+          },
+          {
+            "name": "triggeredBy",
+            "type": "string",
+            "doc": "Process identifier (example: APHERESIS_PLASMA)"
+          },
+          {
+            "name": "performedBy",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Manufacturing User",
+            "default": null
+          },
+          {
+            "name": "createDate",
+            "type": [
+              "null",
+              {
+                "type": "long",
+                "logicalType": "timestamp-millis"
+              }
+            ],
+            "doc": "Record creation date and time",
+            "default": null
+          }
+        ]
+      },
+      "doc": "ApheresisPlasmaProductUnsuitableEvent payload"
+    }
+  ]
+}

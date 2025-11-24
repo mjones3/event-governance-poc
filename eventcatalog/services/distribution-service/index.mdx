@@ -1,0 +1,110 @@
+---
+id: distribution-service
+name: Distribution Service
+version: '1.0.0'
+summary: Manages plasma product distribution logistics, shipping schedules, and delivery tracking
+owners:
+  - Distribution Team
+repository:
+  language: Java
+  url: https://github.com/biopro/distribution-service
+receives:
+  - id: ApheresisPlasmaProductCreated
+    version: '2.3'
+  - id: ApheresisPlasmaProductCompleted
+    version: '1.0'
+sends:
+  - id: ShipmentScheduled
+    version: '1.0'
+  - id: ProductShipped
+    version: '1.0'
+  - id: ProductDelivered
+    version: '1.0'
+  - id: TemperatureExcursion
+    version: '1.0'
+badges:
+  - content: "Java 17"
+    backgroundColor: "#007396"
+    textColor: white
+  - content: "Spring Boot 3.x"
+    backgroundColor: "#6db33f"
+    textColor: white
+  - content: "Production"
+    backgroundColor: "#22c55e"
+    textColor: white
+---
+
+# Distribution Service
+
+The Distribution Service manages the logistics of plasma product distribution, including planning shipments, tracking deliveries, and coordinating with healthcare facilities.
+
+## Responsibilities
+
+- Plan distribution logistics for new products
+- Release products for distribution after completion
+- Coordinate shipments to healthcare facilities
+- Track product location during transit
+- Manage temperature monitoring during transport
+
+## Events Consumed
+
+### ApheresisPlasmaProductCreated
+**From**: manufacturing-service
+**Purpose**: Plan distribution logistics
+**Critical**: Yes
+**Handler**: `ApheresisPlasmaProductCreatedListener`
+
+### ApheresisPlasmaProductCompleted
+**From**: manufacturing-service
+**Purpose**: Release for distribution
+**Critical**: Yes
+**Handler**: `ApheresisPlasmaProductCompletedListener`
+
+## Events Published
+
+- `ShipmentScheduled` - When shipment is planned
+- `ProductShipped` - When product leaves facility
+- `ProductDelivered` - When product reaches destination
+- `TemperatureExcursion` - When temperature monitoring detects issues
+
+## Technical Details
+
+### Technology Stack
+- **Runtime**: Java 17
+- **Framework**: Spring Boot 3.x
+- **Messaging**: Apache Kafka with Avro
+- **Database**: PostgreSQL
+- **Tracking**: Integration with logistics partners
+
+### Deployment
+- **Environment**: Kubernetes
+- **Replicas**: 2
+- **Port**: 8086
+
+### Integrations
+- FedEx Medical API
+- UPS Healthcare
+- Cold chain monitoring systems
+- Healthcare facility management systems
+
+## Team Information
+
+- **Team**: Distribution Team
+- **Lead**: Distribution Manager
+- **Contact**: distribution-team@biopro.com
+- **Slack**: #distribution
+- **On-Call**: PagerDuty - Distribution Rotation
+
+## Monitoring
+
+### Key Metrics
+- On-time delivery rate
+- Temperature excursion incidents
+- Transit time (facility to destination)
+- Product availability for shipment
+
+### Critical Alerts
+- Temperature excursions
+- Delayed shipments
+- Failed deliveries
+- System unavailability

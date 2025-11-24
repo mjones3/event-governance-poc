@@ -1,0 +1,109 @@
+---
+id: wholeblood-service
+version: '1.0.0'
+name: Wholeblood Service
+summary: BioPro Manufacturing domain service
+badges:
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-manufacturing"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 7 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: ProductUnsuitable
+      version: '1.0'
+    - id: WholeBloodProductCompleted
+      version: '1.0'
+    - id: WholeBloodProductCreated
+      version: '1.0'
+    - id: WholeBloodProductUpdated
+      version: '1.0'
+    - id: WholeBloodQCRequested
+      version: '1.0'
+    - id: WholeBloodSampleCollected
+      version: '1.0'
+    - id: WholeBloodVolumeCalculated
+      version: '1.0'
+receives:
+    - id: ProductUnsuitable
+      version: '1.0'
+    - id: QuarantineRemoved
+      version: '1.0'
+    - id: DeviceCreated
+      version: '1.0'
+    - id: ProductStored
+      version: '1.0'
+    - id: DeviceUpdated
+      version: '1.0'
+    - id: CheckInUpdated
+      version: '1.0'
+    - id: TestResultPanelCompleted
+      version: '1.0'
+    - id: UnitUnsuitable
+      version: '1.0'
+    - id: ProductDiscarded
+      version: '1.0'
+    - id: ProductQuarantined
+      version: '1.0'
+    - id: CheckInCompleted
+      version: '1.0'
+    - id: ProductRecovered
+      version: '1.0'
+    - id: PqcTestTypeRequestCreated
+      version: '1.0'
+    - id: PqcTestCompleted
+      version: '1.0'
+---
+
+# Wholeblood Service
+
+**Domain**: Manufacturing
+**Repository**: biopro-manufacturing
+
+## Overview
+
+The wholeblood service is responsible for handling wholeblood operations within the BioPro Manufacturing domain.
+
+## Events Published
+
+This service publishes 7 events:
+
+- **ProductUnsuitable**: ProductUnsuitableEvent
+- **WholeBloodProductCompleted**: WholeBloodProductCompletedEvent
+- **WholeBloodProductCreated**: WholeBloodProductCreatedEvent
+- **WholeBloodProductUpdated**: WholeBloodProductUpdatedEvent
+- **WholeBloodQCRequested**: WholeBloodQCRequestedEvent
+- **WholeBloodSampleCollected**: WholeBloodSampleCollectedEvent
+- **WholeBloodVolumeCalculated**: WholeBloodVolumeCalculatedEvent
+
+## Events Consumed
+
+This service consumes 14 events:
+
+- **ProductUnsuitable**: Consumed from upstream services
+- **QuarantineRemoved**: Consumed from upstream services
+- **DeviceCreated**: Consumed from upstream services
+- **ProductStored**: Consumed from upstream services
+- **DeviceUpdated**: Consumed from upstream services
+- **CheckInUpdated**: Consumed from upstream services
+- **TestResultPanelCompleted**: Consumed from upstream services
+- **UnitUnsuitable**: Consumed from upstream services
+- **ProductDiscarded**: Consumed from upstream services
+- **ProductQuarantined**: Consumed from upstream services
+- **CheckInCompleted**: Consumed from upstream services
+- **ProductRecovered**: Consumed from upstream services
+- **PqcTestTypeRequestCreated**: Consumed from upstream services
+- **PqcTestCompleted**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

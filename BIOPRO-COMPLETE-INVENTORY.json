@@ -1,0 +1,4111 @@
+{
+  "summary": {
+    "repositories": 4,
+    "services": 18,
+    "events": 74,
+    "event_flows": 71
+  },
+  "services": [
+    {
+      "name": "collections",
+      "repository": "biopro-interface",
+      "events_published": 2,
+      "events_consumed": 0,
+      "published_events": [
+        "AcceptedNewDonationEvent",
+        "AcceptedUpdatedDonationEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "AcceptedNewDonationEvent",
+          "package": "com.arcone.biopro.interfaces.collections.domain.event",
+          "type": "ACCEPTEDNEWDONATION",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-interface\\backend\\collections\\src\\main\\java\\com\\arcone\\biopro\\interfaces\\collections\\domain\\event\\AcceptedNewDonationEvent.java",
+          "fields": [
+            {
+              "name": "source",
+              "type": "CollectionAggregate",
+              "required": true
+            }
+          ],
+          "service": "collections",
+          "repository": "biopro-interface"
+        },
+        {
+          "name": "AcceptedUpdatedDonationEvent",
+          "package": "com.arcone.biopro.interfaces.collections.domain.event",
+          "type": "ACCEPTEDUPDATEDDONATION",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-interface\\backend\\collections\\src\\main\\java\\com\\arcone\\biopro\\interfaces\\collections\\domain\\event\\AcceptedUpdatedDonationEvent.java",
+          "fields": [
+            {
+              "name": "source",
+              "type": "CollectionAggregate",
+              "required": true
+            }
+          ],
+          "service": "collections",
+          "repository": "biopro-interface"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "customer",
+      "repository": "biopro-distribution",
+      "events_published": 0,
+      "events_consumed": 0,
+      "published_events": [],
+      "consumed_events": [],
+      "event_details": [],
+      "consumer_details": []
+    },
+    {
+      "name": "eventbridge",
+      "repository": "biopro-distribution",
+      "events_published": 9,
+      "events_consumed": 0,
+      "published_events": [
+        "InventoryUpdatedOutboundEvent",
+        "OrderCancelledOutboundEvent",
+        "OrderCompletedOutboundEvent",
+        "OrderCreatedOutboundEvent",
+        "OrderModifiedOutboundEvent",
+        "OrderPackingStartedOutboundEvent",
+        "RecoveredPlasmaShipmentClosedOutboundEvent",
+        "RecruitmentAndEligibilityOutboundEvent",
+        "ShipmentCompletedOutboundEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "InventoryUpdatedOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "INVENTORYUPDATEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\InventoryUpdatedOutboundEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "InventoryUpdatedOutbound",
+              "required": false
+            }
+          ],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderCancelledOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "ORDERCANCELLEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderCancelledOutboundEvent.java",
+          "fields": [],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderCompletedOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "ORDERCOMPLETEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderCompletedOutboundEvent.java",
+          "fields": [],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderCreatedOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "ORDERCREATEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderCreatedOutboundEvent.java",
+          "fields": [],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderModifiedOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "ORDERMODIFIEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderModifiedOutboundEvent.java",
+          "fields": [],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderPackingStartedOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "ORDERPACKINGSTARTEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderPackingStartedOutboundEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "OrderPackingStartedOutbound",
+              "required": false
+            }
+          ],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecoveredPlasmaShipmentClosedOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "RECOVEREDPLASMASHIPMENTCLOSEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\RecoveredPlasmaShipmentClosedOutboundEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "RecoveredPlasmaShipmentClosedOutbound",
+              "required": false
+            }
+          ],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecruitmentAndEligibilityOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "RECRUITMENTANDELIGIBILITYOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\RecruitmentAndEligibilityOutboundEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "RecruitmentAndEligibilityOutbound",
+              "required": false
+            }
+          ],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "ShipmentCompletedOutboundEvent",
+          "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+          "type": "SHIPMENTCOMPLETEDOUTBOUND",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\ShipmentCompletedOutboundEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "ShipmentCompletedOutbound",
+              "required": false
+            }
+          ],
+          "service": "eventbridge",
+          "repository": "biopro-distribution"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "inventory",
+      "repository": "biopro-distribution",
+      "events_published": 2,
+      "events_consumed": 0,
+      "published_events": [
+        "InventoryCreatedEvent",
+        "InventoryUpdatedApplicationEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "InventoryCreatedEvent",
+          "package": "com.arcone.biopro.distribution.inventory.domain.event",
+          "type": "INVENTORYCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\inventory\\src\\main\\java\\com\\arcone\\biopro\\distribution\\inventory\\domain\\event\\InventoryCreatedEvent.java",
+          "fields": [
+            {
+              "name": "aggregate",
+              "type": "InventoryAggregate",
+              "required": true
+            }
+          ],
+          "service": "inventory",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "InventoryUpdatedApplicationEvent",
+          "package": "com.arcone.biopro.distribution.inventory.domain.event",
+          "type": "INVENTORYUPDATEDAPPLICATION",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\inventory\\src\\main\\java\\com\\arcone\\biopro\\distribution\\inventory\\domain\\event\\InventoryUpdatedApplicationEvent.java",
+          "fields": [
+            {
+              "name": "inventory",
+              "type": "Inventory",
+              "required": true
+            },
+            {
+              "name": "inventoryUpdateType",
+              "type": "InventoryUpdateType",
+              "required": true
+            }
+          ],
+          "service": "inventory",
+          "repository": "biopro-distribution"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "irradiation",
+      "repository": "biopro-distribution",
+      "events_published": 2,
+      "events_consumed": 0,
+      "published_events": [
+        "ProductModifiedEvent",
+        "ProductQuarantinedEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "ProductModifiedEvent",
+          "package": "com.arcone.biopro.distribution.irradiation.domain.event",
+          "type": "PRODUCTMODIFIED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\irradiation\\src\\main\\java\\com\\arcone\\biopro\\distribution\\irradiation\\domain\\event\\ProductModifiedEvent.java",
+          "fields": [],
+          "service": "irradiation",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "ProductQuarantinedEvent",
+          "package": "com.arcone.biopro.distribution.irradiation.domain.event",
+          "type": "PRODUCTQUARANTINED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\irradiation\\src\\main\\java\\com\\arcone\\biopro\\distribution\\irradiation\\domain\\event\\ProductQuarantinedEvent.java",
+          "fields": [],
+          "service": "irradiation",
+          "repository": "biopro-distribution"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "order",
+      "repository": "biopro-distribution",
+      "events_published": 6,
+      "events_consumed": 0,
+      "published_events": [
+        "OrderCancelledEvent",
+        "OrderCompletedEvent",
+        "OrderCreatedEvent",
+        "OrderModifiedEvent",
+        "OrderRejectedEvent",
+        "PickListCreatedEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "OrderCancelledEvent",
+          "package": "com.arcone.biopro.distribution.order.domain.event",
+          "type": "ORDERCANCELLED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderCancelledEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Order",
+              "required": false
+            }
+          ],
+          "service": "order",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderCompletedEvent",
+          "package": "com.arcone.biopro.distribution.order.domain.event",
+          "type": "ORDERCOMPLETED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderCompletedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Order",
+              "required": false
+            }
+          ],
+          "service": "order",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderCreatedEvent",
+          "package": "com.arcone.biopro.distribution.order.domain.event",
+          "type": "ORDERCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderCreatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Order",
+              "required": false
+            }
+          ],
+          "service": "order",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderModifiedEvent",
+          "package": "com.arcone.biopro.distribution.order.domain.event",
+          "type": "ORDERMODIFIED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderModifiedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Order",
+              "required": false
+            }
+          ],
+          "service": "order",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "OrderRejectedEvent",
+          "package": "com.arcone.biopro.distribution.order.domain.event",
+          "type": "ORDERREJECTED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderRejectedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "OrderRejectedPayload",
+              "required": false
+            }
+          ],
+          "service": "order",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "PickListCreatedEvent",
+          "package": "com.arcone.biopro.distribution.order.domain.event",
+          "type": "PICKLISTCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\PickListCreatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "PickList",
+              "required": false
+            }
+          ],
+          "service": "order",
+          "repository": "biopro-distribution"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "partnerorderprovider",
+      "repository": "biopro-distribution",
+      "events_published": 0,
+      "events_consumed": 0,
+      "published_events": [],
+      "consumed_events": [],
+      "event_details": [],
+      "consumer_details": []
+    },
+    {
+      "name": "receiving",
+      "repository": "biopro-distribution",
+      "events_published": 2,
+      "events_consumed": 0,
+      "published_events": [
+        "ImportCompletedDomainEvent",
+        "TransferReceiptCompletedDomainEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "ImportCompletedDomainEvent",
+          "package": "com.arcone.biopro.distribution.receiving.domain.event",
+          "type": "IMPORTCOMPLETEDDOMAIN",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\receiving\\src\\main\\java\\com\\arcone\\biopro\\distribution\\receiving\\domain\\event\\ImportCompletedDomainEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Import",
+              "required": false
+            }
+          ],
+          "service": "receiving",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "TransferReceiptCompletedDomainEvent",
+          "package": "com.arcone.biopro.distribution.receiving.domain.event",
+          "type": "TRANSFERRECEIPTCOMPLETEDDOMAIN",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\receiving\\src\\main\\java\\com\\arcone\\biopro\\distribution\\receiving\\domain\\event\\TransferReceiptCompletedDomainEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "TransferReceipt",
+              "required": false
+            }
+          ],
+          "service": "receiving",
+          "repository": "biopro-distribution"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "recoveredplasmashipping",
+      "repository": "biopro-distribution",
+      "events_published": 7,
+      "events_consumed": 0,
+      "published_events": [
+        "RecoveredPlasmaCartonClosedEvent",
+        "RecoveredPlasmaCartonCreatedEvent",
+        "RecoveredPlasmaCartonRemovedEvent",
+        "RecoveredPlasmaCartonUnpackedEvent",
+        "RecoveredPlasmaShipmentClosedEvent",
+        "RecoveredPlasmaShipmentCreatedEvent",
+        "RecoveredPlasmaShipmentProcessingEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "RecoveredPlasmaCartonClosedEvent",
+          "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+          "type": "RECOVEREDPLASMACARTONCLOSED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonClosedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Carton",
+              "required": false
+            }
+          ],
+          "service": "recoveredplasmashipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecoveredPlasmaCartonCreatedEvent",
+          "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+          "type": "RECOVEREDPLASMACARTONCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonCreatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Carton",
+              "required": false
+            }
+          ],
+          "service": "recoveredplasmashipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecoveredPlasmaCartonRemovedEvent",
+          "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+          "type": "RECOVEREDPLASMACARTONREMOVED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonRemovedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Carton",
+              "required": false
+            }
+          ],
+          "service": "recoveredplasmashipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecoveredPlasmaCartonUnpackedEvent",
+          "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+          "type": "RECOVEREDPLASMACARTONUNPACKED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonUnpackedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Carton",
+              "required": false
+            }
+          ],
+          "service": "recoveredplasmashipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecoveredPlasmaShipmentClosedEvent",
+          "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+          "type": "RECOVEREDPLASMASHIPMENTCLOSED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaShipmentClosedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "RecoveredPlasmaShipment",
+              "required": false
+            }
+          ],
+          "service": "recoveredplasmashipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecoveredPlasmaShipmentCreatedEvent",
+          "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+          "type": "RECOVEREDPLASMASHIPMENTCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaShipmentCreatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "RecoveredPlasmaShipment",
+              "required": false
+            }
+          ],
+          "service": "recoveredplasmashipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "RecoveredPlasmaShipmentProcessingEvent",
+          "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+          "type": "RECOVEREDPLASMASHIPMENTPROCESSING",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaShipmentProcessingEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "RecoveredPlasmaShipment",
+              "required": false
+            }
+          ],
+          "service": "recoveredplasmashipping",
+          "repository": "biopro-distribution"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "shipping",
+      "repository": "biopro-distribution",
+      "events_published": 5,
+      "events_consumed": 0,
+      "published_events": [
+        "ExternalTransferCompletedEvent",
+        "ShipmentCompletedEvent",
+        "ShipmentCreatedEvent",
+        "ShipmentItemPackedEvent",
+        "ShipmentPackingStartedEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "ExternalTransferCompletedEvent",
+          "package": "com.arcone.biopro.distribution.shipping.domain.event",
+          "type": "EXTERNALTRANSFERCOMPLETED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ExternalTransferCompletedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "ExternalTransfer",
+              "required": false
+            }
+          ],
+          "service": "shipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "ShipmentCompletedEvent",
+          "package": "com.arcone.biopro.distribution.shipping.domain.event",
+          "type": "SHIPMENTCOMPLETED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentCompletedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "ShipmentCompletedPayloadDTO",
+              "required": false
+            }
+          ],
+          "service": "shipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "ShipmentCreatedEvent",
+          "package": "com.arcone.biopro.distribution.shipping.domain.event",
+          "type": "SHIPMENTCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentCreatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "Shipment",
+              "required": false
+            }
+          ],
+          "service": "shipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "ShipmentItemPackedEvent",
+          "package": "com.arcone.biopro.distribution.shipping.domain.event",
+          "type": "SHIPMENTITEMPACKED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentItemPackedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "ShipmentItemPacked",
+              "required": false
+            }
+          ],
+          "service": "shipping",
+          "repository": "biopro-distribution"
+        },
+        {
+          "name": "ShipmentPackingStartedEvent",
+          "package": "com.arcone.biopro.distribution.shipping.domain.event",
+          "type": "SHIPMENTPACKINGSTARTED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentPackingStartedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "ShipmentCompletedPayloadDTO",
+              "required": false
+            }
+          ],
+          "service": "shipping",
+          "repository": "biopro-distribution"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "eventmanagement",
+      "repository": "biopro-donor",
+      "events_published": 4,
+      "events_consumed": 0,
+      "published_events": [
+        "FlagUnitForResearchEvent",
+        "ProductUnsuitableEvent",
+        "QuarantineProductEvent",
+        "RemoveQuarantineEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "FlagUnitForResearchEvent",
+          "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+          "type": "FLAG_UNIT_FOR_RESEARCH",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\FlagUnitForResearchEvent.java",
+          "fields": [],
+          "service": "eventmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "ProductUnsuitableEvent",
+          "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+          "type": "PRODUCT_UNSUITABLE",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\ProductUnsuitableEvent.java",
+          "fields": [],
+          "service": "eventmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "QuarantineProductEvent",
+          "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+          "type": "QUARANTINE_PRODUCT",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\QuarantineProductEvent.java",
+          "fields": [],
+          "service": "eventmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "RemoveQuarantineEvent",
+          "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+          "type": "REMOVE_QUARANTINE",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\RemoveQuarantineEvent.java",
+          "fields": [],
+          "service": "eventmanagement",
+          "repository": "biopro-donor"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "history",
+      "repository": "biopro-donor",
+      "events_published": 3,
+      "events_consumed": 0,
+      "published_events": [
+        "DonorUpdatedEvent",
+        "HistoryCreatedEvent",
+        "UnitDiscardEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "DonorUpdatedEvent",
+          "package": "com.arcone.biopro.donor.history.domain.event",
+          "type": "DONORUPDATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\history\\src\\main\\java\\com\\arcone\\biopro\\donor\\history\\domain\\event\\DonorUpdatedEvent.java",
+          "fields": [
+            {
+              "name": "donorId",
+              "type": "Long",
+              "required": false
+            },
+            {
+              "name": "externalId",
+              "type": "String",
+              "required": false
+            },
+            {
+              "name": "donor",
+              "type": "Donor",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "ZonedDateTime",
+              "required": false
+            },
+            {
+              "name": "eventType",
+              "type": "String",
+              "required": false
+            }
+          ],
+          "service": "history",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "HistoryCreatedEvent",
+          "package": "com.arcone.biopro.donor.history.domain.event",
+          "type": "HISTORYCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\history\\src\\main\\java\\com\\arcone\\biopro\\donor\\history\\domain\\event\\HistoryCreatedEvent.java",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Long",
+              "required": true
+            }
+          ],
+          "service": "history",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "UnitDiscardEvent",
+          "package": "com.arcone.biopro.donor.history.domain.event",
+          "type": "UNITDISCARD",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\history\\src\\main\\java\\com\\arcone\\biopro\\donor\\history\\domain\\event\\UnitDiscardEvent.java",
+          "fields": [
+            {
+              "name": "unitNumber",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "reasonKey",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "triggeredBy",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "performedBy",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "createDate",
+              "type": "ZonedDateTime",
+              "required": true
+            }
+          ],
+          "service": "history",
+          "repository": "biopro-donor"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "notification",
+      "repository": "biopro-donor",
+      "events_published": 2,
+      "events_consumed": 0,
+      "published_events": [
+        "DonorNotificationCompletedEvent",
+        "DonorNotificationCreatedEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "DonorNotificationCompletedEvent",
+          "package": "com.arcone.biopro.donor.notification.domain.event",
+          "type": "DONOR_NOTIFICATION_COMPLETED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\notification\\src\\main\\java\\com\\arcone\\biopro\\donor\\notification\\domain\\event\\DonorNotificationCompletedEvent.java",
+          "fields": [],
+          "service": "notification",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "DonorNotificationCreatedEvent",
+          "package": "com.arcone.biopro.donor.notification.domain.event",
+          "type": "DONOR_NOTIFICATION_CREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\notification\\src\\main\\java\\com\\arcone\\biopro\\donor\\notification\\domain\\event\\DonorNotificationCreatedEvent.java",
+          "fields": [],
+          "service": "notification",
+          "repository": "biopro-donor"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "testresultmanagement",
+      "repository": "biopro-donor",
+      "events_published": 19,
+      "events_consumed": 0,
+      "published_events": [
+        "ABORHExceptionCreatedEvent",
+        "ABORHExceptionResolvedEvent",
+        "BloodTypeReceivedEvent",
+        "CreateAboRhExceptionEvent",
+        "CreateDeferralEvent",
+        "CreateDonorNotificationEvent",
+        "DeferralCreatedEvent",
+        "ProductUnsuitableEvent",
+        "QuarantineUnitEvent",
+        "RemoveQuarantineEvent",
+        "SubscribedUnitsEvent",
+        "SubscribeTestResultsEvent",
+        "TestOrderCreatedEvent",
+        "TestResultExceptionCreatedEvent",
+        "TestResultExceptionResolvedEvent",
+        "TestResultPanelCompletedEvent",
+        "TestResultReceivedEvent",
+        "UnitUnsuitableEvent",
+        "UnsubscribeTestResultsEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "ABORHExceptionCreatedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "ABORHEXCEPTIONCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\ABORHExceptionCreatedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "ABORHExceptionCreatedPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "ABORHExceptionResolvedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "ABORHEXCEPTIONRESOLVED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\ABORHExceptionResolvedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "ABORHExceptionResolvedPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "BloodTypeReceivedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "BLOODTYPERECEIVED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\BloodTypeReceivedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "BloodTypeReceivedPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "CreateAboRhExceptionEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "CREATEABORHEXCEPTION",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\CreateAboRhExceptionEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "exception",
+              "type": "Rh",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "CreateDeferralEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "CREATEDEFERRAL",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\CreateDeferralEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "CreateDeferralPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "CreateDonorNotificationEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "CREATEDONORNOTIFICATION",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\CreateDonorNotificationEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "CreateDonorNotificationPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "DeferralCreatedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "DEFERRALCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\DeferralCreatedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "DeferralCreatedPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "ProductUnsuitableEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "PRODUCTUNSUITABLE",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\ProductUnsuitableEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "ProductUnsuitablePayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "QuarantineUnitEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "QUARANTINEUNIT",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\QuarantineUnitEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "QuarantineUnitPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "RemoveQuarantineEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "REMOVEQUARANTINE",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\RemoveQuarantineEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "RemoveQuarantinePayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "SubscribedUnitsEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "SUBSCRIBEDUNITS",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\SubscribedUnitsEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "SubscribedUnitsPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "SubscribeTestResultsEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "SUBSCRIBETESTRESULTS",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\SubscribeTestResultsEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "SubscribeTestResultsPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "TestOrderCreatedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "TESTORDERCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestOrderCreatedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "TestOrderCreatedMessage",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "TestResultExceptionCreatedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "TESTRESULTEXCEPTIONCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultExceptionCreatedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "TestResultExceptionCreatedPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "TestResultExceptionResolvedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "TESTRESULTEXCEPTIONRESOLVED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultExceptionResolvedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "TestResultExceptionResolvedPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "TestResultPanelCompletedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "TESTRESULTPANELCOMPLETED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultPanelCompletedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "TestResultPanelCompletedPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "TestResultReceivedEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "TESTRESULTRECEIVED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultReceivedEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "TestResultReceivedMessage",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "UnitUnsuitableEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "UNITUNSUITABLE",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\UnitUnsuitableEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "UnitUnsuitablePayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        },
+        {
+          "name": "UnsubscribeTestResultsEvent",
+          "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+          "type": "UNSUBSCRIBETESTRESULTS",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\UnsubscribeTestResultsEvent.java",
+          "fields": [
+            {
+              "name": "BioProDefaultEventData",
+              "type": "JsonUnwrapped",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "UnsubscribeTestResultsPayload",
+              "required": true
+            }
+          ],
+          "service": "testresultmanagement",
+          "repository": "biopro-donor"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "device",
+      "repository": "biopro-operations",
+      "events_published": 3,
+      "events_consumed": 0,
+      "published_events": [
+        "DeviceCreatedUpdatedEvent",
+        "StorageConfigurationCreatedEvent",
+        "StorageConfigurationUpdatedEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "DeviceCreatedUpdatedEvent",
+          "package": "com.arcone.biopro.operations.device.domain.event",
+          "type": "DEVICECREATEDUPDATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\device\\src\\main\\java\\com\\arcone\\biopro\\operations\\device\\domain\\event\\DeviceCreatedUpdatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": true
+            },
+            {
+              "name": "occurredOn",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "eventType",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "eventVersion",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "payload",
+              "type": "DeviceCreatedUpdatedPayload",
+              "required": true
+            }
+          ],
+          "service": "device",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "StorageConfigurationCreatedEvent",
+          "package": "com.arcone.biopro.operations.device.domain.event",
+          "type": "STORAGECONFIGURATIONCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\device\\src\\main\\java\\com\\arcone\\biopro\\operations\\device\\domain\\event\\StorageConfigurationCreatedEvent.java",
+          "fields": [
+            {
+              "name": "event",
+              "type": "Biopro",
+              "required": true
+            },
+            {
+              "name": "identification",
+              "type": "unique",
+              "required": true
+            }
+          ],
+          "service": "device",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "StorageConfigurationUpdatedEvent",
+          "package": "com.arcone.biopro.operations.device.domain.event",
+          "type": "STORAGECONFIGURATIONUPDATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\device\\src\\main\\java\\com\\arcone\\biopro\\operations\\device\\domain\\event\\StorageConfigurationUpdatedEvent.java",
+          "fields": [
+            {
+              "name": "event",
+              "type": "Biopro",
+              "required": true
+            },
+            {
+              "name": "identification",
+              "type": "unique",
+              "required": true
+            }
+          ],
+          "service": "device",
+          "repository": "biopro-operations"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "research",
+      "repository": "biopro-operations",
+      "events_published": 3,
+      "events_consumed": 0,
+      "published_events": [
+        "SubscribeTestResultsEvent",
+        "UnitAssignedEvent",
+        "UnSubscribeTestResultsEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "SubscribeTestResultsEvent",
+          "package": "com.arcone.biopro.operations.research.domain.event",
+          "type": "SUBSCRIBETESTRESULTS",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\research\\src\\main\\java\\com\\arcone\\biopro\\operations\\research\\domain\\event\\SubscribeTestResultsEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "ResearchProject",
+              "required": false
+            }
+          ],
+          "service": "research",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "UnitAssignedEvent",
+          "package": "com.arcone.biopro.operations.research.domain.event",
+          "type": "UNITASSIGNED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\research\\src\\main\\java\\com\\arcone\\biopro\\operations\\research\\domain\\event\\UnitAssignedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "FlagUnitForResearch",
+              "required": false
+            }
+          ],
+          "service": "research",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "UnSubscribeTestResultsEvent",
+          "package": "com.arcone.biopro.operations.research.domain.event",
+          "type": "UNSUBSCRIBETESTRESULTS",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\research\\src\\main\\java\\com\\arcone\\biopro\\operations\\research\\domain\\event\\UnSubscribeTestResultsEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": false
+            },
+            {
+              "name": "occurredOn",
+              "type": "Instant",
+              "required": false
+            },
+            {
+              "name": "payload",
+              "type": "ResearchProject",
+              "required": false
+            }
+          ],
+          "service": "research",
+          "repository": "biopro-operations"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "role",
+      "repository": "biopro-operations",
+      "events_published": 5,
+      "events_consumed": 0,
+      "published_events": [
+        "RoleCreatedEvent",
+        "UserCreatedEvent",
+        "UserDeactivatedEvent",
+        "UserRolesAssignedEvent",
+        "UserUpdatedEvent"
+      ],
+      "consumed_events": [],
+      "event_details": [
+        {
+          "name": "RoleCreatedEvent",
+          "package": "com.arcone.biopro.operations.role.domain.event",
+          "type": "ROLECREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\RoleCreatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": true
+            },
+            {
+              "name": "occurredOn",
+              "type": "ZonedDateTime",
+              "required": true
+            },
+            {
+              "name": "eventType",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "eventVersion",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "roleId",
+              "type": "UUID",
+              "required": true
+            },
+            {
+              "name": "roleName",
+              "type": "String",
+              "required": true
+            }
+          ],
+          "service": "role",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "UserCreatedEvent",
+          "package": "com.arcone.biopro.operations.role.domain.event",
+          "type": "USERCREATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserCreatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": true
+            },
+            {
+              "name": "occurredOn",
+              "type": "ZonedDateTime",
+              "required": true
+            },
+            {
+              "name": "eventType",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "eventVersion",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "id",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "required": true
+            }
+          ],
+          "service": "role",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "UserDeactivatedEvent",
+          "package": "com.arcone.biopro.operations.role.domain.event",
+          "type": "USERDEACTIVATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserDeactivatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": true
+            },
+            {
+              "name": "occurredOn",
+              "type": "ZonedDateTime",
+              "required": true
+            },
+            {
+              "name": "eventType",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "eventVersion",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "id",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "required": true
+            }
+          ],
+          "service": "role",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "UserRolesAssignedEvent",
+          "package": "com.arcone.biopro.operations.role.domain.event",
+          "type": "USERROLESASSIGNED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserRolesAssignedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": true
+            },
+            {
+              "name": "occurredOn",
+              "type": "ZonedDateTime",
+              "required": true
+            },
+            {
+              "name": "eventType",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "eventVersion",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "userId",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "roleNames",
+              "type": "List<String>",
+              "required": true
+            }
+          ],
+          "service": "role",
+          "repository": "biopro-operations"
+        },
+        {
+          "name": "UserUpdatedEvent",
+          "package": "com.arcone.biopro.operations.role.domain.event",
+          "type": "USERUPDATED",
+          "version": "1.0",
+          "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserUpdatedEvent.java",
+          "fields": [
+            {
+              "name": "eventId",
+              "type": "UUID",
+              "required": true
+            },
+            {
+              "name": "occurredOn",
+              "type": "ZonedDateTime",
+              "required": true
+            },
+            {
+              "name": "eventType",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "eventVersion",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "id",
+              "type": "String",
+              "required": true
+            },
+            {
+              "name": "username",
+              "type": "String",
+              "required": true
+            }
+          ],
+          "service": "role",
+          "repository": "biopro-operations"
+        }
+      ],
+      "consumer_details": []
+    },
+    {
+      "name": "supply",
+      "repository": "biopro-operations",
+      "events_published": 0,
+      "events_consumed": 0,
+      "published_events": [],
+      "consumed_events": [],
+      "event_details": [],
+      "consumer_details": []
+    }
+  ],
+  "events": [
+    {
+      "name": "AcceptedNewDonationEvent",
+      "package": "com.arcone.biopro.interfaces.collections.domain.event",
+      "type": "ACCEPTEDNEWDONATION",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-interface\\backend\\collections\\src\\main\\java\\com\\arcone\\biopro\\interfaces\\collections\\domain\\event\\AcceptedNewDonationEvent.java",
+      "fields": [
+        {
+          "name": "source",
+          "type": "CollectionAggregate",
+          "required": true
+        }
+      ],
+      "service": "collections",
+      "repository": "biopro-interface"
+    },
+    {
+      "name": "AcceptedUpdatedDonationEvent",
+      "package": "com.arcone.biopro.interfaces.collections.domain.event",
+      "type": "ACCEPTEDUPDATEDDONATION",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-interface\\backend\\collections\\src\\main\\java\\com\\arcone\\biopro\\interfaces\\collections\\domain\\event\\AcceptedUpdatedDonationEvent.java",
+      "fields": [
+        {
+          "name": "source",
+          "type": "CollectionAggregate",
+          "required": true
+        }
+      ],
+      "service": "collections",
+      "repository": "biopro-interface"
+    },
+    {
+      "name": "InventoryUpdatedOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "INVENTORYUPDATEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\InventoryUpdatedOutboundEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "InventoryUpdatedOutbound",
+          "required": false
+        }
+      ],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderCancelledOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "ORDERCANCELLEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderCancelledOutboundEvent.java",
+      "fields": [],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderCompletedOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "ORDERCOMPLETEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderCompletedOutboundEvent.java",
+      "fields": [],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderCreatedOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "ORDERCREATEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderCreatedOutboundEvent.java",
+      "fields": [],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderModifiedOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "ORDERMODIFIEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderModifiedOutboundEvent.java",
+      "fields": [],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderPackingStartedOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "ORDERPACKINGSTARTEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\OrderPackingStartedOutboundEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "OrderPackingStartedOutbound",
+          "required": false
+        }
+      ],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaShipmentClosedOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "RECOVEREDPLASMASHIPMENTCLOSEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\RecoveredPlasmaShipmentClosedOutboundEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "RecoveredPlasmaShipmentClosedOutbound",
+          "required": false
+        }
+      ],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecruitmentAndEligibilityOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "RECRUITMENTANDELIGIBILITYOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\RecruitmentAndEligibilityOutboundEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "RecruitmentAndEligibilityOutbound",
+          "required": false
+        }
+      ],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ShipmentCompletedOutboundEvent",
+      "package": "com.arcone.biopro.distribution.eventbridge.domain.event",
+      "type": "SHIPMENTCOMPLETEDOUTBOUND",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\eventbridge\\src\\main\\java\\com\\arcone\\biopro\\distribution\\eventbridge\\domain\\event\\ShipmentCompletedOutboundEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "ShipmentCompletedOutbound",
+          "required": false
+        }
+      ],
+      "service": "eventbridge",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "InventoryCreatedEvent",
+      "package": "com.arcone.biopro.distribution.inventory.domain.event",
+      "type": "INVENTORYCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\inventory\\src\\main\\java\\com\\arcone\\biopro\\distribution\\inventory\\domain\\event\\InventoryCreatedEvent.java",
+      "fields": [
+        {
+          "name": "aggregate",
+          "type": "InventoryAggregate",
+          "required": true
+        }
+      ],
+      "service": "inventory",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "InventoryUpdatedApplicationEvent",
+      "package": "com.arcone.biopro.distribution.inventory.domain.event",
+      "type": "INVENTORYUPDATEDAPPLICATION",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\inventory\\src\\main\\java\\com\\arcone\\biopro\\distribution\\inventory\\domain\\event\\InventoryUpdatedApplicationEvent.java",
+      "fields": [
+        {
+          "name": "inventory",
+          "type": "Inventory",
+          "required": true
+        },
+        {
+          "name": "inventoryUpdateType",
+          "type": "InventoryUpdateType",
+          "required": true
+        }
+      ],
+      "service": "inventory",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ProductModifiedEvent",
+      "package": "com.arcone.biopro.distribution.irradiation.domain.event",
+      "type": "PRODUCTMODIFIED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\irradiation\\src\\main\\java\\com\\arcone\\biopro\\distribution\\irradiation\\domain\\event\\ProductModifiedEvent.java",
+      "fields": [],
+      "service": "irradiation",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ProductQuarantinedEvent",
+      "package": "com.arcone.biopro.distribution.irradiation.domain.event",
+      "type": "PRODUCTQUARANTINED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\irradiation\\src\\main\\java\\com\\arcone\\biopro\\distribution\\irradiation\\domain\\event\\ProductQuarantinedEvent.java",
+      "fields": [],
+      "service": "irradiation",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderCancelledEvent",
+      "package": "com.arcone.biopro.distribution.order.domain.event",
+      "type": "ORDERCANCELLED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderCancelledEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Order",
+          "required": false
+        }
+      ],
+      "service": "order",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderCompletedEvent",
+      "package": "com.arcone.biopro.distribution.order.domain.event",
+      "type": "ORDERCOMPLETED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderCompletedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Order",
+          "required": false
+        }
+      ],
+      "service": "order",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderCreatedEvent",
+      "package": "com.arcone.biopro.distribution.order.domain.event",
+      "type": "ORDERCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderCreatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Order",
+          "required": false
+        }
+      ],
+      "service": "order",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderModifiedEvent",
+      "package": "com.arcone.biopro.distribution.order.domain.event",
+      "type": "ORDERMODIFIED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderModifiedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Order",
+          "required": false
+        }
+      ],
+      "service": "order",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "OrderRejectedEvent",
+      "package": "com.arcone.biopro.distribution.order.domain.event",
+      "type": "ORDERREJECTED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\OrderRejectedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "OrderRejectedPayload",
+          "required": false
+        }
+      ],
+      "service": "order",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "PickListCreatedEvent",
+      "package": "com.arcone.biopro.distribution.order.domain.event",
+      "type": "PICKLISTCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\order\\src\\main\\java\\com\\arcone\\biopro\\distribution\\order\\domain\\event\\PickListCreatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "PickList",
+          "required": false
+        }
+      ],
+      "service": "order",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ImportCompletedDomainEvent",
+      "package": "com.arcone.biopro.distribution.receiving.domain.event",
+      "type": "IMPORTCOMPLETEDDOMAIN",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\receiving\\src\\main\\java\\com\\arcone\\biopro\\distribution\\receiving\\domain\\event\\ImportCompletedDomainEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Import",
+          "required": false
+        }
+      ],
+      "service": "receiving",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "TransferReceiptCompletedDomainEvent",
+      "package": "com.arcone.biopro.distribution.receiving.domain.event",
+      "type": "TRANSFERRECEIPTCOMPLETEDDOMAIN",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\receiving\\src\\main\\java\\com\\arcone\\biopro\\distribution\\receiving\\domain\\event\\TransferReceiptCompletedDomainEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "TransferReceipt",
+          "required": false
+        }
+      ],
+      "service": "receiving",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaCartonClosedEvent",
+      "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+      "type": "RECOVEREDPLASMACARTONCLOSED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonClosedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Carton",
+          "required": false
+        }
+      ],
+      "service": "recoveredplasmashipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaCartonCreatedEvent",
+      "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+      "type": "RECOVEREDPLASMACARTONCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonCreatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Carton",
+          "required": false
+        }
+      ],
+      "service": "recoveredplasmashipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaCartonRemovedEvent",
+      "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+      "type": "RECOVEREDPLASMACARTONREMOVED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonRemovedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Carton",
+          "required": false
+        }
+      ],
+      "service": "recoveredplasmashipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaCartonUnpackedEvent",
+      "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+      "type": "RECOVEREDPLASMACARTONUNPACKED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaCartonUnpackedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Carton",
+          "required": false
+        }
+      ],
+      "service": "recoveredplasmashipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaShipmentClosedEvent",
+      "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+      "type": "RECOVEREDPLASMASHIPMENTCLOSED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaShipmentClosedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "RecoveredPlasmaShipment",
+          "required": false
+        }
+      ],
+      "service": "recoveredplasmashipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaShipmentCreatedEvent",
+      "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+      "type": "RECOVEREDPLASMASHIPMENTCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaShipmentCreatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "RecoveredPlasmaShipment",
+          "required": false
+        }
+      ],
+      "service": "recoveredplasmashipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "RecoveredPlasmaShipmentProcessingEvent",
+      "package": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+      "type": "RECOVEREDPLASMASHIPMENTPROCESSING",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\recoveredplasmashipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\recoveredplasmashipping\\domain\\event\\RecoveredPlasmaShipmentProcessingEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "RecoveredPlasmaShipment",
+          "required": false
+        }
+      ],
+      "service": "recoveredplasmashipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ExternalTransferCompletedEvent",
+      "package": "com.arcone.biopro.distribution.shipping.domain.event",
+      "type": "EXTERNALTRANSFERCOMPLETED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ExternalTransferCompletedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "ExternalTransfer",
+          "required": false
+        }
+      ],
+      "service": "shipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ShipmentCompletedEvent",
+      "package": "com.arcone.biopro.distribution.shipping.domain.event",
+      "type": "SHIPMENTCOMPLETED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentCompletedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "ShipmentCompletedPayloadDTO",
+          "required": false
+        }
+      ],
+      "service": "shipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ShipmentCreatedEvent",
+      "package": "com.arcone.biopro.distribution.shipping.domain.event",
+      "type": "SHIPMENTCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentCreatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "Shipment",
+          "required": false
+        }
+      ],
+      "service": "shipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ShipmentItemPackedEvent",
+      "package": "com.arcone.biopro.distribution.shipping.domain.event",
+      "type": "SHIPMENTITEMPACKED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentItemPackedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "ShipmentItemPacked",
+          "required": false
+        }
+      ],
+      "service": "shipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "ShipmentPackingStartedEvent",
+      "package": "com.arcone.biopro.distribution.shipping.domain.event",
+      "type": "SHIPMENTPACKINGSTARTED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-distribution\\backend\\shipping\\src\\main\\java\\com\\arcone\\biopro\\distribution\\shipping\\domain\\event\\ShipmentPackingStartedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "ShipmentCompletedPayloadDTO",
+          "required": false
+        }
+      ],
+      "service": "shipping",
+      "repository": "biopro-distribution"
+    },
+    {
+      "name": "FlagUnitForResearchEvent",
+      "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+      "type": "FLAG_UNIT_FOR_RESEARCH",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\FlagUnitForResearchEvent.java",
+      "fields": [],
+      "service": "eventmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "ProductUnsuitableEvent",
+      "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+      "type": "PRODUCT_UNSUITABLE",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\ProductUnsuitableEvent.java",
+      "fields": [],
+      "service": "eventmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "QuarantineProductEvent",
+      "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+      "type": "QUARANTINE_PRODUCT",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\QuarantineProductEvent.java",
+      "fields": [],
+      "service": "eventmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "RemoveQuarantineEvent",
+      "package": "com.arcone.biopro.donor.eventmanagement.domain.event",
+      "type": "REMOVE_QUARANTINE",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\eventmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\eventmanagement\\domain\\event\\RemoveQuarantineEvent.java",
+      "fields": [],
+      "service": "eventmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "DonorUpdatedEvent",
+      "package": "com.arcone.biopro.donor.history.domain.event",
+      "type": "DONORUPDATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\history\\src\\main\\java\\com\\arcone\\biopro\\donor\\history\\domain\\event\\DonorUpdatedEvent.java",
+      "fields": [
+        {
+          "name": "donorId",
+          "type": "Long",
+          "required": false
+        },
+        {
+          "name": "externalId",
+          "type": "String",
+          "required": false
+        },
+        {
+          "name": "donor",
+          "type": "Donor",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "ZonedDateTime",
+          "required": false
+        },
+        {
+          "name": "eventType",
+          "type": "String",
+          "required": false
+        }
+      ],
+      "service": "history",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "HistoryCreatedEvent",
+      "package": "com.arcone.biopro.donor.history.domain.event",
+      "type": "HISTORYCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\history\\src\\main\\java\\com\\arcone\\biopro\\donor\\history\\domain\\event\\HistoryCreatedEvent.java",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Long",
+          "required": true
+        }
+      ],
+      "service": "history",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "UnitDiscardEvent",
+      "package": "com.arcone.biopro.donor.history.domain.event",
+      "type": "UNITDISCARD",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\history\\src\\main\\java\\com\\arcone\\biopro\\donor\\history\\domain\\event\\UnitDiscardEvent.java",
+      "fields": [
+        {
+          "name": "unitNumber",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "reasonKey",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "triggeredBy",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "performedBy",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "createDate",
+          "type": "ZonedDateTime",
+          "required": true
+        }
+      ],
+      "service": "history",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "DonorNotificationCompletedEvent",
+      "package": "com.arcone.biopro.donor.notification.domain.event",
+      "type": "DONOR_NOTIFICATION_COMPLETED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\notification\\src\\main\\java\\com\\arcone\\biopro\\donor\\notification\\domain\\event\\DonorNotificationCompletedEvent.java",
+      "fields": [],
+      "service": "notification",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "DonorNotificationCreatedEvent",
+      "package": "com.arcone.biopro.donor.notification.domain.event",
+      "type": "DONOR_NOTIFICATION_CREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\notification\\src\\main\\java\\com\\arcone\\biopro\\donor\\notification\\domain\\event\\DonorNotificationCreatedEvent.java",
+      "fields": [],
+      "service": "notification",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "ABORHExceptionCreatedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "ABORHEXCEPTIONCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\ABORHExceptionCreatedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "ABORHExceptionCreatedPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "ABORHExceptionResolvedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "ABORHEXCEPTIONRESOLVED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\ABORHExceptionResolvedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "ABORHExceptionResolvedPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "BloodTypeReceivedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "BLOODTYPERECEIVED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\BloodTypeReceivedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "BloodTypeReceivedPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "CreateAboRhExceptionEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "CREATEABORHEXCEPTION",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\CreateAboRhExceptionEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "exception",
+          "type": "Rh",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "CreateDeferralEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "CREATEDEFERRAL",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\CreateDeferralEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "CreateDeferralPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "CreateDonorNotificationEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "CREATEDONORNOTIFICATION",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\CreateDonorNotificationEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "CreateDonorNotificationPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "DeferralCreatedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "DEFERRALCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\DeferralCreatedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "DeferralCreatedPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "ProductUnsuitableEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "PRODUCTUNSUITABLE",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\ProductUnsuitableEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "ProductUnsuitablePayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "QuarantineUnitEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "QUARANTINEUNIT",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\QuarantineUnitEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "QuarantineUnitPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "RemoveQuarantineEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "REMOVEQUARANTINE",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\RemoveQuarantineEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "RemoveQuarantinePayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "SubscribedUnitsEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "SUBSCRIBEDUNITS",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\SubscribedUnitsEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "SubscribedUnitsPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "SubscribeTestResultsEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "SUBSCRIBETESTRESULTS",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\SubscribeTestResultsEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "SubscribeTestResultsPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "TestOrderCreatedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "TESTORDERCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestOrderCreatedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "TestOrderCreatedMessage",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "TestResultExceptionCreatedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "TESTRESULTEXCEPTIONCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultExceptionCreatedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "TestResultExceptionCreatedPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "TestResultExceptionResolvedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "TESTRESULTEXCEPTIONRESOLVED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultExceptionResolvedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "TestResultExceptionResolvedPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "TestResultPanelCompletedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "TESTRESULTPANELCOMPLETED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultPanelCompletedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "TestResultPanelCompletedPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "TestResultReceivedEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "TESTRESULTRECEIVED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\TestResultReceivedEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "TestResultReceivedMessage",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "UnitUnsuitableEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "UNITUNSUITABLE",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\UnitUnsuitableEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "UnitUnsuitablePayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "UnsubscribeTestResultsEvent",
+      "package": "com.arcone.biopro.donor.testresultmanagement.domain.event",
+      "type": "UNSUBSCRIBETESTRESULTS",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-donor\\backend\\testresultmanagement\\src\\main\\java\\com\\arcone\\biopro\\donor\\testresultmanagement\\domain\\event\\UnsubscribeTestResultsEvent.java",
+      "fields": [
+        {
+          "name": "BioProDefaultEventData",
+          "type": "JsonUnwrapped",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "UnsubscribeTestResultsPayload",
+          "required": true
+        }
+      ],
+      "service": "testresultmanagement",
+      "repository": "biopro-donor"
+    },
+    {
+      "name": "DeviceCreatedUpdatedEvent",
+      "package": "com.arcone.biopro.operations.device.domain.event",
+      "type": "DEVICECREATEDUPDATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\device\\src\\main\\java\\com\\arcone\\biopro\\operations\\device\\domain\\event\\DeviceCreatedUpdatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": true
+        },
+        {
+          "name": "occurredOn",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "eventType",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "eventVersion",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "DeviceCreatedUpdatedPayload",
+          "required": true
+        }
+      ],
+      "service": "device",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "StorageConfigurationCreatedEvent",
+      "package": "com.arcone.biopro.operations.device.domain.event",
+      "type": "STORAGECONFIGURATIONCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\device\\src\\main\\java\\com\\arcone\\biopro\\operations\\device\\domain\\event\\StorageConfigurationCreatedEvent.java",
+      "fields": [
+        {
+          "name": "event",
+          "type": "Biopro",
+          "required": true
+        },
+        {
+          "name": "identification",
+          "type": "unique",
+          "required": true
+        }
+      ],
+      "service": "device",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "StorageConfigurationUpdatedEvent",
+      "package": "com.arcone.biopro.operations.device.domain.event",
+      "type": "STORAGECONFIGURATIONUPDATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\device\\src\\main\\java\\com\\arcone\\biopro\\operations\\device\\domain\\event\\StorageConfigurationUpdatedEvent.java",
+      "fields": [
+        {
+          "name": "event",
+          "type": "Biopro",
+          "required": true
+        },
+        {
+          "name": "identification",
+          "type": "unique",
+          "required": true
+        }
+      ],
+      "service": "device",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "SubscribeTestResultsEvent",
+      "package": "com.arcone.biopro.operations.research.domain.event",
+      "type": "SUBSCRIBETESTRESULTS",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\research\\src\\main\\java\\com\\arcone\\biopro\\operations\\research\\domain\\event\\SubscribeTestResultsEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "ResearchProject",
+          "required": false
+        }
+      ],
+      "service": "research",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "UnitAssignedEvent",
+      "package": "com.arcone.biopro.operations.research.domain.event",
+      "type": "UNITASSIGNED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\research\\src\\main\\java\\com\\arcone\\biopro\\operations\\research\\domain\\event\\UnitAssignedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "FlagUnitForResearch",
+          "required": false
+        }
+      ],
+      "service": "research",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "UnSubscribeTestResultsEvent",
+      "package": "com.arcone.biopro.operations.research.domain.event",
+      "type": "UNSUBSCRIBETESTRESULTS",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\research\\src\\main\\java\\com\\arcone\\biopro\\operations\\research\\domain\\event\\UnSubscribeTestResultsEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": false
+        },
+        {
+          "name": "occurredOn",
+          "type": "Instant",
+          "required": false
+        },
+        {
+          "name": "payload",
+          "type": "ResearchProject",
+          "required": false
+        }
+      ],
+      "service": "research",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "RoleCreatedEvent",
+      "package": "com.arcone.biopro.operations.role.domain.event",
+      "type": "ROLECREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\RoleCreatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": true
+        },
+        {
+          "name": "occurredOn",
+          "type": "ZonedDateTime",
+          "required": true
+        },
+        {
+          "name": "eventType",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "eventVersion",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "roleId",
+          "type": "UUID",
+          "required": true
+        },
+        {
+          "name": "roleName",
+          "type": "String",
+          "required": true
+        }
+      ],
+      "service": "role",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "UserCreatedEvent",
+      "package": "com.arcone.biopro.operations.role.domain.event",
+      "type": "USERCREATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserCreatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": true
+        },
+        {
+          "name": "occurredOn",
+          "type": "ZonedDateTime",
+          "required": true
+        },
+        {
+          "name": "eventType",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "eventVersion",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "id",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "username",
+          "type": "String",
+          "required": true
+        }
+      ],
+      "service": "role",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "UserDeactivatedEvent",
+      "package": "com.arcone.biopro.operations.role.domain.event",
+      "type": "USERDEACTIVATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserDeactivatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": true
+        },
+        {
+          "name": "occurredOn",
+          "type": "ZonedDateTime",
+          "required": true
+        },
+        {
+          "name": "eventType",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "eventVersion",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "id",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "username",
+          "type": "String",
+          "required": true
+        }
+      ],
+      "service": "role",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "UserRolesAssignedEvent",
+      "package": "com.arcone.biopro.operations.role.domain.event",
+      "type": "USERROLESASSIGNED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserRolesAssignedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": true
+        },
+        {
+          "name": "occurredOn",
+          "type": "ZonedDateTime",
+          "required": true
+        },
+        {
+          "name": "eventType",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "eventVersion",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "userId",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "username",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "roleNames",
+          "type": "List<String>",
+          "required": true
+        }
+      ],
+      "service": "role",
+      "repository": "biopro-operations"
+    },
+    {
+      "name": "UserUpdatedEvent",
+      "package": "com.arcone.biopro.operations.role.domain.event",
+      "type": "USERUPDATED",
+      "version": "1.0",
+      "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-operations\\backend\\role\\src\\main\\java\\com\\arcone\\biopro\\operations\\role\\domain\\event\\UserUpdatedEvent.java",
+      "fields": [
+        {
+          "name": "eventId",
+          "type": "UUID",
+          "required": true
+        },
+        {
+          "name": "occurredOn",
+          "type": "ZonedDateTime",
+          "required": true
+        },
+        {
+          "name": "eventType",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "eventVersion",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "id",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "username",
+          "type": "String",
+          "required": true
+        }
+      ],
+      "service": "role",
+      "repository": "biopro-operations"
+    }
+  ],
+  "event_flows": {
+    "AcceptedNewDonationEvent": {
+      "publishers": [
+        "collections"
+      ],
+      "consumers": []
+    },
+    "AcceptedUpdatedDonationEvent": {
+      "publishers": [
+        "collections"
+      ],
+      "consumers": []
+    },
+    "InventoryUpdatedOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "OrderCancelledOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "OrderCompletedOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "OrderCreatedOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "OrderModifiedOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "OrderPackingStartedOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaShipmentClosedOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "RecruitmentAndEligibilityOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "ShipmentCompletedOutboundEvent": {
+      "publishers": [
+        "eventbridge"
+      ],
+      "consumers": []
+    },
+    "InventoryCreatedEvent": {
+      "publishers": [
+        "inventory"
+      ],
+      "consumers": []
+    },
+    "InventoryUpdatedApplicationEvent": {
+      "publishers": [
+        "inventory"
+      ],
+      "consumers": []
+    },
+    "ProductModifiedEvent": {
+      "publishers": [
+        "irradiation"
+      ],
+      "consumers": []
+    },
+    "ProductQuarantinedEvent": {
+      "publishers": [
+        "irradiation"
+      ],
+      "consumers": []
+    },
+    "OrderCancelledEvent": {
+      "publishers": [
+        "order"
+      ],
+      "consumers": []
+    },
+    "OrderCompletedEvent": {
+      "publishers": [
+        "order"
+      ],
+      "consumers": []
+    },
+    "OrderCreatedEvent": {
+      "publishers": [
+        "order"
+      ],
+      "consumers": []
+    },
+    "OrderModifiedEvent": {
+      "publishers": [
+        "order"
+      ],
+      "consumers": []
+    },
+    "OrderRejectedEvent": {
+      "publishers": [
+        "order"
+      ],
+      "consumers": []
+    },
+    "PickListCreatedEvent": {
+      "publishers": [
+        "order"
+      ],
+      "consumers": []
+    },
+    "ImportCompletedDomainEvent": {
+      "publishers": [
+        "receiving"
+      ],
+      "consumers": []
+    },
+    "TransferReceiptCompletedDomainEvent": {
+      "publishers": [
+        "receiving"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaCartonClosedEvent": {
+      "publishers": [
+        "recoveredplasmashipping"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaCartonCreatedEvent": {
+      "publishers": [
+        "recoveredplasmashipping"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaCartonRemovedEvent": {
+      "publishers": [
+        "recoveredplasmashipping"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaCartonUnpackedEvent": {
+      "publishers": [
+        "recoveredplasmashipping"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaShipmentClosedEvent": {
+      "publishers": [
+        "recoveredplasmashipping"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaShipmentCreatedEvent": {
+      "publishers": [
+        "recoveredplasmashipping"
+      ],
+      "consumers": []
+    },
+    "RecoveredPlasmaShipmentProcessingEvent": {
+      "publishers": [
+        "recoveredplasmashipping"
+      ],
+      "consumers": []
+    },
+    "ExternalTransferCompletedEvent": {
+      "publishers": [
+        "shipping"
+      ],
+      "consumers": []
+    },
+    "ShipmentCompletedEvent": {
+      "publishers": [
+        "shipping"
+      ],
+      "consumers": []
+    },
+    "ShipmentCreatedEvent": {
+      "publishers": [
+        "shipping"
+      ],
+      "consumers": []
+    },
+    "ShipmentItemPackedEvent": {
+      "publishers": [
+        "shipping"
+      ],
+      "consumers": []
+    },
+    "ShipmentPackingStartedEvent": {
+      "publishers": [
+        "shipping"
+      ],
+      "consumers": []
+    },
+    "FlagUnitForResearchEvent": {
+      "publishers": [
+        "eventmanagement"
+      ],
+      "consumers": []
+    },
+    "ProductUnsuitableEvent": {
+      "publishers": [
+        "eventmanagement",
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "QuarantineProductEvent": {
+      "publishers": [
+        "eventmanagement"
+      ],
+      "consumers": []
+    },
+    "RemoveQuarantineEvent": {
+      "publishers": [
+        "eventmanagement",
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "DonorUpdatedEvent": {
+      "publishers": [
+        "history"
+      ],
+      "consumers": []
+    },
+    "HistoryCreatedEvent": {
+      "publishers": [
+        "history"
+      ],
+      "consumers": []
+    },
+    "UnitDiscardEvent": {
+      "publishers": [
+        "history"
+      ],
+      "consumers": []
+    },
+    "DonorNotificationCompletedEvent": {
+      "publishers": [
+        "notification"
+      ],
+      "consumers": []
+    },
+    "DonorNotificationCreatedEvent": {
+      "publishers": [
+        "notification"
+      ],
+      "consumers": []
+    },
+    "ABORHExceptionCreatedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "ABORHExceptionResolvedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "BloodTypeReceivedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "CreateAboRhExceptionEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "CreateDeferralEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "CreateDonorNotificationEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "DeferralCreatedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "QuarantineUnitEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "SubscribedUnitsEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "SubscribeTestResultsEvent": {
+      "publishers": [
+        "testresultmanagement",
+        "research"
+      ],
+      "consumers": []
+    },
+    "TestOrderCreatedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "TestResultExceptionCreatedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "TestResultExceptionResolvedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "TestResultPanelCompletedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "TestResultReceivedEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "UnitUnsuitableEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "UnsubscribeTestResultsEvent": {
+      "publishers": [
+        "testresultmanagement"
+      ],
+      "consumers": []
+    },
+    "DeviceCreatedUpdatedEvent": {
+      "publishers": [
+        "device"
+      ],
+      "consumers": []
+    },
+    "StorageConfigurationCreatedEvent": {
+      "publishers": [
+        "device"
+      ],
+      "consumers": []
+    },
+    "StorageConfigurationUpdatedEvent": {
+      "publishers": [
+        "device"
+      ],
+      "consumers": []
+    },
+    "UnitAssignedEvent": {
+      "publishers": [
+        "research"
+      ],
+      "consumers": []
+    },
+    "UnSubscribeTestResultsEvent": {
+      "publishers": [
+        "research"
+      ],
+      "consumers": []
+    },
+    "RoleCreatedEvent": {
+      "publishers": [
+        "role"
+      ],
+      "consumers": []
+    },
+    "UserCreatedEvent": {
+      "publishers": [
+        "role"
+      ],
+      "consumers": []
+    },
+    "UserDeactivatedEvent": {
+      "publishers": [
+        "role"
+      ],
+      "consumers": []
+    },
+    "UserRolesAssignedEvent": {
+      "publishers": [
+        "role"
+      ],
+      "consumers": []
+    },
+    "UserUpdatedEvent": {
+      "publishers": [
+        "role"
+      ],
+      "consumers": []
+    }
+  }
+}

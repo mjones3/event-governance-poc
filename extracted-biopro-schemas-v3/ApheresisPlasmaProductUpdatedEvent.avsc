@@ -1,0 +1,53 @@
+{
+  "type": "record",
+  "name": "ApheresisPlasmaProductUpdatedEvent",
+  "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event",
+  "doc": "Event published when apheresisplasmaproductupdated occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "default": "UTC",
+      "doc": "Timezone for occurredOn"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "default": "ApheresisPlasmaProductUpdated",
+      "doc": "Type of event"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Version of the event schema"
+    },
+    {
+      "name": "payload",
+      "type": {
+        "type": "record",
+        "name": "ProductUpdatedPayload",
+        "namespace": "com.arcone.biopro.manufacturing.apheresisplasma.domain.event.payload",
+        "doc": "Payload for ProductUpdated event",
+        "fields": []
+      },
+      "doc": "ApheresisPlasmaProductUpdatedEvent payload"
+    }
+  ]
+}

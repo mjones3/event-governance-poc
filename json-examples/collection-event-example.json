@@ -1,0 +1,35 @@
+{
+  "unitNumber": "UNIT-COL-2024-001",
+  "status": "COLLECTED",
+  "bagType": "SINGLE_BAG",
+  "drawTime": 1704067200000,
+  "drawTimeZone": "America/Chicago",
+  "withdrawalTime": 1704067200000,
+  "withdrawalTimeZone": "America/Chicago",
+  "donationType": "WHOLE_BLOOD",
+  "procedureType": "MANUAL",
+  "collectionLocation": "CENTER-001",
+  "aboRh": "A_POS",
+  "machineSerialNumber": "MACH-789",
+  "machineType": "APHERESIS_DEVICE",
+  "donationProperties": {
+    "donorId": "DONOR-456",
+    "donorWeight": "70kg"
+  },
+  "drawProperties": {
+    "needleGauge": "16G",
+    "armUsed": "LEFT"
+  },
+  "volumes": [
+    {
+      "type": "WHOLE_BLOOD",
+      "amount": 450.0,
+      "excludeInCalculation": false
+    },
+    {
+      "type": "ANTICOAGULANT",
+      "amount": 63.0,
+      "excludeInCalculation": true
+    }
+  ]
+}

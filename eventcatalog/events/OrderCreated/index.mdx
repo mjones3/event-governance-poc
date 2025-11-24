@@ -1,381 +1,60 @@
 ---
 id: OrderCreated
 name: OrderCreated
-version: '2'
-summary: Event OrderCreated - BioPro System
+version: '1.0'
+summary: Event published by order service when ordercreated occurs
 owners:
-    - orders-service
+  - order-service
+producers:
+  - order-service
+consumers:
+  - eventbridge-service
+  - order-service
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
 ---
 
-# OrderCreated Event
+# OrderCreatedEvent
 
 **Schema ID**: 7
 **Schema Version**: 2
 **Subject**: OrderCreatedEvent
-**Domain**: Orders
+**Domain**: Unknown
+**Namespace**: com.biopro.events.orders
 
-## Description
+## Business Context
 
 Event published when a blood product order is created
 
-## Schema
-
-```json
-{
-  "type": "record",
-  "name": "OrderCreatedEvent",
-  "namespace": "com.biopro.events.orders",
-  "doc": "Event published when a blood product order is created",
-  "fields": [
-    {
-      "name": "eventId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      },
-      "doc": "Unique identifier for this event"
-    },
-    {
-      "name": "occurredOn",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
-      "doc": "Timestamp when event occurred"
-    },
-    {
-      "name": "eventType",
-      "type": "string",
-      "doc": "Type of event",
-      "default": "OrderCreated"
-    },
-    {
-      "name": "eventVersion",
-      "type": "string",
-      "doc": "Version of the event schema",
-      "default": "2.0"
-    },
-    {
-      "name": "payload",
-      "type": {
-        "type": "record",
-        "name": "OrderCreatedPayload",
-        "fields": [
-          {
-            "name": "orderNumber",
-            "type": "long",
-            "doc": "Unique order number"
-          },
-          {
-            "name": "externalId",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "External system order ID",
-            "default": null
-          },
-          {
-            "name": "orderStatus",
-            "type": "string",
-            "doc": "Current status of the order"
-          },
-          {
-            "name": "locationCode",
-            "type": "string",
-            "doc": "Location code where order originated"
-          },
-          {
-            "name": "locationName",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Location name",
-            "default": null
-          },
-          {
-            "name": "createDate",
-            "type": {
-              "type": "long",
-              "logicalType": "timestamp-millis"
-            },
-            "doc": "Date/time when order was created"
-          },
-          {
-            "name": "createDateTimeZone",
-            "type": "string",
-            "doc": "Timezone for createDate",
-            "default": "UTC"
-          },
-          {
-            "name": "createEmployeeCode",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Employee code who created the order",
-            "default": null
-          },
-          {
-            "name": "shipmentType",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Type of shipment",
-            "default": null
-          },
-          {
-            "name": "priority",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Order priority (ROUTINE, URGENT, LIFE_THREATENING)",
-            "default": null
-          },
-          {
-            "name": "shippingMethod",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Method of shipping",
-            "default": null
-          },
-          {
-            "name": "productCategory",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Category of products ordered",
-            "default": null
-          },
-          {
-            "name": "desiredShippingDate",
-            "type": [
-              "null",
-              {
-                "type": "int",
-                "logicalType": "date"
-              }
-            ],
-            "doc": "Desired shipping date",
-            "default": null
-          },
-          {
-            "name": "shippingCustomerCode",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Shipping customer code",
-            "default": null
-          },
-          {
-            "name": "shippingCustomerName",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Shipping customer name",
-            "default": null
-          },
-          {
-            "name": "billingCustomerCode",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Billing customer code",
-            "default": null
-          },
-          {
-            "name": "comments",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Order comments",
-            "default": null
-          },
-          {
-            "name": "willPickUp",
-            "type": "boolean",
-            "doc": "Whether customer will pick up the order",
-            "default": false
-          },
-          {
-            "name": "willPickUpPhoneNumber",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Phone number for pickup coordination",
-            "default": null
-          },
-          {
-            "name": "transactionId",
-            "type": {
-              "type": "string",
-              "logicalType": "uuid"
-            },
-            "doc": "Transaction ID for idempotency"
-          },
-          {
-            "name": "quarantinedProducts",
-            "type": [
-              "null",
-              "boolean"
-            ],
-            "doc": "Whether order includes quarantined products",
-            "default": null
-          },
-          {
-            "name": "labelStatus",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Status of order labels",
-            "default": null
-          },
-          {
-            "name": "version",
-            "type": [
-              "null",
-              "int"
-            ],
-            "doc": "Order version for optimistic locking",
-            "default": null
-          },
-          {
-            "name": "orderSource",
-            "type": [
-              "null",
-              "string"
-            ],
-            "doc": "Source system that created the order (WEB, MOBILE, API, INTERNAL)",
-            "default": null
-          },
-          {
-            "name": "requestedDeliveryDate",
-            "type": [
-              "null",
-              {
-                "type": "long",
-                "logicalType": "timestamp-millis"
-              }
-            ],
-            "doc": "When customer requested delivery",
-            "default": null
-          },
-          {
-            "name": "emergencyContact",
-            "type": [
-              "null",
-              {
-                "type": "record",
-                "name": "EmergencyContact",
-                "fields": [
-                  {
-                    "name": "name",
-                    "type": "string",
-                    "doc": "Contact name"
-                  },
-                  {
-                    "name": "phone",
-                    "type": "string",
-                    "doc": "Contact phone"
-                  },
-                  {
-                    "name": "relationship",
-                    "type": [
-                      "null",
-                      "string"
-                    ],
-                    "doc": "Relationship to patient",
-                    "default": null
-                  }
-                ]
-              }
-            ],
-            "doc": "Emergency contact information for urgent orders",
-            "default": null
-          },
-          {
-            "name": "orderItems",
-            "type": {
-              "type": "array",
-              "items": {
-                "type": "record",
-                "name": "OrderItemCreated",
-                "fields": [
-                  {
-                    "name": "productFamily",
-                    "type": "string",
-                    "doc": "Product family code"
-                  },
-                  {
-                    "name": "bloodType",
-                    "type": [
-                      "null",
-                      "string"
-                    ],
-                    "doc": "Required blood type (e.g., A_POSITIVE, O_NEGATIVE)",
-                    "default": null
-                  },
-                  {
-                    "name": "quantity",
-                    "type": "int",
-                    "doc": "Quantity ordered"
-                  },
-                  {
-                    "name": "comments",
-                    "type": [
-                      "null",
-                      "string"
-                    ],
-                    "doc": "Item-specific comments",
-                    "default": null
-                  },
-                  {
-                    "name": "attributes",
-                    "type": [
-                      "null",
-                      {
-                        "type": "map",
-                        "values": "string"
-                      }
-                    ],
-                    "doc": "Additional item attributes",
-                    "default": null
-                  }
-                ]
-              }
-            },
-            "doc": "List of items in the order"
-          }
-        ]
-      },
-      "doc": "Order created event payload"
-    }
-  ]
-}
-```
-
-## Fields
+## Event Schema Fields
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `eventId` | `string` | Yes | Unique identifier for this event |
-| `occurredOn` | `long` | Yes | Timestamp when event occurred |
-| `eventType` | `string` | Yes | Type of event |
-| `eventVersion` | `string` | Yes | Version of the event schema |
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
 | `payload` | `OrderCreatedPayload` | Yes | Order created event payload |
 
+
+## Sample Event
+
+```json
+{
+  "eventId": "fce2177d-2194-4a76-9d3d-dd9229efd70b",
+  "occurredOn": 1763355987499,
+  "eventType": "STANDARD",
+  "payload": {}
+}
+```
 
 ## Schema Evolution
 
@@ -385,67 +64,28 @@ This event uses Avro schema validation through Confluent Schema Registry.
 - **Version**: 2
 - **Compatibility**: BACKWARD (default)
 
-## Producers
-
-- **Service**: orders-service
-- **Topic**: `biopro.orders.events`
-
 ## Message Format
 
 Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
 
-## Example Payload
+## Integration Notes
 
-```json
-{
-  "eventId": null,
-  "occurredOn": null,
-  "eventType": "example-string",
-  "eventVersion": "example-string",
-  "payload": {
-    "orderNumber": 1234567890,
-    "externalId": "example-string",
-    "orderStatus": "example-string",
-    "locationCode": "example-string",
-    "locationName": "example-string",
-    "createDate": null,
-    "createDateTimeZone": "example-string",
-    "createEmployeeCode": "example-string",
-    "shipmentType": "example-string",
-    "priority": "example-string",
-    "shippingMethod": "example-string",
-    "productCategory": "example-string",
-    "desiredShippingDate": null,
-    "shippingCustomerCode": "example-string",
-    "shippingCustomerName": "example-string",
-    "billingCustomerCode": "example-string",
-    "comments": "example-string",
-    "willPickUp": true,
-    "willPickUpPhoneNumber": "example-string",
-    "transactionId": null,
-    "quarantinedProducts": true,
-    "labelStatus": "example-string",
-    "version": 123,
-    "orderSource": "example-string",
-    "requestedDeliveryDate": null,
-    "emergencyContact": {
-      "name": "example-string",
-      "phone": "example-string",
-      "relationship": "example-string"
-    },
-    "orderItems": [
-      {
-        "productFamily": "example-string",
-        "bloodType": "example-string",
-        "quantity": 123,
-        "comments": "example-string",
-        "attributes": {
-          "key1": "example-string"
-        }
-      }
-    ]
-  }
-}
-```
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./OrderCreatedEvent.avsc) - Complete Avro schema definition
 
 <NodeGraph />

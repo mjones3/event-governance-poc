@@ -1,0 +1,47 @@
+{
+  "type": "record",
+  "name": "InventoryCreatedEvent",
+  "namespace": "com.arcone.biopro.distribution.inventory.domain.event",
+  "doc": "Event published when inventorycreated occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "INVENTORYCREATED"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "aggregate",
+      "type": "string",
+      "doc": "aggregate field"
+    }
+  ]
+}

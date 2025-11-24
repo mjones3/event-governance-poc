@@ -1,0 +1,84 @@
+{
+  "type": "record",
+  "name": "QcSampleCollectedRequestEvent",
+  "namespace": "com.arcone.biopro.manufacturing.qualitycontrol.domain.event",
+  "doc": "Event published when qcsamplecollectedrequest occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "QCSAMPLECOLLECTEDREQUEST"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "unitNumber",
+      "type": "string",
+      "doc": "unitNumber field",
+      "default": ""
+    },
+    {
+      "name": "productCode",
+      "type": "string",
+      "doc": "productCode field",
+      "default": ""
+    },
+    {
+      "name": "machineType",
+      "type": "string",
+      "doc": "machineType field",
+      "default": ""
+    },
+    {
+      "name": "procedureType",
+      "type": "string",
+      "doc": "procedureType field",
+      "default": ""
+    },
+    {
+      "name": "performedBy",
+      "type": "string",
+      "doc": "performedBy field",
+      "default": ""
+    },
+    {
+      "name": "filtrationEnd",
+      "type": "string",
+      "doc": "filtrationEnd field",
+      "default": ""
+    },
+    {
+      "name": "createDate",
+      "type": "string",
+      "doc": "createDate field",
+      "default": ""
+    }
+  ]
+}

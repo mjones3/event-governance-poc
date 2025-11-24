@@ -1,0 +1,97 @@
+---
+id: ApheresisPlasmaProductUnsuitable
+name: ApheresisPlasmaProductUnsuitable
+version: '1'
+summary: Event ApheresisPlasmaProductUnsuitableEvent - BioPro System
+owners:
+  - unknown-service
+producers:
+  - unknown-service
+consumers:
+  []
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Team: Unknown"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Consumers: 0"
+    backgroundColor: "#f59e0b"
+    textColor: white
+  - content: "Last Updated: 2025-01-16"
+    backgroundColor: "#6366f1"
+    textColor: white
+
+---
+
+# ApheresisPlasmaProductUnsuitableEvent
+
+**Schema ID**: 8
+**Schema Version**: 1
+**Subject**: ApheresisPlasmaProductUnsuitableEvent
+**Domain**: Manufacturing
+**Namespace**: com.arcone.biopro.manufacturing.apheresisplasma.domain.event
+
+## Business Context
+
+Event published when apheresisplasmaproductunsuitable occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+| `payload` | `ProductUnsuitablePayload` | Yes | ApheresisPlasmaProductUnsuitableEvent payload |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "7ff09a71-22d9-4ae6-8e78-c2b5c2c29e70",
+  "occurredOn": 1763355986717,
+  "occurredOnTimeZone": 1763355986717,
+  "eventType": "STANDARD",
+  "eventVersion": "1.0",
+  "payload": {}
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 8
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./ApheresisPlasmaProductUnsuitableEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

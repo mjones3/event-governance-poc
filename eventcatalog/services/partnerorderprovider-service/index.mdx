@@ -1,0 +1,66 @@
+---
+id: partnerorderprovider-service
+version: '1.0.0'
+name: Partnerorderprovider Service
+summary: BioPro Distribution domain service
+badges:
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-distribution"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 0 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    []
+receives:
+    - id: ModifyOrderReceived
+      version: '1.0'
+    - id: OrderReceived
+      version: '1.0'
+    - id: CancelOrderReceived
+      version: '1.0'
+    - id: ModifyOrderInboundReceived
+      version: '1.0'
+    - id: PartnerOrderInboundReceived
+      version: '1.0'
+    - id: CancelOrderInboundReceived
+      version: '1.0'
+---
+
+# Partnerorderprovider Service
+
+**Domain**: Distribution
+**Repository**: biopro-distribution
+
+## Overview
+
+The partnerorderprovider service is responsible for handling partnerorderprovider operations within the BioPro Distribution domain.
+
+## Events Published
+
+This service publishes 0 events:
+
+- None
+
+## Events Consumed
+
+This service consumes 6 events:
+
+- **ModifyOrderReceived**: Consumed from upstream services
+- **OrderReceived**: Consumed from upstream services
+- **CancelOrderReceived**: Consumed from upstream services
+- **ModifyOrderInboundReceived**: Consumed from upstream services
+- **PartnerOrderInboundReceived**: Consumed from upstream services
+- **CancelOrderInboundReceived**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

@@ -1,0 +1,51 @@
+---
+id: customer-service
+version: '1.0.0'
+name: Customer Service
+summary: BioPro Distribution domain service
+badges:
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-distribution"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 0 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    []
+receives:
+    - id: CustomerData
+      version: '1.0'
+---
+
+# Customer Service
+
+**Domain**: Distribution
+**Repository**: biopro-distribution
+
+## Overview
+
+The customer service is responsible for handling customer operations within the BioPro Distribution domain.
+
+## Events Published
+
+This service publishes 0 events:
+
+- None
+
+## Events Consumed
+
+This service consumes 1 events:
+
+- **CustomerData**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

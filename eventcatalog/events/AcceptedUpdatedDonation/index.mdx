@@ -1,0 +1,91 @@
+---
+id: AcceptedUpdatedDonation
+name: AcceptedUpdatedDonation
+version: '1.0'
+summary: Event published by collections service when acceptedupdateddonation occurs
+owners:
+  - collections-service
+producers:
+  - collections-service
+consumers:
+  []
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Interface"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# AcceptedUpdatedDonationEvent
+
+**Schema ID**: 59
+**Schema Version**: 1
+**Subject**: AcceptedUpdatedDonationEvent
+**Domain**: Collections
+**Namespace**: com.arcone.biopro.interfaces.collections.domain.event
+
+## Business Context
+
+Event published when acceptedupdateddonation occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+| `source` | `string` | Yes | source field |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "e23bbf68-7c26-4308-8952-2a0f31fcd2ca",
+  "occurredOn": 1763355986633,
+  "eventVersion": "1.0",
+  "source": "source_value"
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 59
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./AcceptedUpdatedDonationEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

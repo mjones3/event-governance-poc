@@ -1,0 +1,100 @@
+---
+id: labeling-service
+version: '1.0.0'
+name: Labeling Service
+summary: BioPro Manufacturing domain service
+badges:
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-manufacturing"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 4 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: Created
+      version: '1.0'
+    - id: Invalidated
+      version: '1.0'
+    - id: Labeled
+      version: '1.0'
+    - id: Modified
+      version: '1.0'
+receives:
+    - id: QuarantineUpdated
+      version: '1.0'
+    - id: Unsuitable
+      version: '1.0'
+    - id: ProductModified
+      version: '1.0'
+    - id: PooledProductUpdated
+      version: '1.0'
+    - id: Created
+      version: '1.0'
+    - id: ProductConverted
+      version: '1.0'
+    - id: PooledCreated
+      version: '1.0'
+    - id: Quarantined
+      version: '1.0'
+    - id: Recovered
+      version: '1.0'
+    - id: Discarded
+      version: '1.0'
+    - id: Updated
+      version: '1.0'
+    - id: RemoveQuarantined
+      version: '1.0'
+    - id: Completed
+      version: '1.0'
+    - id: CreatedApplication
+      version: '1.0'
+---
+
+# Labeling Service
+
+**Domain**: Manufacturing
+**Repository**: biopro-manufacturing
+
+## Overview
+
+The labeling service is responsible for handling labeling operations within the BioPro Manufacturing domain.
+
+## Events Published
+
+This service publishes 4 events:
+
+- **Created**: CreatedEvent
+- **Invalidated**: InvalidatedEvent
+- **Labeled**: LabeledEvent
+- **Modified**: ModifiedEvent
+
+## Events Consumed
+
+This service consumes 14 events:
+
+- **QuarantineUpdated**: Consumed from upstream services
+- **Unsuitable**: Consumed from upstream services
+- **ProductModified**: Consumed from upstream services
+- **PooledProductUpdated**: Consumed from upstream services
+- **Created**: Consumed from upstream services
+- **ProductConverted**: Consumed from upstream services
+- **PooledCreated**: Consumed from upstream services
+- **Quarantined**: Consumed from upstream services
+- **Recovered**: Consumed from upstream services
+- **Discarded**: Consumed from upstream services
+- **Updated**: Consumed from upstream services
+- **RemoveQuarantined**: Consumed from upstream services
+- **Completed**: Consumed from upstream services
+- **CreatedApplication**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

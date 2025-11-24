@@ -1,0 +1,94 @@
+---
+id: StorageConfigurationUpdated
+name: StorageConfigurationUpdated
+version: '1.0'
+summary: Event published by device service when storageconfigurationupdated occurs
+owners:
+  - device-service
+producers:
+  - device-service
+consumers:
+  - storage-service
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Operations"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# StorageConfigurationUpdatedEvent
+
+**Schema ID**: 92
+**Schema Version**: 1
+**Subject**: StorageConfigurationUpdatedEvent
+**Domain**: Operations
+**Namespace**: com.arcone.biopro.operations.device.domain.event
+
+## Business Context
+
+Event published when storageconfigurationupdated occurs
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn |
+| `eventType` | `string` | No | Type of event |
+| `eventVersion` | `string` | No | Version of the event schema |
+| `event` | `string` | Yes | event field |
+| `identification` | `string` | Yes | identification field |
+
+
+## Sample Event
+
+```json
+{
+  "eventId": "3cce6a78-5228-4dab-80a9-13326501197b",
+  "occurredOn": 1763355987895,
+  "occurredOnTimeZone": 1763355987895,
+  "eventType": "STANDARD",
+  "event": "event_value",
+  "identification": "ca2b8c8d-62e3-42c5-b7dc-24aa6f1a4eb7"
+}
+```
+
+## Schema Evolution
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+- **Schema ID**: 92
+- **Version**: 1
+- **Compatibility**: BACKWARD (default)
+
+## Message Format
+
+Messages are serialized using **Avro** with the schema ID embedded in the message header (magic byte + schema ID).
+
+## Integration Notes
+
+### Consuming This Event
+
+When consuming this event, use the Confluent Avro deserializer which will:
+1. Read the schema ID from the message
+2. Fetch the schema from the registry (with caching)
+3. Deserialize the message using the schema
+
+### Publishing This Event
+
+When publishing this event:
+1. Use the Confluent Avro serializer
+2. The serializer will register the schema if needed
+3. The schema ID will be embedded in each message
+
+## Download Schema
+
+- [Download Avro Schema](./StorageConfigurationUpdatedEvent.avsc) - Complete Avro schema definition
+
+<NodeGraph />

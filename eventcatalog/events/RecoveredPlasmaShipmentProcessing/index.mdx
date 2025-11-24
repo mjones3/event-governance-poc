@@ -1,0 +1,200 @@
+---
+id: RecoveredPlasmaShipmentProcessing
+name: RecoveredPlasmaShipmentProcessing
+version: '1.0'
+summary: Event published by recoveredplasmashipping service when recoveredplasmashipmentprocessing occurs
+owners:
+  - recoveredplasmashipping-service
+producers:
+  - recoveredplasmashipping-service
+consumers:
+  []
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Distribution"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# RecoveredPlasmaShipmentProcessing Event
+
+**Schema ID**: 999
+**Schema Version**: 1.0
+**Subject**: RecoveredPlasmaShipmentProcessingEvent
+**Domain**: Distribution
+**Service**: recoveredplasmashipping-service
+**Repository**: biopro-distribution
+
+## Business Context
+
+Event published when recoveredplasmashipmentprocessing occurs in the recoveredplasmashipping service.
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| eventId | UUID | Yes | Unique event identifier |
+| occurredOn | timestamp-millis | Yes | When the event occurred |
+| eventType | string | Yes | Event type identifier |
+| eventVersion | string | Yes | Schema version |
+| eventId | UUID | No |  |
+| occurredOn | Instant | No |  |
+| payload | RecoveredPlasmaShipment | No |  |
+
+## Consumer Implementation with DLQ Support
+
+### Spring Boot Kafka Listener
+
+```java
+package com.arcone.biopro.recoveredplasmashipping.infrastructure.listener;
+
+import com.arcone.biopro.recoveredplasmashipping.domain.event.RecoveredPlasmaShipmentProcessingEvent;
+import com.arcone.biopro.common.infrastructure.listener.AbstractListener;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class RecoveredPlasmaShipmentProcessingEventListener extends AbstractListener<RecoveredPlasmaShipmentProcessingEvent> {
+
+    private final YourBusinessService businessService;
+
+    @KafkaListener(
+        topics = "${kafka.topics.recoveredplasmashipmentprocessing}",
+        groupId = "${kafka.consumer.group-id}",
+        containerFactory = "kafkaListenerContainerFactory",
+        errorHandler = "kafkaListenerErrorHandler"
+    )
+    public void listen(
+            @Payload RecoveredPlasmaShipmentProcessingEvent event,
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+            @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
+            @Header(KafkaHeaders.OFFSET) long offset
+    ) {
+        log.info("Received RecoveredPlasmaShipmentProcessingEvent: eventId={}, topic={}, partition={}, offset={}",
+                event.getEventId(), topic, partition, offset);
+
+        processMessage(event)
+            .doOnSuccess(result ->
+                log.info("Successfully processed RecoveredPlasmaShipmentProcessingEvent: {}", event.getEventId()))
+            .doOnError(error ->
+                log.error("Failed to process RecoveredPlasmaShipmentProcessingEvent: {}", event.getEventId(), error))
+            .subscribe();
+    }
+
+    @Override
+    protected Mono<RecoveredPlasmaShipmentProcessingEvent> processMessage(RecoveredPlasmaShipmentProcessingEvent event) {
+        return Mono.defer(() -> {
+            try {
+                validateEvent(event);
+                return businessService.handle(event)
+                    .doOnError(this::handleBusinessError)
+                    .onErrorResume(this::recoverFromError);
+            } catch (InvalidEventException e) {
+                log.error("Invalid event detected - routing to DLQ: {}", event.getEventId(), e);
+                sendToDLQ(event, e);
+                return Mono.empty();
+            } catch (Exception e) {
+                return handleUnexpectedError(event, e);
+            }
+        });
+    }
+
+    private void validateEvent(RecoveredPlasmaShipmentProcessingEvent event) {
+        if (event.getEventId() == null || event.getEventId().isEmpty()) {
+            throw new InvalidEventException("Event ID is required");
+        }
+        // Add domain-specific validations
+    }
+}
+```
+
+## Complete Avro Schema
+
+```json
+{
+  "type": "record",
+  "name": "RecoveredPlasmaShipmentProcessingEvent",
+  "namespace": "com.arcone.biopro.distribution.recoveredplasmashipping.domain.event",
+  "doc": "Event published when recoveredplasmashipmentprocessing occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "RECOVEREDPLASMASHIPMENTPROCESSING"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "eventId field"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "occurredOn field"
+    },
+    {
+      "name": "payload",
+      "type": "string",
+      "doc": "payload field",
+      "default": ""
+    }
+  ]
+}
+```
+
+## Change Log
+
+### v1.0 (2025-11-16)
+- Schema registered with ID 999
+- Integrated with Schema Registry
+- DLQ error handling configured
+
+<NodeGraph />

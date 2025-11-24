@@ -1,0 +1,106 @@
+---
+id: reporting-service
+name: Reporting Service
+version: '1.0.0'
+summary: Generates analytics, reports, and business intelligence for plasma product operations
+owners:
+  - Data Analytics Team
+repository:
+  language: Python
+  url: https://github.com/biopro/reporting-service
+receives:
+  - id: ApheresisPlasmaProductCreated
+    version: '2.3'
+  - id: ApheresisPlasmaProductUpdated
+    version: '1.0'
+  - id: OrderCreated
+    version: '2.2'
+  - id: CollectionReceived
+    version: '2.1'
+sends: []
+badges:
+  - content: "Python 3.11"
+    backgroundColor: "#3776ab"
+    textColor: white
+  - content: "Apache Spark"
+    backgroundColor: "#e25a1c"
+    textColor: white
+  - content: "Production"
+    backgroundColor: "#22c55e"
+    textColor: white
+---
+
+# Reporting Service
+
+The Reporting Service provides analytics and business intelligence by consuming events across the BioPro platform and generating insights, reports, and dashboards.
+
+## Responsibilities
+
+- Generate manufacturing reports
+- Track product changes and trends
+- Provide operational analytics
+- Create executive dashboards
+- Support regulatory reporting requirements
+
+## Events Consumed
+
+### ApheresisPlasmaProductCreated
+**From**: manufacturing-service
+**Purpose**: Generate manufacturing reports
+**Critical**: No
+**Handler**: `ProductCreatedAnalytics`
+
+### ApheresisPlasmaProductUpdated
+**From**: manufacturing-service
+**Purpose**: Track product changes
+**Critical**: No
+**Handler**: `ProductUpdatedAnalytics`
+
+## Data Products Generated
+
+- **Daily Manufacturing Summary** - Products created, completed, updated
+- **Quality Metrics Dashboard** - Pass/fail rates, compliance status
+- **Distribution Analytics** - Delivery times, temperature monitoring
+- **Inventory Reports** - Stock levels, product aging, expiration tracking
+- **Regulatory Reports** - FDA submissions, audit trails
+
+## Technical Details
+
+### Technology Stack
+- **Runtime**: Python 3.11
+- **Processing**: Apache Spark
+- **Messaging**: Apache Kafka with Avro
+- **Database**: PostgreSQL (OLTP), Snowflake (OLAP)
+- **Visualization**: Tableau, Grafana
+
+### Deployment
+- **Environment**: Kubernetes
+- **Replicas**: 2
+- **Port**: 8087
+
+### Data Pipeline
+- Real-time event streaming from Kafka
+- Batch processing for historical analytics
+- Data warehouse updates every 15 minutes
+- Dashboard refresh every 5 minutes
+
+## Team Information
+
+- **Team**: Data Analytics Team
+- **Lead**: Analytics Manager
+- **Contact**: analytics-team@biopro.com
+- **Slack**: #data-analytics
+
+## Monitoring
+
+### Key Metrics
+- Report generation time
+- Data freshness (lag time)
+- Query performance
+- Dashboard load times
+
+### Alerts
+- Report generation failures
+- Data pipeline delays
+- Data quality issues
+- Dashboard unavailability

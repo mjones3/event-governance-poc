@@ -1,0 +1,47 @@
+{
+  "eventId": "650e8400-e29b-41d4-a716-446655440002",
+  "occurredOn": 1704067200000,
+  "eventType": "OrderCreated",
+  "eventVersion": "2.0",
+  "payload": {
+    "orderNumber": 12345678,
+    "externalId": "ORD-2024-002",
+    "orderStatus": "NEW",
+    "locationCode": "HOSP-123",
+    "locationName": null,
+    "createDate": 1704067200000,
+    "createDateTimeZone": "UTC",
+    "createEmployeeCode": "DR-456",
+    "shipmentType": null,
+    "priority": "URGENT",
+    "shippingMethod": null,
+    "productCategory": null,
+    "desiredShippingDate": null,
+    "shippingCustomerCode": null,
+    "shippingCustomerName": null,
+    "billingCustomerCode": null,
+    "comments": null,
+    "willPickUp": false,
+    "willPickUpPhoneNumber": null,
+    "transactionId": "550e8400-e29b-41d4-a716-446655440098",
+    "quarantinedProducts": null,
+    "labelStatus": null,
+    "version": null,
+    "orderItems": [
+      {
+        "productFamily": "BLOOD_PRODUCTS",
+        "bloodType": "O_POS",
+        "quantity": 2,
+        "comments": null,
+        "attributes": null
+      }
+    ],
+    "orderSource": "WEB",
+    "requestedDeliveryDate": 1704153600000,
+    "emergencyContact": {
+      "name": "Jane Doe",
+      "phone": "+1-555-0123",
+      "relationship": "SPOUSE"
+    }
+  }
+}

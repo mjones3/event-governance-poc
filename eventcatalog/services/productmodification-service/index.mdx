@@ -1,0 +1,55 @@
+---
+id: productmodification-service
+version: '1.0.0'
+name: Productmodification Service
+summary: BioPro Manufacturing domain service
+badges:
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-manufacturing"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 1 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: ProductModified
+      version: '1.0'
+receives:
+    - id: DeviceCreated
+      version: '1.0'
+    - id: DeviceUpdated
+      version: '1.0'
+---
+
+# Productmodification Service
+
+**Domain**: Manufacturing
+**Repository**: biopro-manufacturing
+
+## Overview
+
+The productmodification service is responsible for handling productmodification operations within the BioPro Manufacturing domain.
+
+## Events Published
+
+This service publishes 1 events:
+
+- **ProductModified**: ProductModifiedEvent
+
+## Events Consumed
+
+This service consumes 2 events:
+
+- **DeviceCreated**: Consumed from upstream services
+- **DeviceUpdated**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

@@ -6,6 +6,9 @@ export default {
   homepageLink: 'https://github.com/mjones3/event-governance-poc',
   landingPage: '',
 
+  // Server configuration
+  port: 3002,
+
   // Logo and branding
   logo: {
     alt: 'BioPro Logo',
@@ -20,24 +23,25 @@ export default {
   },
 
   // Generators (plugins)
-  generators: [
-    [
-      './plugins/schema-registry-generator',
-      {
-        schemaRegistryUrl: 'http://localhost:8081',
-        // Map schema subjects to domains
-        domainMapping: {
-          'OrderCreatedEvent': 'Orders',
-          'ApheresisPlasmaProductCreatedEvent': 'Manufacturing',
-          'CollectionReceivedEvent': 'Collections'
-        },
-        // Services that publish these events
-        serviceMapping: {
-          'OrderCreatedEvent': 'orders-service',
-          'ApheresisPlasmaProductCreatedEvent': 'manufacturing-service',
-          'CollectionReceivedEvent': 'collections-service'
-        }
-      }
-    ]
-  ],
+  // Temporarily disabled - plugin not yet created
+  // generators: [
+  //   [
+  //     './plugins/schema-registry-generator',
+  //     {
+  //       schemaRegistryUrl: 'http://localhost:8081',
+  //       // Map schema subjects to domains
+  //       domainMapping: {
+  //         'OrderCreatedEvent': 'Orders',
+  //         'ApheresisPlasmaProductCreatedEvent': 'Manufacturing',
+  //         'CollectionReceivedEvent': 'Collections'
+  //       },
+  //       // Services that publish these events
+  //       serviceMapping: {
+  //         'OrderCreatedEvent': 'orders-service',
+  //         'ApheresisPlasmaProductCreatedEvent': 'manufacturing-service',
+  //         'CollectionReceivedEvent': 'collections-service'
+  //       }
+  //     }
+  //   ]
+  // ],
 };

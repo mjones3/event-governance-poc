@@ -1,0 +1,42 @@
+{
+  "type": "record",
+  "name": "ApheresisPlateletProductCreatedEvent",
+  "namespace": "com.arcone.biopro.manufacturing.apheresisplatelet.domain.event",
+  "doc": "Event published when apheresis plasma product created occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "APHERESIS_PLASMA_PRODUCT_CREATED"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    }
+  ]
+}

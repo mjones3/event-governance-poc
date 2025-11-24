@@ -1,0 +1,205 @@
+---
+id: PQCTestType
+name: PQCTestType
+version: '1.0'
+summary: Event published by qualitycontrol service when pqctesttype occurs
+owners:
+  - qualitycontrol-service
+producers:
+  - qualitycontrol-service
+consumers:
+  []
+badges:
+  - content: "Schema Valid ✓"
+    backgroundColor: "#22c55e"
+    textColor: white
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "v1.0"
+    backgroundColor: "#6366f1"
+    textColor: white
+---
+
+# PQCTestType Event
+
+**Schema ID**: 999
+**Schema Version**: 1.0
+**Subject**: PQCTestTypeEvent
+**Domain**: Manufacturing
+**Service**: qualitycontrol-service
+**Repository**: biopro-manufacturing
+
+## Business Context
+
+Event published when pqctesttype occurs in the qualitycontrol service.
+
+## Event Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| eventId | UUID | Yes | Unique event identifier |
+| occurredOn | timestamp-millis | Yes | When the event occurred |
+| eventType | string | Yes | Event type identifier |
+| eventVersion | string | Yes | Schema version |
+| Test | PQC | Yes |  |
+| ID | Request | Yes |  |
+| to | Id | Yes |  |
+| the | identify | Yes |  |
+| Test | PQC | Yes |  |
+
+## Consumer Implementation with DLQ Support
+
+### Spring Boot Kafka Listener
+
+```java
+package com.arcone.biopro.qualitycontrol.infrastructure.listener;
+
+import com.arcone.biopro.qualitycontrol.domain.event.PQCTestTypeEvent;
+import com.arcone.biopro.common.infrastructure.listener.AbstractListener;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class PQCTestTypeEventListener extends AbstractListener<PQCTestTypeEvent> {
+
+    private final YourBusinessService businessService;
+
+    @KafkaListener(
+        topics = "${kafka.topics.pqctesttype}",
+        groupId = "${kafka.consumer.group-id}",
+        containerFactory = "kafkaListenerContainerFactory",
+        errorHandler = "kafkaListenerErrorHandler"
+    )
+    public void listen(
+            @Payload PQCTestTypeEvent event,
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+            @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
+            @Header(KafkaHeaders.OFFSET) long offset
+    ) {
+        log.info("Received PQCTestTypeEvent: eventId={}, topic={}, partition={}, offset={}",
+                event.getEventId(), topic, partition, offset);
+
+        processMessage(event)
+            .doOnSuccess(result ->
+                log.info("Successfully processed PQCTestTypeEvent: {}", event.getEventId()))
+            .doOnError(error ->
+                log.error("Failed to process PQCTestTypeEvent: {}", event.getEventId(), error))
+            .subscribe();
+    }
+
+    @Override
+    protected Mono<PQCTestTypeEvent> processMessage(PQCTestTypeEvent event) {
+        return Mono.defer(() -> {
+            try {
+                validateEvent(event);
+                return businessService.handle(event)
+                    .doOnError(this::handleBusinessError)
+                    .onErrorResume(this::recoverFromError);
+            } catch (InvalidEventException e) {
+                log.error("Invalid event detected - routing to DLQ: {}", event.getEventId(), e);
+                sendToDLQ(event, e);
+                return Mono.empty();
+            } catch (Exception e) {
+                return handleUnexpectedError(event, e);
+            }
+        });
+    }
+
+    private void validateEvent(PQCTestTypeEvent event) {
+        if (event.getEventId() == null || event.getEventId().isEmpty()) {
+            throw new InvalidEventException("Event ID is required");
+        }
+        // Add domain-specific validations
+    }
+}
+```
+
+## Complete Avro Schema
+
+```json
+{
+  "type": "record",
+  "name": "PQCTestTypeEvent",
+  "namespace": "com.arcone.biopro.manufacturing.qualitycontrol.domain.event",
+  "doc": "Event published when pqctesttype occurs",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique identifier for this event"
+    },
+    {
+      "name": "occurredOn",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Timestamp when event occurred"
+    },
+    {
+      "name": "occurredOnTimeZone",
+      "type": "string",
+      "doc": "Timezone for occurredOn",
+      "default": "UTC"
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "doc": "Type of event",
+      "default": "PQCTESTTYPE"
+    },
+    {
+      "name": "eventVersion",
+      "type": "string",
+      "doc": "Version of the event schema",
+      "default": "1.0"
+    },
+    {
+      "name": "Test",
+      "type": "string",
+      "doc": "Test field"
+    },
+    {
+      "name": "ID",
+      "type": "string",
+      "doc": "ID field"
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "doc": "to field"
+    },
+    {
+      "name": "the",
+      "type": "string",
+      "doc": "the field"
+    },
+    {
+      "name": "Test",
+      "type": "string",
+      "doc": "Test field"
+    }
+  ]
+}
+```
+
+## Change Log
+
+### v1.0 (2025-11-16)
+- Schema registered with ID 999
+- Integrated with Schema Registry
+- DLQ error handling configured
+
+<NodeGraph />

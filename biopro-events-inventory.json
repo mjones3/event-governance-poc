@@ -1,0 +1,2036 @@
+[
+  {
+    "service": "apheresisplasma",
+    "event_name": "ApheresisPlasmaProductCompletedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_COMPLETED",
+    "version": "1.0",
+    "payload_class": "ProductCompleted",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplasma\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplasma\\domain\\event\\ApheresisPlasmaProductCompletedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplasma",
+    "event_name": "ApheresisPlasmaProductCreatedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_CREATED",
+    "version": "1.0",
+    "payload_class": "ProductCreated",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplasma\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplasma\\domain\\event\\ApheresisPlasmaProductCreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplasma",
+    "event_name": "ApheresisPlasmaProductUpdatedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_UPDATED",
+    "version": "1.0",
+    "payload_class": "ProductUpdated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "updatedDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "inputProducts",
+        "type": "List<InputProduct>",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplasma\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplasma\\domain\\event\\ApheresisPlasmaProductUpdatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplasma",
+    "event_name": "ProductUnsuitableEvent",
+    "event_type": "PRODUCT_UNSUITABLE",
+    "version": "1.0",
+    "payload_class": "ProductUnsuitable",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplasma\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplasma\\domain\\event\\ProductUnsuitableEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ApheresisPlateletProductCompletedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_COMPLETED",
+    "version": "1.0",
+    "payload_class": "ProductCompleted",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ApheresisPlateletProductCompletedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ApheresisPlateletProductCreatedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_CREATED",
+    "version": "1.0",
+    "payload_class": "ProductCreated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productFamily",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "completionStage",
+        "type": "ProductCompletionStage",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "anticoagulantVolume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "drawTime",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "donationType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "procedureType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "collectionLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "manufacturingLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "aboRh",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "createDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "inputProducts",
+        "type": "List<InputProduct>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "additionalSteps",
+        "type": "List<Step>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationDate",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationTime",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "collectionTimeZone",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "qcTests",
+        "type": "List<QcTestDTO>",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ApheresisPlateletProductCreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ApheresisPlateletProductUpdatedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_UPDATED",
+    "version": "1.0",
+    "payload_class": "ProductUpdated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "completionStage",
+        "type": "ProductCompletionStage",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ApheresisPlateletProductUpdatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ApheresisPlateletQCRequestedEvent",
+    "event_type": "APHERESIS_PLATELET_QC_REQUESTED",
+    "version": "1.0",
+    "payload_class": "QCRequest",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "selectedQCTests",
+        "type": "List<String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "properties",
+        "type": "Map<String, String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "createDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "manufacturingLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ApheresisPlateletQCRequestedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ApheresisPlateletReadyForCADEvent",
+    "event_type": "APHERESIS_PLATELET_READY_FOR_CAD",
+    "version": "1.0",
+    "payload_class": "ReadyForCAD",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ApheresisPlateletReadyForCADEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ApheresisPlateletSampleCollectedEvent",
+    "event_type": "APHERESIS_PLATELET_SAMPLE_COLLECTED",
+    "version": "1.0",
+    "payload_class": "SampleCollected",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "machineType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "procedureType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "selectedQCTests",
+        "type": "List<String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "filtrationEnd",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ApheresisPlateletSampleCollectedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ApheresisPlateletVolumeCalculatedEvent",
+    "event_type": "APHERESIS_PLATELET_VOLUME_CALCULATED",
+    "version": "1.0",
+    "payload_class": "ProductVolumeCalculated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volumeType",
+        "type": "VolumeType",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagTareWeight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ApheresisPlateletVolumeCalculatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ProductBottleCreatedEvent",
+    "event_type": "PRODUCT_BOTTLE_CREATED",
+    "version": "1.0",
+    "payload_class": "ProductBottleCreated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "inoculationDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ProductBottleCreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "ProductUnsuitableEvent",
+    "event_type": "PRODUCT_UNSUITABLE",
+    "version": "1.0",
+    "payload_class": "ProductUnsuitable",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\ProductUnsuitableEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "QuarantineProductEvent",
+    "event_type": "QUARANTINE_PRODUCT",
+    "version": "1.0",
+    "payload_class": "QuarantineProduct",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "products",
+        "type": "List<QuarantineProductInput>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "triggeredBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "reasonKey",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "comments",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\QuarantineProductEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "QuarantineUnitEvent",
+    "event_type": "QUARANTINE_UNIT",
+    "version": "1.0",
+    "payload_class": "QuarantineUnit",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "reasonKey",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "triggeredBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\QuarantineUnitEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisplatelet",
+    "event_name": "RemoveQuarantineEvent",
+    "event_type": "REMOVE_QUARANTINE",
+    "version": "1.0",
+    "payload_class": "RemoveQuarantine",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "products",
+        "type": "List<String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "reasonKey",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "triggeredBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisplatelet\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisplatelet\\domain\\event\\RemoveQuarantineEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "ApheresisRBCProductCompletedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_COMPLETED",
+    "version": "1.0",
+    "payload_class": "ProductCompleted",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\ApheresisRBCProductCompletedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "ApheresisRBCProductCreatedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_CREATED",
+    "version": "1.0",
+    "payload_class": "ProductCreated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productFamily",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "completionStage",
+        "type": "ProductCompletionStage",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "anticoagulantVolume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "drawTime",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "donationType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "procedureType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "collectionLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "manufacturingLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "aboRh",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "createDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "inputProducts",
+        "type": "List<InputProduct>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "additionalSteps",
+        "type": "List<Step>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationDate",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationTime",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\ApheresisRBCProductCreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "ApheresisRBCProductUpdatedEvent",
+    "event_type": "APHERESIS_PLASMA_PRODUCT_UPDATED",
+    "version": "1.0",
+    "payload_class": "ProductUpdated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "updatedDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "inputProducts",
+        "type": "List<InputProduct>",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\ApheresisRBCProductUpdatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "ApheresisRBCQCRequestedEvent",
+    "event_type": "APHERESIS_RBC_QC_REQUESTED",
+    "version": "1.0",
+    "payload_class": "QCRequest",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "selectedQCTests",
+        "type": "List<String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performeBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "createDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "manufacturingLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\ApheresisRBCQCRequestedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "ApheresisRBCSampleCollectedEvent",
+    "event_type": "APHERESIS_RBC_SAMPLE_COLLECTED",
+    "version": "1.0",
+    "payload_class": "SampleCollected",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "machineType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "procedureType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "selectedQCTests",
+        "type": "List<String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "filtrationEnd",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\ApheresisRBCSampleCollectedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "ApheresisRBCVolumeCalculatedEvent",
+    "event_type": "APHERESIS_RBC_VOLUME_CALCULATED",
+    "version": "1.0",
+    "payload_class": "ProductVolumeCalculated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volumeType",
+        "type": "VolumeType",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagTareWeight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\ApheresisRBCVolumeCalculatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "ProductUnsuitableEvent",
+    "event_type": "PRODUCT_UNSUITABLE",
+    "version": "1.0",
+    "payload_class": "ProductUnsuitable",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\ProductUnsuitableEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "apheresisrbc",
+    "event_name": "QuarantineProductEvent",
+    "event_type": "QUARANTINE_PRODUCT",
+    "version": "1.0",
+    "payload_class": "QuarantineProduct",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "products",
+        "type": "List<QuarantineProductInput>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "triggeredBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "reasonKey",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "comments",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\apheresisrbc\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\apheresisrbc\\domain\\event\\QuarantineProductEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "labeling",
+    "event_name": "CreatedEvent",
+    "event_type": "CreatedEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\labeling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\labeling\\domain\\event\\CreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "labeling",
+    "event_name": "InvalidatedEvent",
+    "event_type": "InvalidatedEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\labeling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\labeling\\domain\\event\\InvalidatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "labeling",
+    "event_name": "LabeledEvent",
+    "event_type": "LabeledEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\labeling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\labeling\\domain\\event\\LabeledEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "labeling",
+    "event_name": "ModifiedEvent",
+    "event_type": "ModifiedEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\labeling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\labeling\\domain\\event\\ModifiedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "pooling",
+    "event_name": "PooledProductCompletedEvent",
+    "event_type": "POOLED_PRODUCT_COMPLETED",
+    "version": "1.0",
+    "payload_class": "ProductCompleted",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\pooling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\pooling\\domain\\event\\PooledProductCompletedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "pooling",
+    "event_name": "PooledProductCreatedEvent",
+    "event_type": "POOLED_PRODUCT_CREATED",
+    "version": "1.0",
+    "payload_class": "ProductCreated",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\pooling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\pooling\\domain\\event\\PooledProductCreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "pooling",
+    "event_name": "PooledProductUpdatedEvent",
+    "event_type": "POOLED_PRODUCT_UPDATED",
+    "version": "1.0",
+    "payload_class": "ProductUpdated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "updatedDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "inputProducts",
+        "type": "List<InputProduct>",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\pooling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\pooling\\domain\\event\\PooledProductUpdatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "pooling",
+    "event_name": "UnitUnsuitableEvent",
+    "event_type": "UNIT_UNSUITABLE",
+    "version": "1.0",
+    "payload_class": "UnitUnsuitable",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "reasonKey",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "triggeredBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\pooling\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\pooling\\domain\\event\\UnitUnsuitableEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "productmodification",
+    "event_name": "ProductModifiedEvent",
+    "event_type": "PRODUCT_MODIFIED",
+    "version": "1.0",
+    "payload_class": "ProductModified",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "parentProductCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productFamily",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationDate",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationTime",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "modificationLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "modificationDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "modificationTimeZone",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "collectionTime",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "collectionTimeZone",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "properties",
+        "type": "Map<String, String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\productmodification\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\productmodification\\domain\\event\\ProductModifiedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "qualitycontrol",
+    "event_name": "BottleInformationRequestEvent",
+    "event_type": "BottleInformationRequestEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\qualitycontrol\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\qualitycontrol\\domain\\event\\BottleInformationRequestEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "qualitycontrol",
+    "event_name": "PQCCompletedEvent",
+    "event_type": "PQCCompletedEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\qualitycontrol\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\qualitycontrol\\domain\\event\\PQCCompletedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "qualitycontrol",
+    "event_name": "QCRequestEvent",
+    "event_type": "QCRequestEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\qualitycontrol\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\qualitycontrol\\domain\\event\\QCRequestEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "qualitycontrol",
+    "event_name": "QcSampleCollectedRequestEvent",
+    "event_type": "QcSampleCollectedRequestEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\qualitycontrol\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\qualitycontrol\\domain\\event\\QcSampleCollectedRequestEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "storage",
+    "event_name": "CartonEvent",
+    "event_type": "CartonEvent",
+    "version": "1.0",
+    "payload_class": "Unknown",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\storage\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\storage\\domain\\event\\CartonEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "storage",
+    "event_name": "StorageCreatedEvent",
+    "event_type": "StorageCreatedEvent",
+    "version": "1.0",
+    "payload_class": "ProductStored",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\storage\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\storage\\domain\\event\\StorageCreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "wholeblood",
+    "event_name": "ProductUnsuitableEvent",
+    "event_type": "PRODUCT_UNSUITABLE",
+    "version": "1.0",
+    "payload_class": "ProductUnsuitable",
+    "purpose": "",
+    "fields": [],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\wholeblood\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\wholeblood\\domain\\event\\ProductUnsuitableEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "wholeblood",
+    "event_name": "WholeBloodProductCompletedEvent",
+    "event_type": "WHOLE_BLOOD_PRODUCT_COMPLETED",
+    "version": "1.0",
+    "payload_class": "ProductCompleted",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "completionStage",
+        "type": "ProductCompletionStage",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "aboRh",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "completionDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\wholeblood\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\wholeblood\\domain\\event\\WholeBloodProductCompletedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "wholeblood",
+    "event_name": "WholeBloodProductCreatedEvent",
+    "event_type": "WHOLE_BLOOD_PRODUCT_CREATED",
+    "version": "1.0",
+    "payload_class": "ProductCreated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productFamily",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "completionStage",
+        "type": "ProductCompletionStage",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "anticoagulantVolume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "drawTime",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "donationType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "procedureType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "collectionLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "manufacturingLocation",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "aboRh",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "createDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "inputProducts",
+        "type": "List<InputProduct>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "additionalSteps",
+        "type": "List<Step>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationDate",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "expirationTime",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "collectionTimeZone",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "separationTime",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\wholeblood\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\wholeblood\\domain\\event\\WholeBloodProductCreatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "wholeblood",
+    "event_name": "WholeBloodProductUpdatedEvent",
+    "event_type": "WHOLE_BLOOD_PRODUCT_UPDATED",
+    "version": "1.0",
+    "payload_class": "ProductUpdated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "completionStage",
+        "type": "ProductCompletionStage",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\wholeblood\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\wholeblood\\domain\\event\\WholeBloodProductUpdatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "wholeblood",
+    "event_name": "WholeBloodQCRequestedEvent",
+    "event_type": "WHOLE_BLOOD_QC_REQUESTED",
+    "version": "1.0",
+    "payload_class": "QCRequest",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "selectedQCTests",
+        "type": "List<String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "properties",
+        "type": "Map<String, String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "createDate",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\wholeblood\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\wholeblood\\domain\\event\\WholeBloodQCRequestedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "wholeblood",
+    "event_name": "WholeBloodSampleCollectedEvent",
+    "event_type": "WHOLE_BLOOD_SAMPLE_COLLECTED",
+    "version": "1.0",
+    "payload_class": "SampleCollected",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productDescription",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "procedureType",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "selectedQCTests",
+        "type": "List<String>",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "filtrationEnd",
+        "type": "ZonedDateTime",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\wholeblood\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\wholeblood\\domain\\event\\WholeBloodSampleCollectedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  },
+  {
+    "service": "wholeblood",
+    "event_name": "WholeBloodVolumeCalculatedEvent",
+    "event_type": "WHOLE_BLOOD_VOLUME_CALCULATED",
+    "version": "1.0",
+    "payload_class": "ProductVolumeCalculated",
+    "purpose": "",
+    "fields": [
+      {
+        "name": "unitNumber",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "productCode",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volumeType",
+        "type": "VolumeType",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "volume",
+        "type": "Volume",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "weight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "bagTareWeight",
+        "type": "Weight",
+        "description": "",
+        "required": false,
+        "example": ""
+      },
+      {
+        "name": "performedBy",
+        "type": "String",
+        "description": "",
+        "required": false,
+        "example": ""
+      }
+    ],
+    "file_path": "C:\\Users\\MelvinJones\\work\\biopro\\biopro-manufacturing\\backend\\wholeblood\\src\\main\\java\\com\\arcone\\biopro\\manufacturing\\wholeblood\\domain\\event\\WholeBloodVolumeCalculatedEvent.java",
+    "topic_name": "",
+    "dependencies": []
+  }
+]

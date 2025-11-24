@@ -1,0 +1,73 @@
+---
+id: pooling-service
+version: '1.0.0'
+name: Pooling Service
+summary: BioPro Manufacturing domain service
+badges:
+  - content: "Domain: Manufacturing"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-manufacturing"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 4 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: PooledProductCompleted
+      version: '1.0'
+    - id: PooledProductCreated
+      version: '1.0'
+    - id: PooledProductUpdated
+      version: '1.0'
+    - id: UnitUnsuitable
+      version: '1.0'
+receives:
+    - id: ProductUnsuitable
+      version: '1.0'
+    - id: DeviceCreated
+      version: '1.0'
+    - id: DeviceUpdated
+      version: '1.0'
+    - id: UnitUnsuitable
+      version: '1.0'
+    - id: ProductDiscarded
+      version: '1.0'
+---
+
+# Pooling Service
+
+**Domain**: Manufacturing
+**Repository**: biopro-manufacturing
+
+## Overview
+
+The pooling service is responsible for handling pooling operations within the BioPro Manufacturing domain.
+
+## Events Published
+
+This service publishes 4 events:
+
+- **PooledProductCompleted**: PooledProductCompletedEvent
+- **PooledProductCreated**: PooledProductCreatedEvent
+- **PooledProductUpdated**: PooledProductUpdatedEvent
+- **UnitUnsuitable**: UnitUnsuitableEvent
+
+## Events Consumed
+
+This service consumes 5 events:
+
+- **ProductUnsuitable**: Consumed from upstream services
+- **DeviceCreated**: Consumed from upstream services
+- **DeviceUpdated**: Consumed from upstream services
+- **UnitUnsuitable**: Consumed from upstream services
+- **ProductDiscarded**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
+- **Schema Registry**: Confluent Schema Registry
+- **Error Handling**: DLQ pattern with AbstractListener base class
+
+<NodeGraph />

@@ -1,35 +1,55 @@
 ---
 id: collections-service
-name: collections-service
-version: 1.0.0
-summary: collections-service - BioPro Event Producer
-owners:
-    - BioPro Platform Team
+version: '1.0.0'
+name: Collections Service
+summary: BioPro Interface domain service
+badges:
+  - content: "Domain: Interface"
+    backgroundColor: "#3b82f6"
+    textColor: white
+  - content: "Repository: biopro-interface"
+    backgroundColor: "#6366f1"
+    textColor: white
+  - content: "Events: 2 published"
+    backgroundColor: "#22c55e"
+    textColor: white
+sends:
+    - id: AcceptedNewDonation
+      version: '1.0'
+    - id: AcceptedUpdatedDonation
+      version: '1.0'
+receives:
+    - id: LabelApplied
+      version: '1.0'
 ---
 
-# collections-service
+# Collections Service
 
-BioPro microservice that publishes events to Kafka.
+**Domain**: Interface
+**Repository**: biopro-interface
 
-## Published Events
+## Overview
 
-- **CollectionReceived** (v1)
+The collections service is responsible for handling collections operations within the BioPro Interface domain.
 
-## Domain
+## Events Published
 
-**Collections**
+This service publishes 2 events:
 
-## Infrastructure
+- **AcceptedNewDonation**: AcceptedNewDonationEvent
+- **AcceptedUpdatedDonation**: AcceptedUpdatedDonationEvent
 
-- **Kafka Broker**: Redpanda
+## Events Consumed
+
+This service consumes 1 events:
+
+- **LabelApplied**: Consumed from upstream services
+
+## Technology Stack
+
+- **Framework**: Spring Boot with WebFlux (Reactive)
+- **Messaging**: Apache Kafka with Avro serialization
 - **Schema Registry**: Confluent Schema Registry
-- **Serialization**: Avro with schema validation
-- **DLQ**: Dead Letter Queue for failed messages
-
-## Metrics
-
-- Schema validation success/failure rates
-- Event publish success/failure rates
-- DLQ routing metrics
+- **Error Handling**: DLQ pattern with AbstractListener base class
 
 <NodeGraph />
