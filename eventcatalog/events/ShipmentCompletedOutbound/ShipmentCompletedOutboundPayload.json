@@ -1,0 +1,13 @@
+{
+  "shipmentNumber": 789456,
+  "orderNumber": 123456,
+  "completedDate": 1763355987499,
+  "destinationCode": "DEST-001",
+  "destinationName": "City Hospital Blood Bank",
+  "trackingNumber": "1Z999AA10123456784",
+  "carrier": "UPS",
+  "totalItems": 5,
+  "shipmentStatus": "COMPLETED",
+  "completedByEmployeeCode": "EMP-789",
+  "transactionId": "xyz789-4567-89ab-cdef-0123456789ab"
+}

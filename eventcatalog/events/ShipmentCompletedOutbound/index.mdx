@@ -38,13 +38,88 @@ Event published when shipmentcompletedoutbound occurs in the eventbridge service
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| eventId | UUID | Yes | Unique event identifier |
-| occurredOn | timestamp-millis | Yes | When the event occurred |
-| eventType | string | Yes | Event type identifier |
-| eventVersion | string | Yes | Schema version |
-| eventId | UUID | No |  |
-| occurredOn | Instant | No |  |
-| payload | ShipmentCompletedOutbound | No |  |
+| `eventId` | `uuid` | Yes | Unique identifier for this event |
+| `occurredOn` | `timestamp-millis` | Yes | Timestamp when event occurred |
+| `occurredOnTimeZone` | `string` | No | Timezone for occurredOn (default: UTC) |
+| `eventType` | `string` | No | Type of event (default: SHIPMENTCOMPLETEDOUTBOUND) |
+| `eventVersion` | `string` | No | Version of the event schema (default: 1.0) |
+| `payload` | `ShipmentCompletedOutboundPayload` | Yes | Shipment completed event payload |
+
+## Payload Structure
+
+The `ShipmentCompletedOutboundPayload` contains the following fields:
+
+### Shipment Information
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `shipmentNumber` | `long` | Yes | Unique shipment number |
+| `orderNumber` | `long` | Yes | Associated order number |
+| `completedDate` | `timestamp-millis` | Yes | Date/time when shipment was completed |
+| `shipmentStatus` | `string` | Yes | Current status of the shipment |
+| `totalItems` | `int` | Yes | Total number of items in shipment |
+
+### Destination Details
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `destinationCode` | `string` | Yes | Destination location code |
+| `destinationName` | `string` | No | Destination location name |
+
+### Shipping Details
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `trackingNumber` | `string` | No | Carrier tracking number |
+| `carrier` | `string` | No | Shipping carrier name |
+
+### Metadata
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `completedByEmployeeCode` | `string` | No | Employee code who completed the shipment |
+| `transactionId` | `uuid` | Yes | Transaction ID for idempotency |
+
+## Sample Event
+
+### Complete Event Example
+
+```json
+{
+  "eventId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "occurredOn": 1763355987499,
+  "occurredOnTimeZone": "UTC",
+  "eventType": "SHIPMENTCOMPLETEDOUTBOUND",
+  "eventVersion": "1.0",
+  "payload": {
+    "shipmentNumber": 789456,
+    "orderNumber": 123456,
+    "completedDate": 1763355987499,
+    "destinationCode": "DEST-001",
+    "destinationName": "City Hospital Blood Bank",
+    "trackingNumber": "1Z999AA10123456784",
+    "carrier": "UPS",
+    "totalItems": 5,
+    "shipmentStatus": "COMPLETED",
+    "completedByEmployeeCode": "EMP-789",
+    "transactionId": "xyz789-4567-89ab-cdef-0123456789ab"
+  }
+}
+```
+
+### Payload Only Example
+
+```json
+{
+  "shipmentNumber": 789456,
+  "orderNumber": 123456,
+  "completedDate": 1763355987499,
+  "destinationCode": "DEST-001",
+  "destinationName": "City Hospital Blood Bank",
+  "trackingNumber": "1Z999AA10123456784",
+  "carrier": "UPS",
+  "totalItems": 5,
+  "shipmentStatus": "COMPLETED",
+  "completedByEmployeeCode": "EMP-789",
+  "transactionId": "xyz789-4567-89ab-cdef-0123456789ab"
+}
+```
 
 ## Consumer Implementation with DLQ Support
 
@@ -121,74 +196,72 @@ public class ShipmentCompletedOutboundEventListener extends AbstractListener<Shi
 }
 ```
 
-## Complete Avro Schema
+## Schema Registry Integration
 
-```json
-{
-  "type": "record",
-  "name": "ShipmentCompletedOutboundEvent",
-  "namespace": "com.arcone.biopro.distribution.eventbridge.domain.event",
-  "doc": "Event published when shipmentcompletedoutbound occurs",
-  "fields": [
-    {
-      "name": "eventId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      },
-      "doc": "Unique identifier for this event"
-    },
-    {
-      "name": "occurredOn",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
-      "doc": "Timestamp when event occurred"
-    },
-    {
-      "name": "occurredOnTimeZone",
-      "type": "string",
-      "doc": "Timezone for occurredOn",
-      "default": "UTC"
-    },
-    {
-      "name": "eventType",
-      "type": "string",
-      "doc": "Type of event",
-      "default": "SHIPMENTCOMPLETEDOUTBOUND"
-    },
-    {
-      "name": "eventVersion",
-      "type": "string",
-      "doc": "Version of the event schema",
-      "default": "1.0"
-    },
-    {
-      "name": "eventId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      },
-      "doc": "eventId field"
-    },
-    {
-      "name": "occurredOn",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
-      "doc": "occurredOn field"
-    },
-    {
-      "name": "payload",
-      "type": "string",
-      "doc": "payload field",
-      "default": ""
-    }
-  ]
-}
-```
+### Download Schemas
+
+- [Download Complete Event Schema (Avro)](./ShipmentCompletedOutboundEvent.avsc) - Full Avro schema definition including payload
+- [Download Payload Schema (Avro)](./ShipmentCompletedOutboundPayload.avsc) - Just the payload schema for reuse
+- [Download Payload Example (JSON)](./ShipmentCompletedOutboundPayload.json) - Sample payload in JSON format
+
+### Schema Registry Details
+
+This event uses Avro schema validation through Confluent Schema Registry.
+
+**Subject**: `ShipmentCompletedOutboundEvent`
+**Schema ID**: 999
+**Current Version**: 1
+**Compatibility Mode**: BACKWARD (default)
+
+### Schema Versioning
+
+When updating this schema:
+
+1. **Schema Registry Versioning** - The Schema Registry automatically versions schemas:
+   - Each change creates a new version number (v1, v2, v3...)
+   - The schema ID remains constant for the subject
+   - Consumers can fetch any version using the schema ID + version number
+
+2. **Compatibility Checks** - Before registering a new version:
+   ```bash
+   # Test compatibility before registering
+   curl -X POST http://schema-registry:8081/compatibility/subjects/ShipmentCompletedOutboundEvent/versions/latest \
+     -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+     -d @ShipmentCompletedOutboundEvent.avsc
+   ```
+
+3. **Register New Version** - To register a new schema version:
+   ```bash
+   # Register new version to Schema Registry
+   curl -X POST http://schema-registry:8081/subjects/ShipmentCompletedOutboundEvent/versions \
+     -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+     -d @ShipmentCompletedOutboundEvent.avsc
+   ```
+
+4. **View Version History**:
+   ```bash
+   # List all versions for this subject
+   curl http://schema-registry:8081/subjects/ShipmentCompletedOutboundEvent/versions
+
+   # Get specific version
+   curl http://schema-registry:8081/subjects/ShipmentCompletedOutboundEvent/versions/2
+   ```
+
+### Schema Evolution Best Practices
+
+- **BACKWARD compatibility** (default): New schema can read data written by previous schema
+  - ✅ Add optional fields with defaults
+  - ✅ Delete fields
+  - ❌ Rename fields
+  - ❌ Add required fields
+
+- **FORWARD compatibility**: Previous schema can read data written by new schema
+  - ✅ Add fields
+  - ✅ Delete optional fields with defaults
+
+- **FULL compatibility**: Both backward and forward compatible
+  - ✅ Add optional fields with defaults
+  - ✅ Delete optional fields with defaults
 
 ## Change Log
 

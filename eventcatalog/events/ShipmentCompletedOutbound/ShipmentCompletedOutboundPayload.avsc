@@ -1,0 +1,85 @@
+{
+  "type": "record",
+  "name": "ShipmentCompletedOutboundPayload",
+  "namespace": "com.arcone.biopro.distribution.eventbridge.domain.event",
+  "doc": "Payload for shipment completed outbound event",
+  "fields": [
+    {
+      "name": "shipmentNumber",
+      "type": "long",
+      "doc": "Unique shipment number"
+    },
+    {
+      "name": "orderNumber",
+      "type": "long",
+      "doc": "Associated order number"
+    },
+    {
+      "name": "completedDate",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Date/time when shipment was completed"
+    },
+    {
+      "name": "destinationCode",
+      "type": "string",
+      "doc": "Destination location code"
+    },
+    {
+      "name": "destinationName",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Destination location name",
+      "default": null
+    },
+    {
+      "name": "trackingNumber",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Carrier tracking number",
+      "default": null
+    },
+    {
+      "name": "carrier",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Shipping carrier name",
+      "default": null
+    },
+    {
+      "name": "totalItems",
+      "type": "int",
+      "doc": "Total number of items in shipment"
+    },
+    {
+      "name": "shipmentStatus",
+      "type": "string",
+      "doc": "Current status of the shipment"
+    },
+    {
+      "name": "completedByEmployeeCode",
+      "type": [
+        "null",
+        "string"
+      ],
+      "doc": "Employee code who completed the shipment",
+      "default": null
+    },
+    {
+      "name": "transactionId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Transaction ID for idempotency"
+    }
+  ]
+}
